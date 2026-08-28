@@ -1,4 +1,3 @@
-```html
 <!doctype html>
 <html lang="pl">
 
@@ -8,12 +7,7 @@
 
   <title>SillyTube</title>
 
-  <!-- ========================= -->
-  <!-- SUPABASE -->
-  <!-- ========================= -->
-
   <script type="module">
-
     import {
       createClient
     } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
@@ -22,633 +16,409 @@
       "https://czyklqosqoqxgaxoejpz.supabase.co",
       "sb_publishable_xChRH3i5kMb0ErQALcXKHA_Gogcykzj"
     );
-
   </script>
 
-
-  <!-- ========================= -->
-  <!-- STYLE -->
-  <!-- ========================= -->
-
   <style>
-
     * {
       box-sizing: border-box;
     }
 
-
     body {
       margin: 0;
-
       background: #0f0f0f;
-
-      color: #ffffff;
-
-      font-family:
-        Arial,
-        sans-serif;
+      color: #fff;
+      font-family: Arial, sans-serif;
     }
 
-
-    /* ========================= */
-    /* HEADER */
-    /* ========================= */
+    button,
+    input,
+    textarea {
+      font-family: inherit;
+    }
 
     header {
-
       height: 64px;
-
       background: #181818;
-
-      border-bottom:
-        1px solid #292929;
-
+      border-bottom: 1px solid #292929;
       display: flex;
-
       align-items: center;
-
       gap: 18px;
-
-      padding:
-        0 22px;
-
+      padding: 0 22px;
       position: sticky;
-
       top: 0;
-
-      z-index: 10;
-
+      z-index: 20;
     }
-
 
     .logo {
-
       font-size: 23px;
-
       font-weight: 800;
-
       white-space: nowrap;
-
     }
-
 
     .logo span {
-
       background: #f03;
-
-      padding:
-        7px 10px;
-
+      padding: 7px 10px;
       border-radius: 9px;
-
       margin-right: 7px;
-
     }
-
 
     .free {
-
       color: #5ee68a;
-
       font-weight: 800;
-
       white-space: nowrap;
-
     }
-
 
     .search {
-
       flex: 1;
-
-      max-width: 620px;
-
+      max-width: 650px;
       margin: auto;
-
     }
-
 
     .search input {
-
       width: 100%;
-
       background: #101010;
-
       color: white;
-
-      border:
-        1px solid #444;
-
+      border: 1px solid #444;
       border-radius: 24px;
-
-      padding:
-        11px 16px;
-
+      padding: 11px 17px;
       outline: none;
-
     }
-
 
     .search input:focus {
-
       border-color: #777;
-
     }
-
-
-    /* ========================= */
-    /* BUTTONS */
-    /* ========================= */
 
     .btn {
-
       border: 0;
-
       border-radius: 10px;
-
-      padding:
-        10px 15px;
-
+      padding: 10px 15px;
       font-weight: 700;
-
       cursor: pointer;
-
     }
-
 
     .btn:hover {
-
-      opacity: 0.9;
-
+      opacity: .88;
     }
 
+    .btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
 
     .red {
-
       background: #f03;
-
       color: white;
-
     }
-
 
     .gray {
-
       background: #303030;
-
       color: white;
-
     }
 
-
-    /* ========================= */
-    /* MAIN */
-    /* ========================= */
+    .green {
+      color: #5ee68a;
+      font-weight: 800;
+    }
 
     .main {
-
-      max-width: 1250px;
-
+      max-width: 1350px;
       margin: auto;
-
-      padding:
-        25px 20px;
-
+      padding: 24px 20px;
     }
-
-
-    /* ========================= */
-    /* HERO */
-    /* ========================= */
 
     .hero {
-
-      background:
-        linear-gradient(
-          120deg,
-          #25102a,
-          #121c35
-        );
-
-      border:
-        1px solid #303030;
-
+      background: linear-gradient(120deg, #25102a, #121c35);
+      border: 1px solid #303030;
       border-radius: 18px;
-
       padding: 26px;
-
       margin-bottom: 25px;
-
     }
-
 
     .hero h1 {
-
-      margin:
-        0 0 8px;
-
+      margin: 0 0 8px;
       font-size: 34px;
-
     }
-
 
     .hero p {
-
-      margin:
-        10px 0;
-
+      margin: 10px 0;
     }
-
 
     .muted {
-
       color: #999;
-
     }
 
-
-    /* ========================= */
-    /* VIDEO GRID */
-    /* ========================= */
+    .section-title {
+      margin: 25px 0 15px;
+      font-size: 22px;
+    }
 
     .grid {
-
       display: grid;
-
-      grid-template-columns:
-        repeat(
-          auto-fill,
-          minmax(
-            250px,
-            1fr
-          )
-        );
-
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(250px, 1fr)
+      );
       gap: 20px;
-
     }
-
-
-    /* ========================= */
-    /* VIDEO CARD */
-    /* ========================= */
 
     .card {
-
       background: #181818;
-
       border-radius: 12px;
-
       overflow: hidden;
-
-      border:
-        1px solid #242424;
-
-      transition:
-        transform 0.15s,
-        border-color 0.15s;
-
+      border: 1px solid #242424;
+      transition: .15s;
     }
-
 
     .card:hover {
-
-      transform:
-        translateY(-2px);
-
+      transform: translateY(-2px);
       border-color: #444;
-
     }
-
 
     .thumb {
-
       display: block;
-
       width: 100%;
-
       aspect-ratio: 16 / 9;
-
       object-fit: cover;
-
       background: #292929;
-
     }
-
 
     .info {
-
       padding: 13px;
-
     }
-
 
     .title {
-
       font-weight: 700;
-
       font-size: 16px;
-
+      line-height: 1.35;
       word-break: break-word;
-
     }
 
+    .description {
+      color: #aaa;
+      font-size: 13px;
+      margin-top: 7px;
+      line-height: 1.4;
+      max-height: 40px;
+      overflow: hidden;
+    }
 
     .meta {
-
       color: #999;
-
       font-size: 13px;
-
-      margin-top: 7px;
-
+      margin-top: 8px;
     }
 
+    .actions {
+      display: flex;
+      gap: 7px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
 
-    /* ========================= */
-    /* EMPTY */
-    /* ========================= */
+    .action-btn {
+      border: 0;
+      border-radius: 20px;
+      padding: 7px 11px;
+      background: #303030;
+      color: white;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .action-btn.active {
+      background: #f03;
+    }
 
     .empty {
-
       text-align: center;
-
-      padding:
-        65px 20px;
-
-      border:
-        1px dashed #444;
-
+      padding: 65px 20px;
+      border: 1px dashed #444;
       border-radius: 18px;
-
       background: #141414;
-
     }
-
 
     .empty .big {
-
       font-size: 55px;
-
     }
-
-
-    /* ========================= */
-    /* ACCOUNT */
-    /* ========================= */
 
     .userbox {
-
       display: flex;
-
       align-items: center;
-
       gap: 8px;
-
       white-space: nowrap;
-
     }
-
 
     .balance {
-
       color: #5ee68a;
-
       font-weight: 800;
-
     }
-
-
-    /* ========================= */
-    /* MODALS */
-    /* ========================= */
 
     .modal {
-
       display: none;
-
       position: fixed;
-
       inset: 0;
-
       background: #000c;
-
       z-index: 100;
-
       align-items: center;
-
       justify-content: center;
-
       padding: 18px;
-
     }
-
 
     .modal.open {
-
       display: flex;
-
     }
-
 
     .box {
-
-      width:
-        min(
-          540px,
-          100%
-        );
-
+      width: min(600px, 100%);
       background: #181818;
-
-      border:
-        1px solid #444;
-
+      border: 1px solid #444;
       border-radius: 18px;
-
       padding: 24px;
-
       max-height: 90vh;
-
       overflow: auto;
-
     }
-
 
     .box h2 {
-
       margin-top: 0;
-
     }
 
-
-    .box input {
-
+    .box input,
+    .box textarea {
       width: 100%;
-
       padding: 11px;
-
-      margin:
-        7px 0 14px;
-
+      margin: 7px 0 14px;
       background: #101010;
-
       color: white;
-
-      border:
-        1px solid #444;
-
+      border: 1px solid #444;
       border-radius: 9px;
-
+      outline: none;
     }
 
+    .box textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
 
     .row {
-
       display: flex;
-
       gap: 8px;
-
       justify-content: flex-end;
-
       flex-wrap: wrap;
-
     }
-
 
     .status {
-
       padding: 12px;
-
       border-radius: 10px;
-
       background: #222;
-
-      margin:
-        10px 0;
-
+      margin: 10px 0;
       display: none;
-
       word-break: break-word;
-
     }
 
+    .channel-panel {
+      background: #181818;
+      border: 1px solid #303030;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 25px;
+    }
 
-    /* ========================= */
-    /* MOBILE */
-    /* ========================= */
+    .channel-name {
+      font-size: 28px;
+      font-weight: 800;
+    }
 
-    @media (max-width: 700px) {
+    .channel-description {
+      color: #aaa;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
 
+    .membership {
+      background: #202020;
+      border: 1px solid #333;
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 15px;
+    }
+
+    .membership-name {
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .membership-price {
+      color: #5ee68a;
+      font-weight: 800;
+      margin-top: 6px;
+    }
+
+    .loading {
+      opacity: .7;
+    }
+
+    @media (max-width: 800px) {
       header {
-
-        padding:
-          0 10px;
-
+        padding: 0 10px;
         gap: 8px;
-
       }
-
 
       .logo {
-
         font-size: 17px;
-
       }
-
 
       .free {
-
         display: none;
-
       }
-
 
       .search {
-
         display: none;
-
       }
-
 
       .main {
-
-        padding:
-          16px 12px;
-
+        padding: 16px 12px;
       }
-
 
       .grid {
-
-        grid-template-columns:
-          1fr;
-
+        grid-template-columns: 1fr;
       }
-
     }
-
   </style>
-
 </head>
 
-
 <body>
-
-
-  <!-- ========================= -->
-  <!-- HEADER -->
-  <!-- ========================= -->
 
   <header>
 
     <div class="logo">
-
-      <span>▶</span>
-
-      SillyTube
-
+      <span>▶</span>SillyTube
     </div>
-
 
     <div class="free">
-
       100% FREE
-
     </div>
-
 
     <div class="search">
-
       <input
         id="search"
-        type="text"
         placeholder="Szukaj filmów..."
+        autocomplete="off"
       >
-
     </div>
 
-
     <div id="account">
-
       <button
         class="btn gray"
         id="loginBtn"
       >
         Zaloguj się
       </button>
-
     </div>
 
   </header>
 
 
-  <!-- ========================= -->
-  <!-- MAIN -->
-  <!-- ========================= -->
-
   <main class="main">
-
 
     <section class="hero">
 
@@ -656,25 +426,14 @@
         SillyTube 🎬
       </h1>
 
-
       <p>
         Darmowa platforma wideo.
       </p>
 
-
       <p class="muted">
-
-        Subskrypcje dają twórcy
-        <b>
-          10 zł wirtualnego salda
-        </b>.
-
-        To saldo nie jest
-        prawdziwymi pieniędzmi
-        ani prawdziwym PSC.
-
+        Twórz filmy, zdobywaj subskrybentów
+        i buduj swój kanał.
       </p>
-
 
       <button
         class="btn red"
@@ -683,7 +442,6 @@
         ⬆ Upload filmu
       </button>
 
-
       <button
         class="btn gray"
         id="codeBtn"
@@ -691,16 +449,27 @@
         🎟 Kod
       </button>
 
+      <button
+        class="btn gray"
+        id="channelBtn"
+      >
+        👤 Mój kanał
+      </button>
+
     </section>
 
 
-    <!-- ========================= -->
-    <!-- VIDEO LIST -->
-    <!-- ========================= -->
+    <div id="channelPanel"></div>
+
+
+    <h2 class="section-title">
+      🎬 Najnowsze filmy
+    </h2>
+
 
     <div id="list">
 
-      <div class="empty">
+      <div class="empty loading">
 
         <div class="big">
           🎬
@@ -710,10 +479,6 @@
           Ładowanie filmów...
         </h2>
 
-        <p class="muted">
-          Chwilka...
-        </p>
-
       </div>
 
     </div>
@@ -722,7 +487,7 @@
 
 
   <!-- ========================= -->
-  <!-- AUTH MODAL -->
+  <!-- AUTH -->
   <!-- ========================= -->
 
   <div
@@ -736,34 +501,26 @@
         Zaloguj się
       </h2>
 
-
       <input
         id="authEmail"
         type="email"
         placeholder="E-mail"
-        autocomplete="email"
       >
-
 
       <input
         id="authPass"
         type="password"
         placeholder="Hasło"
-        autocomplete="current-password"
       >
-
 
       <div class="row">
 
         <button
           class="btn gray"
-          onclick="
-            closeModal('authModal')
-          "
+          onclick="closeModal('authModal')"
         >
           Anuluj
         </button>
-
 
         <button
           class="btn red"
@@ -774,12 +531,10 @@
 
       </div>
 
-
       <p
         class="muted"
         id="authSwitch"
       >
-
         Nie masz konta?
 
         <button
@@ -788,9 +543,7 @@
         >
           Załóż konto
         </button>
-
       </p>
-
 
       <div
         class="status"
@@ -803,7 +556,7 @@
 
 
   <!-- ========================= -->
-  <!-- UPLOAD MODAL -->
+  <!-- UPLOAD -->
   <!-- ========================= -->
 
   <div
@@ -814,20 +567,30 @@
     <div class="box">
 
       <h2>
-        Upload filmu
+        🎬 Dodaj film
       </h2>
 
+      <label class="muted">
+        Tytuł
+      </label>
 
       <input
         id="videoTitle"
         placeholder="Tytuł filmu"
       >
 
+      <label class="muted">
+        Opis
+      </label>
+
+      <textarea
+        id="videoDescription"
+        placeholder="Opisz swój film..."
+      ></textarea>
 
       <label class="muted">
         Film
       </label>
-
 
       <input
         id="videoFile"
@@ -835,40 +598,29 @@
         accept="video/*"
       >
 
-
       <label class="muted">
         Miniaturka JPG, PNG lub GIF
       </label>
 
-
       <input
         id="thumbFile"
         type="file"
-        accept="
-          image/jpeg,
-          image/png,
-          image/gif
-        "
+        accept="image/jpeg,image/png,image/gif"
       >
-
 
       <div
         class="status"
         id="uploadStatus"
       ></div>
 
-
       <div class="row">
 
         <button
           class="btn gray"
-          onclick="
-            closeModal('uploadModal')
-          "
+          onclick="closeModal('uploadModal')"
         >
           Anuluj
         </button>
-
 
         <button
           class="btn red"
@@ -885,7 +637,7 @@
 
 
   <!-- ========================= -->
-  <!-- CODE MODAL -->
+  <!-- CODE -->
   <!-- ========================= -->
 
   <div
@@ -896,27 +648,22 @@
     <div class="box">
 
       <h2>
-        Wpisz kod
+        🎟 Kod
       </h2>
-
 
       <input
         id="promoCode"
         placeholder="Np. SILLY10"
       >
 
-
       <div class="row">
 
         <button
           class="btn gray"
-          onclick="
-            closeModal('codeModal')
-          "
+          onclick="closeModal('codeModal')"
         >
           Anuluj
         </button>
-
 
         <button
           class="btn red"
@@ -926,7 +673,6 @@
         </button>
 
       </div>
-
 
       <div
         class="status"
@@ -939,169 +685,236 @@
 
 
   <!-- ========================= -->
-  <!-- JAVASCRIPT -->
+  <!-- CHANNEL -->
   <!-- ========================= -->
+
+  <div
+    class="modal"
+    id="channelModal"
+  >
+
+    <div class="box">
+
+      <h2>
+        👤 Mój kanał
+      </h2>
+
+      <label class="muted">
+        Nazwa kanału
+      </label>
+
+      <input
+        id="channelName"
+        placeholder="Nazwa kanału"
+      >
+
+      <label class="muted">
+        Opis kanału
+      </label>
+
+      <textarea
+        id="channelDescription"
+        placeholder="Napisz coś o swoim kanale..."
+      ></textarea>
+
+      <h3>
+        ⭐ Membership
+      </h3>
+
+      <label class="muted">
+        Nazwa membershipu
+      </label>
+
+      <input
+        id="membershipName"
+        placeholder="Np. Super Member"
+      >
+
+      <label class="muted">
+        Opis membershipu
+      </label>
+
+      <textarea
+        id="membershipDescription"
+        placeholder="Co otrzyma członek?"
+      ></textarea>
+
+      <label class="muted">
+        Cena wirtualna
+      </label>
+
+      <input
+        id="membershipPrice"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="100"
+      >
+
+      <div
+        class="status"
+        id="channelStatus"
+      ></div>
+
+      <div class="row">
+
+        <button
+          class="btn gray"
+          onclick="closeModal('channelModal')"
+        >
+          Anuluj
+        </button>
+
+        <button
+          class="btn red"
+          id="saveChannel"
+        >
+          Zapisz kanał
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
 
   <script>
 
-
     let currentUser = null;
-
     let authMode = "login";
+    let myChannel = null;
 
 
     /* ========================= */
-    /* HELPER */
+    /* HELPERS */
     /* ========================= */
-
 
     function $(id) {
-
       return document.getElementById(id);
-
     }
 
 
     function openModal(id) {
-
-      $(id)
-        .classList
-        .add("open");
-
+      $(id).classList.add("open");
     }
 
 
     function closeModal(id) {
-
-      $(id)
-        .classList
-        .remove("open");
-
+      $(id).classList.remove("open");
     }
 
 
-    function msg(
-      element,
-      text,
-      success = false
-    ) {
+    function msg(element, text, success = false) {
 
-      element.style.display =
-        "block";
+      element.style.display = "block";
 
-
-      element.textContent =
-        text;
-
+      element.textContent = text;
 
       element.style.color =
         success
           ? "#5ee68a"
           : "#ff8a8a";
+    }
+
+
+    function esc(value) {
+
+      return String(value ?? "")
+        .replace(
+          /[&<>"']/g,
+          function(character) {
+
+            const map = {
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#039;"
+            };
+
+            return map[character];
+
+          }
+        );
+
+    }
+
+
+    function visitorId() {
+
+      let id =
+        localStorage.getItem(
+          "sillytube_visitor"
+        );
+
+      if (!id) {
+
+        id =
+          crypto.randomUUID();
+
+        localStorage.setItem(
+          "sillytube_visitor",
+          id
+        );
+
+      }
+
+      return id;
 
     }
 
 
     /* ========================= */
-    /* INITIALIZATION */
+    /* INIT */
     /* ========================= */
-
 
     async function init() {
 
       console.log(
-        "SillyTube: start"
+        "SillyTube started"
       );
 
 
-      try {
-
-        const {
-          data,
-          error
-        } =
-          await sb.auth.getSession();
+      const session =
+        await sb.auth.getSession();
 
 
-        if (error) {
+      currentUser =
+        session.data?.session?.user ||
+        null;
 
-          console.error(
-            "Session error:",
-            error
+
+      renderAccount();
+
+
+      await loadVideos();
+
+
+      sb.auth.onAuthStateChange(
+        async function(
+          event,
+          sessionData
+        ) {
+
+          console.log(
+            "AUTH:",
+            event
           );
 
+
+          currentUser =
+            sessionData?.user ||
+            null;
+
+
+          renderAccount();
+
+
+          await loadVideos();
+
         }
-
-
-        currentUser =
-          data?.session?.user || null;
-
-
-        renderAccount();
-
-
-        /*
-          WAŻNE:
-          ŁADUJEMY FILMY OD RAZU
-        */
-
-        await loadVideos();
-
-
-        sb.auth.onAuthStateChange(
-          async function (
-            event,
-            session
-          ) {
-
-            console.log(
-              "Auth event:",
-              event
-            );
-
-
-            currentUser =
-              session?.user || null;
-
-
-            renderAccount();
-
-
-            await loadVideos();
-
-          }
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          "INIT ERROR:",
-          error
-        );
-
-
-        $("list").innerHTML = `
-
-          <div class="empty">
-
-            <div class="big">
-              ⚠️
-            </div>
-
-            <h2>
-              Nie udało się uruchomić SillyTube
-            </h2>
-
-            <p class="muted">
-              ${esc(error.message)}
-            </p>
-
-          </div>
-
-        `;
-
-      }
+      );
 
     }
 
@@ -1109,7 +922,6 @@
     /* ========================= */
     /* ACCOUNT */
     /* ========================= */
-
 
     function renderAccount() {
 
@@ -1130,10 +942,8 @@
 
         `;
 
-
         $("loginBtn").onclick =
           openAuth;
-
 
         return;
 
@@ -1145,12 +955,11 @@
         <div class="userbox">
 
           <span
-            id="bal"
             class="balance"
+            id="bal"
           >
             🪙 ...
           </span>
-
 
           <button
             class="btn gray"
@@ -1165,21 +974,9 @@
 
 
       $("logout").onclick =
-        async function () {
+        async function() {
 
-          const {
-            error
-          } =
-            await sb.auth.signOut();
-
-
-          if (error) {
-
-            alert(
-              error.message
-            );
-
-          }
+          await sb.auth.signOut();
 
         };
 
@@ -1199,12 +996,11 @@
 
 
     /* ========================= */
-    /* LOGIN / REGISTER */
+    /* AUTH */
     /* ========================= */
 
-
     $("authAction").onclick =
-      async function () {
+      async function() {
 
         const email =
           $("authEmail")
@@ -1228,7 +1024,7 @@
 
           msg(
             status,
-            "Podaj e-mail i hasło (minimum 6 znaków)."
+            "Podaj poprawny e-mail i hasło minimum 6 znaków."
           );
 
           return;
@@ -1236,16 +1032,11 @@
         }
 
 
+        let result;
+
+
         $("authAction")
           .disabled = true;
-
-
-        $("authAction")
-          .textContent =
-          "Ładowanie...";
-
-
-        let result;
 
 
         if (
@@ -1256,11 +1047,8 @@
             await sb.auth
               .signInWithPassword({
 
-                email:
-                  email,
-
-                password:
-                  password
+                email,
+                password
 
               });
 
@@ -1270,11 +1058,8 @@
             await sb.auth
               .signUp({
 
-                email:
-                  email,
-
-                password:
-                  password,
+                email,
+                password,
 
                 options: {
 
@@ -1290,13 +1075,6 @@
 
         $("authAction")
           .disabled = false;
-
-
-        $("authAction")
-          .textContent =
-          authMode === "login"
-            ? "Zaloguj"
-            : "Zarejestruj";
 
 
         if (result.error) {
@@ -1315,7 +1093,6 @@
           authMode === "signup"
         ) {
 
-
           if (
             result.data?.session
           ) {
@@ -1328,73 +1105,54 @@
 
             renderAccount();
 
-
             closeModal(
               "authModal"
             );
 
 
-            await loadVideos();
+            await ensureProfile();
+
+            await ensureChannel();
 
           } else {
 
             msg(
               status,
-
-              "Konto utworzone. Sprawdź e-mail i kliknij link potwierdzający.",
-
+              "Konto utworzone. Sprawdź e-mail i potwierdź konto.",
               true
             );
 
           }
 
-
         } else {
 
-
-          if (
-            result.data?.session
-          ) {
-
-            currentUser =
-              result.data
-                .session
-                .user;
+          currentUser =
+            result.data?.user ||
+            null;
 
 
-            renderAccount();
+          renderAccount();
 
 
-            closeModal(
-              "authModal"
-            );
+          closeModal(
+            "authModal"
+          );
 
 
-            await loadVideos();
+          await ensureProfile();
 
-          } else {
-
-            msg(
-              status,
-
-              "Logowanie nie utworzyło sesji."
-
-            );
-
-          }
+          await ensureChannel();
 
         }
+
+
+        await loadVideos();
 
       };
 
 
-    /* ========================= */
-    /* SWITCH AUTH */
-    /* ========================= */
-
-
     $("switchAuth").onclick =
-      function () {
+      function() {
 
         authMode =
           authMode === "login"
@@ -1423,107 +1181,180 @@
             ? "Nie masz konta? "
             : "Masz już konto? ";
 
-
-        $("authStatus")
-          .style
-          .display =
-          "none";
-
       };
 
 
     /* ========================= */
-    /* UPLOAD BUTTON */
+    /* PROFILE */
     /* ========================= */
 
+    async function ensureProfile() {
 
-    $("uploadBtn").onclick =
-      function () {
-
-        if (!currentUser) {
-
-          openAuth();
-
-          return;
-
-        }
+      if (!currentUser) {
+        return;
+      }
 
 
-        openModal(
-          "uploadModal"
+      const existing =
+        await sb
+          .from("profiles")
+          .select("id")
+          .eq(
+            "id",
+            currentUser.id
+          )
+          .maybeSingle();
+
+
+      if (
+        existing.data
+      ) {
+
+        return;
+
+      }
+
+
+      const username =
+        (
+          currentUser.email
+            ?.split("@")[0] ||
+          "user"
+        ) +
+        "-" +
+        Math.floor(
+          Math.random() * 10000
         );
 
-      };
+
+      const result =
+        await sb
+          .from("profiles")
+          .insert({
+
+            id:
+              currentUser.id,
+
+            username:
+              username,
+
+            psc_balance:
+              10000
+
+          });
 
 
-    /* ========================= */
-    /* CODE BUTTON */
-    /* ========================= */
+      if (result.error) {
 
-
-    $("codeBtn").onclick =
-      function () {
-
-        if (!currentUser) {
-
-          openAuth();
-
-          return;
-
-        }
-
-
-        openModal(
-          "codeModal"
+        console.error(
+          "PROFILE CREATE:",
+          result.error
         );
 
-      };
+      }
+
+    }
+
+
+    /* ========================= */
+    /* CHANNEL */
+    /* ========================= */
+
+    async function ensureChannel() {
+
+      if (!currentUser) {
+        return null;
+      }
+
+
+      let result =
+        await sb
+          .from("channels")
+          .select("*")
+          .eq(
+            "owner_id",
+            currentUser.id
+          )
+          .limit(1)
+          .maybeSingle();
+
+
+      if (result.data) {
+
+        myChannel =
+          result.data;
+
+        return result.data;
+
+      }
+
+
+      result =
+        await sb
+          .from("channels")
+          .insert({
+
+            owner_id:
+              currentUser.id,
+
+            name:
+              "Mój kanał",
+
+            description:
+              "Witaj na moim kanale!"
+
+          })
+          .select()
+          .single();
+
+
+      if (result.error) {
+
+        console.error(
+          "CHANNEL CREATE:",
+          result.error
+        );
+
+        return null;
+
+      }
+
+
+      myChannel =
+        result.data;
+
+
+      return result.data;
+
+    }
 
 
     /* ========================= */
     /* BALANCE */
     /* ========================= */
 
-
     async function loadBalance() {
 
       if (!currentUser) {
-
         return;
-
       }
 
 
-      const {
-        data,
-        error
-      } =
+      const result =
         await sb
           .from("profiles")
           .select(
-            "psc_balance,username"
+            "psc_balance"
           )
           .eq(
             "id",
             currentUser.id
           )
-          .single();
-
-
-      if (error) {
-
-        console.error(
-          "Profile error:",
-          error
-        );
-
-        return;
-
-      }
+          .maybeSingle();
 
 
       if (
-        data &&
+        result.data &&
         $("bal")
       ) {
 
@@ -1531,7 +1362,8 @@
           .textContent =
           "🪙 " +
           Number(
-            data.psc_balance || 0
+            result.data.psc_balance ||
+            0
           ).toFixed(2) +
           " zł";
 
@@ -1541,93 +1373,52 @@
 
 
     /* ========================= */
-    /* PROMO CODE */
+    /* UPLOAD */
     /* ========================= */
 
+    $("uploadBtn").onclick =
+      async function() {
 
-    $("redeem").onclick =
-      async function () {
+        if (!currentUser) {
 
-        const code =
-          $("promoCode")
-            .value
-            .trim();
-
-
-        const status =
-          $("codeStatus");
-
-
-        if (!code) {
-
-          msg(
-            status,
-            "Wpisz kod."
-          );
+          openAuth();
 
           return;
 
         }
 
 
-        const {
-          data,
-          error
-        } =
-          await sb.rpc(
-            "redeem_promo",
-            {
-              p_code:
-                code
-            }
-          );
+        await ensureProfile();
 
+        await ensureChannel();
 
-        if (error) {
-
-          msg(
-            status,
-            error.message
-          );
-
-          return;
-
-        }
-
-
-        msg(
-
-          status,
-
-          "Dodano " +
-            Number(data)
-              .toFixed(2) +
-            " zł do wirtualnego salda.",
-
-          true
-
+        openModal(
+          "uploadModal"
         );
-
-
-        $("promoCode")
-          .value = "";
-
-
-        loadBalance();
 
       };
 
 
-    /* ========================= */
-    /* UPLOAD */
-    /* ========================= */
-
-
     $("publish").onclick =
-      async function () {
+      async function() {
+
+        if (!currentUser) {
+
+          openAuth();
+
+          return;
+
+        }
+
 
         const title =
           $("videoTitle")
+            .value
+            .trim();
+
+
+        const description =
+          $("videoDescription")
             .value
             .trim();
 
@@ -1670,7 +1461,7 @@
 
           msg(
             status,
-            "Film jest większy niż 500 MB."
+            "Film może mieć maksymalnie 500 MB."
           );
 
           return;
@@ -1680,14 +1471,13 @@
 
         try {
 
-
           msg(
             status,
             "Wysyłanie filmu..."
           );
 
 
-          const safeName =
+          const safe =
             (
               videoFile.name ||
               "video"
@@ -1702,12 +1492,8 @@
             "/" +
             Date.now() +
             "-" +
-            safeName;
+            safe;
 
-
-          /*
-            UPLOAD VIDEO
-          */
 
           let result =
             await sb.storage
@@ -1736,10 +1522,6 @@
           }
 
 
-          /*
-            UPLOAD THUMBNAIL
-          */
-
           let thumbnailPath =
             null;
 
@@ -1748,8 +1530,7 @@
             thumbnailFile
           ) {
 
-
-            const safeThumb =
+            const thumbName =
               (
                 thumbnailFile.name ||
                 "thumbnail"
@@ -1764,7 +1545,7 @@
               "/" +
               Date.now() +
               "-" +
-              safeThumb;
+              thumbName;
 
 
             result =
@@ -1803,36 +1584,11 @@
           }
 
 
-          /*
-            FIND CHANNEL
-          */
-
           const channel =
-            await sb
-              .from("channels")
-              .select("id")
-              .eq(
-                "owner_id",
-                currentUser.id
-              )
-              .limit(1)
-              .maybeSingle();
+            await ensureChannel();
 
 
-          if (
-            channel.error
-          ) {
-
-            throw new Error(
-              channel.error.message
-            );
-
-          }
-
-
-          if (
-            !channel.data
-          ) {
+          if (!channel) {
 
             await sb.storage
               .from("videos")
@@ -1841,30 +1597,12 @@
               ]);
 
 
-            if (
-              thumbnailPath
-            ) {
-
-              await sb.storage
-                .from("thumbnails")
-                .remove([
-                  thumbnailPath
-                ]);
-
-            }
-
-
             throw new Error(
-              "Nie znaleziono kanału."
+              "Nie znaleziono kanału. Zaloguj się ponownie."
             );
 
           }
 
-
-          /*
-            SAVE VIDEO
-            TO DATABASE
-          */
 
           result =
             await sb
@@ -1875,16 +1613,25 @@
                   currentUser.id,
 
                 channel_id:
-                  channel.data.id,
+                  channel.id,
 
                 title:
                   title,
+
+                description:
+                  description,
 
                 video_path:
                   videoPath,
 
                 thumbnail_path:
-                  thumbnailPath
+                  thumbnailPath,
+
+                views:
+                  0,
+
+                likes_count:
+                  0
 
               });
 
@@ -1918,10 +1665,6 @@
           }
 
 
-          /*
-            SUCCESS
-          */
-
           msg(
             status,
             "Film opublikowany!",
@@ -1930,6 +1673,10 @@
 
 
           $("videoTitle")
+            .value = "";
+
+
+          $("videoDescription")
             .value = "";
 
 
@@ -1942,7 +1689,7 @@
 
 
           setTimeout(
-            async function () {
+            async function() {
 
               closeModal(
                 "uploadModal"
@@ -1959,7 +1706,7 @@
         } catch (error) {
 
           console.error(
-            "UPLOAD ERROR:",
+            "UPLOAD:",
             error
           );
 
@@ -1978,18 +1725,12 @@
     /* LOAD VIDEOS */
     /* ========================= */
 
-
     async function loadVideos() {
 
       const search =
         $("search")
           .value
           .trim();
-
-
-      console.log(
-        "Loading videos..."
-      );
 
 
       let query =
@@ -2011,8 +1752,8 @@
           query.ilike(
             "title",
             "%" +
-              search +
-              "%"
+            search +
+            "%"
           );
 
       }
@@ -2041,10 +1782,6 @@
       );
 
 
-      /*
-        DATABASE ERROR
-      */
-
       if (error) {
 
         list.innerHTML = `
@@ -2056,13 +1793,11 @@
             </div>
 
             <h2>
-              Błąd ładowania filmów
+              Błąd
             </h2>
 
             <p class="muted">
-              ${esc(
-                error.message
-              )}
+              ${esc(error.message)}
             </p>
 
           </div>
@@ -2073,10 +1808,6 @@
 
       }
 
-
-      /*
-        NO VIDEOS
-      */
 
       if (
         !data ||
@@ -2092,14 +1823,11 @@
             </div>
 
             <h2>
-              Nie ma jeszcze żadnych filmów
+              Nie ma jeszcze filmów
             </h2>
 
             <p class="muted">
-
-              Zaloguj się
-              i wrzuć pierwszy film.
-
+              Dodaj pierwszy film!
             </p>
 
           </div>
@@ -2111,116 +1839,207 @@
       }
 
 
-      /*
-        VIDEO GRID
-      */
+      const ids =
+        data.map(
+          video => video.id
+        );
+
+
+      let likedIds =
+        new Set();
+
+
+      const likes =
+        await sb
+          .from("video_likes")
+          .select(
+            "video_id"
+          )
+          .in(
+            "video_id",
+            ids
+          )
+          .eq(
+            "visitor_id",
+            visitorId()
+          );
+
+
+      if (likes.data) {
+
+        likedIds =
+          new Set(
+            likes.data.map(
+              item =>
+                item.video_id
+            )
+          );
+
+      }
+
 
       list.innerHTML = `
 
         <div class="grid">
 
-          ${data
-            .map(
-              function (videoData) {
+          ${data.map(
+            function(videoData) {
+
+              const videoUrl =
+                sb.storage
+                  .from("videos")
+                  .getPublicUrl(
+                    videoData.video_path
+                  )
+                  .data
+                  .publicUrl;
 
 
-                /*
-                  VIDEO URL
-                */
+              let thumbUrl = "";
 
-                const videoUrl =
+
+              if (
+                videoData.thumbnail_path
+              ) {
+
+                thumbUrl =
                   sb.storage
-                    .from("videos")
+                    .from("thumbnails")
                     .getPublicUrl(
-                      videoData.video_path
+                      videoData.thumbnail_path
                     )
                     .data
                     .publicUrl;
 
-
-                /*
-                  THUMBNAIL URL
-                */
-
-                let thumbnailUrl =
-                  "";
+              }
 
 
-                if (
-                  videoData.thumbnail_path
-                ) {
-
-                  thumbnailUrl =
-                    sb.storage
-                      .from(
-                        "thumbnails"
-                      )
-                      .getPublicUrl(
-                        videoData.thumbnail_path
-                      )
-                      .data
-                      .publicUrl;
-
-                }
+              const liked =
+                likedIds.has(
+                  videoData.id
+                );
 
 
-                /*
-                  CARD
-                */
+              return `
 
-                return `
+                <article
+                  class="card"
+                >
 
-                  <article
-                    class="card"
+                  <video
+                    class="thumb"
+                    src="${esc(videoUrl)}"
+
+                    ${
+                      thumbUrl
+                        ? `poster="${esc(thumbUrl)}"`
+                        : ""
+                    }
+
+                    controls
+                    preload="metadata"
+
+                    onclick="countView('${videoData.id}')"
+
+                  ></video>
+
+
+                  <div
+                    class="info"
                   >
 
-                    <video
-                      class="thumb"
-                      src="${videoUrl}"
+                    <div
+                      class="title"
+                    >
+                      ${esc(
+                        videoData.title
+                      )}
+                    </div>
 
-                      ${
-                        thumbnailUrl
-                          ? `
-                            poster="${thumbnailUrl}"
-                          `
-                          : ""
-                      }
 
-                      controls
-
-                      preload="metadata"
-
-                    ></video>
+                    ${
+                      videoData.description
+                        ? `
+                          <div
+                            class="description"
+                          >
+                            ${esc(
+                              videoData.description
+                            )}
+                          </div>
+                        `
+                        : ""
+                    }
 
 
                     <div
-                      class="info"
+                      class="meta"
                     >
 
-                      <div
-                        class="title"
-                      >
-                        ${esc(
-                          videoData.title
-                        )}
-                      </div>
+                      👁️
+                      ${Number(
+                        videoData.views ||
+                        0
+                      )}
 
+                      &nbsp; · &nbsp;
 
-                      <div
-                        class="meta"
-                      >
-                        SillyTube
-                      </div>
+                      👍
+                      ${Number(
+                        videoData.likes_count ||
+                        0
+                      )}
 
                     </div>
 
-                  </article>
 
-                `;
+                    <div
+                      class="actions"
+                    >
 
-              }
-            )
-            .join("")}
+                      <button
+                        class="
+                          action-btn
+                          ${liked ? "active" : ""}
+                        "
+
+                        onclick="
+                          likeVideo(
+                            '${videoData.id}'
+                          )
+                        "
+                      >
+
+                        ${liked ? "❤️" : "👍"}
+                        Lubię to
+
+                      </button>
+
+
+                      <button
+                        class="action-btn"
+
+                        onclick="
+                          subscribeChannel(
+                            '${videoData.channel_id}'
+                          )
+                        "
+                      >
+
+                        🔔 Subskrybuj
+
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                </article>
+
+              `;
+
+            }
+          ).join("")}
 
         </div>
 
@@ -2230,60 +2049,1032 @@
 
 
     /* ========================= */
-    /* ESCAPE HTML */
+    /* LIKE */
     /* ========================= */
 
+    async function likeVideo(
+      videoId
+    ) {
 
-    function esc(value) {
-
-      return String(value)
-
-        .replace(
-          /[&<>"']/g,
-
-          function (
-            character
-          ) {
-
-            const replacements = {
-
-              "&":
-                "&amp;",
-
-              "<":
-                "&lt;",
-
-              ">":
-                "&gt;",
-
-              '"':
-                "&quot;",
-
-              "'":
-                "&#039;"
-
-            };
+      const id =
+        visitorId();
 
 
-            return replacements[
-              character
-            ];
+      const existing =
+        await sb
+          .from("video_likes")
+          .select("id")
+          .eq(
+            "video_id",
+            videoId
+          )
+          .eq(
+            "visitor_id",
+            id
+          )
+          .maybeSingle();
 
-          }
-        );
+
+      if (
+        existing.data
+      ) {
+
+        await sb
+          .from("video_likes")
+          .delete()
+          .eq(
+            "id",
+            existing.data.id
+          );
+
+      } else {
+
+        await sb
+          .from("video_likes")
+          .insert({
+
+            video_id:
+              videoId,
+
+            visitor_id:
+              id
+
+          });
+
+      }
+
+
+      await updateLikeCount(
+        videoId
+      );
+
+
+      await loadVideos();
 
     }
+
+
+    async function updateLikeCount(
+      videoId
+    ) {
+
+      const result =
+        await sb
+          .from("video_likes")
+          .select(
+            "id",
+            {
+              count:
+                "exact",
+              head:
+                true
+            }
+          )
+          .eq(
+            "video_id",
+            videoId
+          );
+
+
+      if (
+        result.count !== null
+      ) {
+
+        await sb
+          .from("videos")
+          .update({
+
+            likes_count:
+              result.count
+
+          })
+          .eq(
+            "id",
+            videoId
+          );
+
+      }
+
+    }
+
+
+    /* ========================= */
+    /* VIEWS */
+    /* ========================= */
+
+    async function countView(
+      videoId
+    ) {
+
+      const key =
+        "viewed_" +
+        videoId;
+
+
+      if (
+        sessionStorage.getItem(
+          key
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      sessionStorage.setItem(
+        key,
+        "1"
+      );
+
+
+      const result =
+        await sb
+          .from("videos")
+          .select("views")
+          .eq(
+            "id",
+            videoId
+          )
+          .single();
+
+
+      if (
+        result.data
+      ) {
+
+        await sb
+          .from("videos")
+          .update({
+
+            views:
+              Number(
+                result.data.views ||
+                0
+              ) + 1
+
+          })
+          .eq(
+            "id",
+            videoId
+          );
+
+      }
+
+    }
+
+
+    /* ========================= */
+    /* SUBSCRIBE */
+    /* ========================= */
+
+    async function subscribeChannel(
+      channelId
+    ) {
+
+      if (!currentUser) {
+
+        openAuth();
+
+        return;
+
+      }
+
+
+      if (
+        channelId ===
+        myChannel?.id
+      ) {
+
+        alert(
+          "Nie możesz subskrybować własnego kanału."
+        );
+
+        return;
+
+      }
+
+
+      const existing =
+        await sb
+          .from("subscriptions")
+          .select("id")
+          .eq(
+            "subscriber_id",
+            currentUser.id
+          )
+          .eq(
+            "channel_id",
+            channelId
+          )
+          .maybeSingle();
+
+
+      if (
+        existing.data
+      ) {
+
+        await sb
+          .from("subscriptions")
+          .delete()
+          .eq(
+            "id",
+            existing.data.id
+          );
+
+
+        alert(
+          "Subskrypcja anulowana."
+        );
+
+      } else {
+
+        const result =
+          await sb
+            .from("subscriptions")
+            .insert({
+
+              subscriber_id:
+                currentUser.id,
+
+              channel_id:
+                channelId
+
+            });
+
+
+        if (result.error) {
+
+          alert(
+            result.error.message
+          );
+
+          return;
+
+        }
+
+
+        alert(
+          "Subskrypcja dodana!"
+        );
+
+      }
+
+    }
+
+
+    /* ========================= */
+    /* CHANNEL PANEL */
+    /* ========================= */
+
+    $("channelBtn").onclick =
+      async function() {
+
+        if (!currentUser) {
+
+          openAuth();
+
+          return;
+
+        }
+
+
+        const channel =
+          await ensureChannel();
+
+
+        if (!channel) {
+
+          alert(
+            "Nie udało się znaleźć kanału."
+          );
+
+          return;
+
+        }
+
+
+        $("channelName")
+          .value =
+          channel.name ||
+          "Mój kanał";
+
+
+        $("channelDescription")
+          .value =
+          channel.description ||
+          "";
+
+
+        const membership =
+          await sb
+            .from("channel_memberships")
+            .select("*")
+            .eq(
+              "channel_id",
+              channel.id
+            )
+            .limit(1)
+            .maybeSingle();
+
+
+        if (
+          membership.data
+        ) {
+
+          $("membershipName")
+            .value =
+            membership.data.name ||
+            "";
+
+
+          $("membershipDescription")
+            .value =
+            membership.data.description ||
+            "";
+
+
+          $("membershipPrice")
+            .value =
+            membership.data.price ||
+            0;
+
+        } else {
+
+          $("membershipName")
+            .value =
+            "Super Member";
+
+
+          $("membershipDescription")
+            .value =
+            "Wspieraj mój kanał.";
+
+
+          $("membershipPrice")
+            .value =
+            100;
+
+        }
+
+
+        openModal(
+          "channelModal"
+        );
+
+      };
+
+
+    /* ========================= */
+    /* SAVE CHANNEL */
+    /* ========================= */
+
+    $("saveChannel").onclick =
+      async function() {
+
+        if (!currentUser) {
+
+          return;
+
+        }
+
+
+        const status =
+          $("channelStatus");
+
+
+        const channel =
+          await ensureChannel();
+
+
+        if (!channel) {
+
+          msg(
+            status,
+            "Nie znaleziono kanału."
+          );
+
+          return;
+
+        }
+
+
+        const name =
+          $("channelName")
+            .value
+            .trim();
+
+
+        const description =
+          $("channelDescription")
+            .value
+            .trim();
+
+
+        const membershipName =
+          $("membershipName")
+            .value
+            .trim();
+
+
+        const membershipDescription =
+          $("membershipDescription")
+            .value
+            .trim();
+
+
+        const membershipPrice =
+          Number(
+            $("membershipPrice")
+              .value ||
+            0
+          );
+
+
+        if (!name) {
+
+          msg(
+            status,
+            "Podaj nazwę kanału."
+          );
+
+          return;
+
+        }
+
+
+        let result =
+          await sb
+            .from("channels")
+            .update({
+
+              name:
+                name,
+
+              description:
+                description
+
+            })
+            .eq(
+              "id",
+              channel.id
+            );
+
+
+        if (result.error) {
+
+          msg(
+            status,
+            result.error.message
+          );
+
+          return;
+
+        }
+
+
+        const existing =
+          await sb
+            .from("channel_memberships")
+            .select("id")
+            .eq(
+              "channel_id",
+              channel.id
+            )
+            .limit(1)
+            .maybeSingle();
+
+
+        if (
+          existing.data
+        ) {
+
+          result =
+            await sb
+              .from("channel_memberships")
+              .update({
+
+                name:
+                  membershipName,
+
+                description:
+                  membershipDescription,
+
+                price:
+                  membershipPrice
+
+              })
+              .eq(
+                "id",
+                existing.data.id
+              );
+
+        } else {
+
+          result =
+            await sb
+              .from("channel_memberships")
+              .insert({
+
+                channel_id:
+                  channel.id,
+
+                name:
+                  membershipName ||
+                  "Super Member",
+
+                description:
+                  membershipDescription,
+
+                price:
+                  membershipPrice
+
+              });
+
+        }
+
+
+        if (result.error) {
+
+          msg(
+            status,
+            result.error.message
+          );
+
+          return;
+
+        }
+
+
+        msg(
+          status,
+          "Kanał zapisany!",
+          true
+        );
+
+
+        myChannel =
+          {
+            ...channel,
+            name,
+            description
+          };
+
+
+        await renderChannel();
+
+
+        setTimeout(
+          function() {
+
+            closeModal(
+              "channelModal"
+            );
+
+          },
+          600
+        );
+
+      };
+
+
+    /* ========================= */
+    /* PUBLIC CHANNEL PANEL */
+    /* ========================= */
+
+    async function renderChannel() {
+
+      if (!currentUser) {
+
+        $("channelPanel")
+          .innerHTML = "";
+
+        return;
+
+      }
+
+
+      const channel =
+        await ensureChannel();
+
+
+      if (!channel) {
+
+        return;
+
+      }
+
+
+      const subscribers =
+        await sb
+          .from("subscriptions")
+          .select(
+            "id",
+            {
+              count:
+                "exact",
+              head:
+                true
+            }
+          )
+          .eq(
+            "channel_id",
+            channel.id
+          );
+
+
+      const membership =
+        await sb
+          .from("channel_memberships")
+          .select("*")
+          .eq(
+            "channel_id",
+            channel.id
+          )
+          .limit(1)
+          .maybeSingle();
+
+
+      $("channelPanel")
+        .innerHTML = `
+
+          <section
+            class="channel-panel"
+          >
+
+            <div
+              class="channel-name"
+            >
+              👤 ${esc(
+                channel.name
+              )}
+            </div>
+
+
+            <div
+              class="meta"
+            >
+              🔔
+              ${
+                subscribers.count ||
+                0
+              }
+              subskrybentów
+            </div>
+
+
+            <div
+              class="channel-description"
+            >
+              ${esc(
+                channel.description ||
+                "Brak opisu kanału."
+              )}
+            </div>
+
+
+            ${
+              membership.data
+                ? `
+
+                  <div
+                    class="membership"
+                  >
+
+                    <div
+                      class="membership-name"
+                    >
+                      ⭐ ${esc(
+                        membership.data.name
+                      )}
+                    </div>
+
+
+                    <div
+                      class="membership-description"
+                    >
+                      ${esc(
+                        membership.data.description ||
+                        ""
+                      )}
+                    </div>
+
+
+                    <div
+                      class="membership-price"
+                    >
+                      🪙 ${
+                        Number(
+                          membership.data.price ||
+                          0
+                        ).toFixed(2)
+                      }
+                      zł / miesiąc
+                    </div>
+
+
+                    <button
+                      class="btn red"
+                      style="margin-top:10px"
+                      onclick="
+                        joinMembership(
+                          '${membership.data.id}'
+                        )
+                      "
+                    >
+                      ⭐ Dołącz
+                    </button>
+
+                  </div>
+
+                `
+                : ""
+            }
+
+          </section>
+
+        `;
+
+    }
+
+
+    /* ========================= */
+    /* JOIN MEMBERSHIP */
+    /* ========================= */
+
+    async function joinMembership(
+      membershipId
+    ) {
+
+      if (!currentUser) {
+
+        openAuth();
+
+        return;
+
+      }
+
+
+      const membership =
+        await sb
+          .from("channel_memberships")
+          .select("*")
+          .eq(
+            "id",
+            membershipId
+          )
+          .single();
+
+
+      if (
+        membership.error ||
+        !membership.data
+      ) {
+
+        alert(
+          "Nie znaleziono membershipu."
+        );
+
+        return;
+
+      }
+
+
+      const price =
+        Number(
+          membership.data.price ||
+          0
+        );
+
+
+      const profile =
+        await sb
+          .from("profiles")
+          .select(
+            "psc_balance"
+          )
+          .eq(
+            "id",
+            currentUser.id
+          )
+          .single();
+
+
+      if (
+        profile.error ||
+        !profile.data
+      ) {
+
+        alert(
+          "Nie znaleziono profilu."
+        );
+
+        return;
+
+      }
+
+
+      const balance =
+        Number(
+          profile.data.psc_balance ||
+          0
+        );
+
+
+      if (
+        balance < price
+      ) {
+
+        alert(
+          "Masz za mało wirtualnego salda."
+        );
+
+        return;
+
+      }
+
+
+      const already =
+        await sb
+          .from("channel_members")
+          .select("id")
+          .eq(
+            "membership_id",
+            membershipId
+          )
+          .eq(
+            "user_id",
+            currentUser.id
+          )
+          .maybeSingle();
+
+
+      if (
+        already.data
+      ) {
+
+        alert(
+          "Już jesteś członkiem."
+        );
+
+        return;
+
+      }
+
+
+      const result =
+        await sb
+          .from("channel_members")
+          .insert({
+
+            membership_id:
+              membershipId,
+
+            user_id:
+              currentUser.id
+
+          });
+
+
+      if (result.error) {
+
+        alert(
+          result.error.message
+        );
+
+        return;
+
+      }
+
+
+      /*
+        Aktualnie membership
+        zapisuje członkostwo.
+        Saldo jest wirtualne.
+      */
+
+      await sb
+        .from("profiles")
+        .update({
+
+          psc_balance:
+            balance - price
+
+        })
+        .eq(
+          "id",
+          currentUser.id
+        );
+
+
+      alert(
+        "Dołączyłeś do membershipu!"
+      );
+
+
+      await loadBalance();
+
+    }
+
+
+    /* ========================= */
+    /* PROMO */
+    /* ========================= */
+
+    $("codeBtn").onclick =
+      function() {
+
+        if (!currentUser) {
+
+          openAuth();
+
+          return;
+
+        }
+
+
+        openModal(
+          "codeModal"
+        );
+
+      };
+
+
+    $("redeem").onclick =
+      async function() {
+
+        const code =
+          $("promoCode")
+            .value
+            .trim();
+
+
+        const status =
+          $("codeStatus");
+
+
+        if (!code) {
+
+          msg(
+            status,
+            "Wpisz kod."
+          );
+
+          return;
+
+        }
+
+
+        const result =
+          await sb.rpc(
+            "redeem_promo",
+            {
+              p_code:
+                code
+            }
+          );
+
+
+        if (result.error) {
+
+          msg(
+            status,
+            result.error.message
+          );
+
+          return;
+
+        }
+
+
+        msg(
+          status,
+          "Dodano " +
+          Number(
+            result.data
+          ).toFixed(2) +
+          " zł.",
+          true
+        );
+
+
+        $("promoCode")
+          .value = "";
+
+
+        await loadBalance();
+
+      };
 
 
     /* ========================= */
     /* SEARCH */
     /* ========================= */
 
-
     $("search")
       .addEventListener(
         "input",
-        function () {
+        function() {
 
           loadVideos();
 
@@ -2297,18 +3088,23 @@
 
     window.addEventListener(
       "DOMContentLoaded",
-      function () {
+      async function() {
 
-        init();
+        await init();
+
+        await ensureProfile();
+
+        await ensureChannel();
+
+        await renderChannel();
+
+        await loadVideos();
 
       }
     );
 
-
   </script>
-
 
 </body>
 
 </html>
-```
