@@ -8,8 +8,12 @@
 
   <title>SillyTube</title>
 
+  <!-- ========================= -->
   <!-- SUPABASE -->
+  <!-- ========================= -->
+
   <script type="module">
+
     import {
       createClient
     } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
@@ -18,113 +22,207 @@
       "https://czyklqosqoqxgaxoejpz.supabase.co",
       "sb_publishable_xChRH3i5kMb0ErQALcXKHA_Gogcykzj"
     );
+
   </script>
 
+
+  <!-- ========================= -->
+  <!-- STYLE -->
+  <!-- ========================= -->
+
   <style>
+
     * {
       box-sizing: border-box;
     }
 
+
     body {
       margin: 0;
+
       background: #0f0f0f;
-      color: #fff;
-      font-family: Arial, sans-serif;
+
+      color: #ffffff;
+
+      font-family:
+        Arial,
+        sans-serif;
     }
 
+
+    /* ========================= */
     /* HEADER */
+    /* ========================= */
 
     header {
+
       height: 64px;
+
       background: #181818;
-      border-bottom: 1px solid #292929;
+
+      border-bottom:
+        1px solid #292929;
 
       display: flex;
+
       align-items: center;
 
       gap: 18px;
-      padding: 0 22px;
+
+      padding:
+        0 22px;
 
       position: sticky;
+
       top: 0;
+
       z-index: 10;
+
     }
+
 
     .logo {
+
       font-size: 23px;
+
       font-weight: 800;
+
       white-space: nowrap;
+
     }
+
 
     .logo span {
+
       background: #f03;
-      padding: 7px 10px;
+
+      padding:
+        7px 10px;
+
       border-radius: 9px;
+
       margin-right: 7px;
+
     }
+
 
     .free {
+
       color: #5ee68a;
+
       font-weight: 800;
+
       white-space: nowrap;
+
     }
+
 
     .search {
+
       flex: 1;
+
       max-width: 620px;
+
       margin: auto;
+
     }
 
+
     .search input {
+
       width: 100%;
 
       background: #101010;
+
       color: white;
 
-      border: 1px solid #444;
+      border:
+        1px solid #444;
+
       border-radius: 24px;
 
-      padding: 11px 16px;
+      padding:
+        11px 16px;
+
       outline: none;
+
     }
 
+
+    .search input:focus {
+
+      border-color: #777;
+
+    }
+
+
+    /* ========================= */
     /* BUTTONS */
+    /* ========================= */
 
     .btn {
+
       border: 0;
+
       border-radius: 10px;
 
-      padding: 10px 15px;
+      padding:
+        10px 15px;
 
       font-weight: 700;
+
       cursor: pointer;
+
     }
+
 
     .btn:hover {
+
       opacity: 0.9;
+
     }
+
 
     .red {
+
       background: #f03;
+
       color: white;
+
     }
+
 
     .gray {
+
       background: #303030;
+
       color: white;
+
     }
 
+
+    /* ========================= */
     /* MAIN */
+    /* ========================= */
 
     .main {
+
       max-width: 1250px;
+
       margin: auto;
-      padding: 25px 20px;
+
+      padding:
+        25px 20px;
+
     }
 
+
+    /* ========================= */
     /* HERO */
+    /* ========================= */
 
     .hero {
+
       background:
         linear-gradient(
           120deg,
@@ -132,123 +230,205 @@
           #121c35
         );
 
-      border: 1px solid #303030;
+      border:
+        1px solid #303030;
+
       border-radius: 18px;
 
       padding: 26px;
+
       margin-bottom: 25px;
+
     }
+
 
     .hero h1 {
-      margin: 0 0 8px;
+
+      margin:
+        0 0 8px;
+
       font-size: 34px;
+
     }
+
 
     .hero p {
-      margin: 10px 0;
+
+      margin:
+        10px 0;
+
     }
+
 
     .muted {
+
       color: #999;
+
     }
 
+
+    /* ========================= */
     /* VIDEO GRID */
+    /* ========================= */
 
     .grid {
+
       display: grid;
 
       grid-template-columns:
         repeat(
           auto-fill,
-          minmax(250px, 1fr)
+          minmax(
+            250px,
+            1fr
+          )
         );
 
       gap: 20px;
+
     }
 
+
+    /* ========================= */
     /* VIDEO CARD */
+    /* ========================= */
 
     .card {
+
       background: #181818;
 
       border-radius: 12px;
+
       overflow: hidden;
 
-      border: 1px solid #242424;
+      border:
+        1px solid #242424;
+
+      transition:
+        transform 0.15s,
+        border-color 0.15s;
+
     }
+
 
     .card:hover {
+
+      transform:
+        translateY(-2px);
+
       border-color: #444;
+
     }
 
+
     .thumb {
+
       display: block;
 
       width: 100%;
+
       aspect-ratio: 16 / 9;
 
       object-fit: cover;
 
       background: #292929;
+
     }
+
 
     .info {
+
       padding: 13px;
+
     }
 
+
     .title {
+
       font-weight: 700;
+
       font-size: 16px;
 
       word-break: break-word;
+
     }
 
+
     .meta {
+
       color: #999;
+
       font-size: 13px;
 
       margin-top: 7px;
+
     }
 
+
+    /* ========================= */
     /* EMPTY */
+    /* ========================= */
 
     .empty {
+
       text-align: center;
 
-      padding: 65px 20px;
+      padding:
+        65px 20px;
 
-      border: 1px dashed #444;
+      border:
+        1px dashed #444;
+
       border-radius: 18px;
 
       background: #141414;
+
     }
+
 
     .empty .big {
+
       font-size: 55px;
+
     }
 
+
+    /* ========================= */
     /* ACCOUNT */
+    /* ========================= */
 
     .userbox {
+
       display: flex;
+
       align-items: center;
 
       gap: 8px;
 
       white-space: nowrap;
+
     }
+
 
     .balance {
+
       color: #5ee68a;
+
       font-weight: 800;
+
     }
 
+
+    /* ========================= */
     /* MODALS */
+    /* ========================= */
 
     .modal {
+
       display: none;
 
       position: fixed;
+
       inset: 0;
 
       background: #000c;
@@ -256,50 +436,75 @@
       z-index: 100;
 
       align-items: center;
+
       justify-content: center;
 
       padding: 18px;
+
     }
+
 
     .modal.open {
+
       display: flex;
+
     }
 
+
     .box {
-      width: min(540px, 100%);
+
+      width:
+        min(
+          540px,
+          100%
+        );
 
       background: #181818;
 
-      border: 1px solid #444;
+      border:
+        1px solid #444;
 
       border-radius: 18px;
 
       padding: 24px;
 
       max-height: 90vh;
+
       overflow: auto;
+
     }
+
 
     .box h2 {
+
       margin-top: 0;
+
     }
 
+
     .box input {
+
       width: 100%;
 
       padding: 11px;
 
-      margin: 7px 0 14px;
+      margin:
+        7px 0 14px;
 
       background: #101010;
+
       color: white;
 
-      border: 1px solid #444;
+      border:
+        1px solid #444;
 
       border-radius: 9px;
+
     }
 
+
     .row {
+
       display: flex;
 
       gap: 8px;
@@ -307,60 +512,89 @@
       justify-content: flex-end;
 
       flex-wrap: wrap;
+
     }
 
+
     .status {
+
       padding: 12px;
 
       border-radius: 10px;
 
       background: #222;
 
-      margin: 10px 0;
+      margin:
+        10px 0;
 
       display: none;
 
       word-break: break-word;
+
     }
 
+
+    /* ========================= */
     /* MOBILE */
+    /* ========================= */
 
     @media (max-width: 700px) {
 
       header {
-        padding: 0 10px;
+
+        padding:
+          0 10px;
+
         gap: 8px;
+
       }
+
 
       .logo {
+
         font-size: 17px;
+
       }
+
 
       .free {
+
         display: none;
+
       }
+
 
       .search {
+
         display: none;
+
       }
+
 
       .main {
-        padding: 16px 12px;
+
+        padding:
+          16px 12px;
+
       }
 
+
       .grid {
+
         grid-template-columns:
-          repeat(
-            1,
-            minmax(0, 1fr)
-          );
+          1fr;
+
       }
+
     }
+
   </style>
+
 </head>
 
 
 <body>
+
 
   <!-- ========================= -->
   <!-- HEADER -->
@@ -369,13 +603,20 @@
   <header>
 
     <div class="logo">
+
       <span>▶</span>
+
       SillyTube
+
     </div>
 
+
     <div class="free">
+
       100% FREE
+
     </div>
+
 
     <div class="search">
 
@@ -386,6 +627,7 @@
       >
 
     </div>
+
 
     <div id="account">
 
@@ -407,22 +649,32 @@
 
   <main class="main">
 
+
     <section class="hero">
 
       <h1>
         SillyTube 🎬
       </h1>
 
+
       <p>
         Darmowa platforma wideo.
       </p>
 
+
       <p class="muted">
+
         Subskrypcje dają twórcy
-        <b>10 zł wirtualnego salda</b>.
-        To saldo nie jest prawdziwymi pieniędzmi
+        <b>
+          10 zł wirtualnego salda
+        </b>.
+
+        To saldo nie jest
+        prawdziwymi pieniędzmi
         ani prawdziwym PSC.
+
       </p>
+
 
       <button
         class="btn red"
@@ -430,6 +682,7 @@
       >
         ⬆ Upload filmu
       </button>
+
 
       <button
         class="btn gray"
@@ -441,15 +694,35 @@
     </section>
 
 
-    <!-- FILMY -->
+    <!-- ========================= -->
+    <!-- VIDEO LIST -->
+    <!-- ========================= -->
 
-    <div id="list"></div>
+    <div id="list">
+
+      <div class="empty">
+
+        <div class="big">
+          🎬
+        </div>
+
+        <h2>
+          Ładowanie filmów...
+        </h2>
+
+        <p class="muted">
+          Chwilka...
+        </p>
+
+      </div>
+
+    </div>
 
   </main>
 
 
   <!-- ========================= -->
-  <!-- LOGIN / REGISTER -->
+  <!-- AUTH MODAL -->
   <!-- ========================= -->
 
   <div
@@ -463,12 +736,14 @@
         Zaloguj się
       </h2>
 
+
       <input
         id="authEmail"
         type="email"
         placeholder="E-mail"
         autocomplete="email"
       >
+
 
       <input
         id="authPass"
@@ -477,14 +752,18 @@
         autocomplete="current-password"
       >
 
+
       <div class="row">
 
         <button
           class="btn gray"
-          onclick="closeModal('authModal')"
+          onclick="
+            closeModal('authModal')
+          "
         >
           Anuluj
         </button>
+
 
         <button
           class="btn red"
@@ -495,10 +774,12 @@
 
       </div>
 
+
       <p
         class="muted"
         id="authSwitch"
       >
+
         Nie masz konta?
 
         <button
@@ -507,7 +788,9 @@
         >
           Załóż konto
         </button>
+
       </p>
+
 
       <div
         class="status"
@@ -520,7 +803,7 @@
 
 
   <!-- ========================= -->
-  <!-- UPLOAD -->
+  <!-- UPLOAD MODAL -->
   <!-- ========================= -->
 
   <div
@@ -534,14 +817,17 @@
         Upload filmu
       </h2>
 
+
       <input
         id="videoTitle"
         placeholder="Tytuł filmu"
       >
 
+
       <label class="muted">
         Film
       </label>
+
 
       <input
         id="videoFile"
@@ -549,29 +835,40 @@
         accept="video/*"
       >
 
+
       <label class="muted">
         Miniaturka JPG, PNG lub GIF
       </label>
 
+
       <input
         id="thumbFile"
         type="file"
-        accept="image/jpeg,image/png,image/gif"
+        accept="
+          image/jpeg,
+          image/png,
+          image/gif
+        "
       >
+
 
       <div
         class="status"
         id="uploadStatus"
       ></div>
 
+
       <div class="row">
 
         <button
           class="btn gray"
-          onclick="closeModal('uploadModal')"
+          onclick="
+            closeModal('uploadModal')
+          "
         >
           Anuluj
         </button>
+
 
         <button
           class="btn red"
@@ -588,7 +885,7 @@
 
 
   <!-- ========================= -->
-  <!-- PROMO CODE -->
+  <!-- CODE MODAL -->
   <!-- ========================= -->
 
   <div
@@ -602,19 +899,24 @@
         Wpisz kod
       </h2>
 
+
       <input
         id="promoCode"
         placeholder="Np. SILLY10"
       >
 
+
       <div class="row">
 
         <button
           class="btn gray"
-          onclick="closeModal('codeModal')"
+          onclick="
+            closeModal('codeModal')
+          "
         >
           Anuluj
         </button>
+
 
         <button
           class="btn red"
@@ -624,6 +926,7 @@
         </button>
 
       </div>
+
 
       <div
         class="status"
@@ -641,25 +944,39 @@
 
   <script>
 
+
     let currentUser = null;
 
     let authMode = "login";
 
 
+    /* ========================= */
     /* HELPER */
+    /* ========================= */
+
 
     function $(id) {
+
       return document.getElementById(id);
+
     }
 
 
     function openModal(id) {
-      $(id).classList.add("open");
+
+      $(id)
+        .classList
+        .add("open");
+
     }
 
 
     function closeModal(id) {
-      $(id).classList.remove("open");
+
+      $(id)
+        .classList
+        .remove("open");
+
     }
 
 
@@ -672,74 +989,119 @@
       element.style.display =
         "block";
 
+
       element.textContent =
         text;
+
 
       element.style.color =
         success
           ? "#5ee68a"
           : "#ff8a8a";
+
     }
 
 
     /* ========================= */
-    /* AUTH INITIALIZATION */
+    /* INITIALIZATION */
     /* ========================= */
+
 
     async function init() {
 
       console.log(
-        "SillyTube start"
+        "SillyTube: start"
       );
 
 
-      const {
-        data,
-        error
-      } = await sb.auth.getSession();
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await sb.auth.getSession();
 
 
-      if (error) {
+        if (error) {
+
+          console.error(
+            "Session error:",
+            error
+          );
+
+        }
+
+
+        currentUser =
+          data?.session?.user || null;
+
+
+        renderAccount();
+
+
+        /*
+          WAŻNE:
+          ŁADUJEMY FILMY OD RAZU
+        */
+
+        await loadVideos();
+
+
+        sb.auth.onAuthStateChange(
+          async function (
+            event,
+            session
+          ) {
+
+            console.log(
+              "Auth event:",
+              event
+            );
+
+
+            currentUser =
+              session?.user || null;
+
+
+            renderAccount();
+
+
+            await loadVideos();
+
+          }
+        );
+
+
+      } catch (error) {
 
         console.error(
-          "Session error:",
+          "INIT ERROR:",
           error
         );
 
+
+        $("list").innerHTML = `
+
+          <div class="empty">
+
+            <div class="big">
+              ⚠️
+            </div>
+
+            <h2>
+              Nie udało się uruchomić SillyTube
+            </h2>
+
+            <p class="muted">
+              ${esc(error.message)}
+            </p>
+
+          </div>
+
+        `;
+
       }
-
-
-      currentUser =
-        data?.session?.user || null;
-
-
-      renderAccount();
-
-      loadVideos();
-
-
-      sb.auth.onAuthStateChange(
-        function (
-          event,
-          session
-        ) {
-
-          console.log(
-            "Auth:",
-            event
-          );
-
-
-          currentUser =
-            session?.user || null;
-
-
-          renderAccount();
-
-          loadVideos();
-
-        }
-      );
 
     }
 
@@ -747,6 +1109,7 @@
     /* ========================= */
     /* ACCOUNT */
     /* ========================= */
+
 
     function renderAccount() {
 
@@ -757,12 +1120,14 @@
       if (!currentUser) {
 
         account.innerHTML = `
+
           <button
             class="btn gray"
             id="loginBtn"
           >
             Zaloguj się
           </button>
+
         `;
 
 
@@ -771,10 +1136,12 @@
 
 
         return;
+
       }
 
 
       account.innerHTML = `
+
         <div class="userbox">
 
           <span
@@ -784,6 +1151,7 @@
             🪙 ...
           </span>
 
+
           <button
             class="btn gray"
             id="logout"
@@ -792,6 +1160,7 @@
           </button>
 
         </div>
+
       `;
 
 
@@ -800,7 +1169,8 @@
 
           const {
             error
-          } = await sb.auth.signOut();
+          } =
+            await sb.auth.signOut();
 
 
           if (error) {
@@ -820,15 +1190,18 @@
 
 
     function openAuth() {
+
       openModal(
         "authModal"
       );
+
     }
 
 
     /* ========================= */
     /* LOGIN / REGISTER */
     /* ========================= */
+
 
     $("authAction").onclick =
       async function () {
@@ -838,9 +1211,11 @@
             .value
             .trim();
 
+
         const password =
           $("authPass")
             .value;
+
 
         const status =
           $("authStatus");
@@ -857,14 +1232,16 @@
           );
 
           return;
+
         }
 
 
-        $("authAction").disabled =
-          true;
+        $("authAction")
+          .disabled = true;
 
 
-        $("authAction").textContent =
+        $("authAction")
+          .textContent =
           "Ładowanie...";
 
 
@@ -878,8 +1255,13 @@
           result =
             await sb.auth
               .signInWithPassword({
-                email: email,
-                password: password
+
+                email:
+                  email,
+
+                password:
+                  password
+
               });
 
         } else {
@@ -888,9 +1270,11 @@
             await sb.auth
               .signUp({
 
-                email: email,
+                email:
+                  email,
 
-                password: password,
+                password:
+                  password,
 
                 options: {
 
@@ -904,11 +1288,12 @@
         }
 
 
-        $("authAction").disabled =
-          false;
+        $("authAction")
+          .disabled = false;
 
 
-        $("authAction").textContent =
+        $("authAction")
+          .textContent =
           authMode === "login"
             ? "Zaloguj"
             : "Zarejestruj";
@@ -922,6 +1307,7 @@
           );
 
           return;
+
         }
 
 
@@ -929,51 +1315,70 @@
           authMode === "signup"
         ) {
 
+
           if (
             result.data?.session
           ) {
 
             currentUser =
-              result.data.session.user;
+              result.data
+                .session
+                .user;
 
 
             renderAccount();
+
 
             closeModal(
               "authModal"
             );
 
+
+            await loadVideos();
+
           } else {
 
             msg(
               status,
+
               "Konto utworzone. Sprawdź e-mail i kliknij link potwierdzający.",
+
               true
             );
 
           }
 
+
         } else {
+
 
           if (
             result.data?.session
           ) {
 
             currentUser =
-              result.data.session.user;
+              result.data
+                .session
+                .user;
 
 
             renderAccount();
+
 
             closeModal(
               "authModal"
             );
 
+
+            await loadVideos();
+
           } else {
 
             msg(
               status,
+
               "Logowanie nie utworzyło sesji."
+
             );
 
           }
@@ -984,8 +1389,9 @@
 
 
     /* ========================= */
-    /* SWITCH LOGIN / REGISTER */
+    /* SWITCH AUTH */
     /* ========================= */
+
 
     $("switchAuth").onclick =
       function () {
@@ -996,13 +1402,15 @@
             : "login";
 
 
-        $("authTitle").textContent =
+        $("authTitle")
+          .textContent =
           authMode === "login"
             ? "Zaloguj się"
             : "Załóż konto";
 
 
-        $("authAction").textContent =
+        $("authAction")
+          .textContent =
           authMode === "login"
             ? "Zaloguj"
             : "Zarejestruj";
@@ -1011,9 +1419,9 @@
         $("authSwitch")
           .firstChild
           .textContent =
-            authMode === "login"
-              ? "Nie masz konta? "
-              : "Masz już konto? ";
+          authMode === "login"
+            ? "Nie masz konta? "
+            : "Masz już konto? ";
 
 
         $("authStatus")
@@ -1028,6 +1436,7 @@
     /* UPLOAD BUTTON */
     /* ========================= */
 
+
     $("uploadBtn").onclick =
       function () {
 
@@ -1036,6 +1445,7 @@
           openAuth();
 
           return;
+
         }
 
 
@@ -1050,6 +1460,7 @@
     /* CODE BUTTON */
     /* ========================= */
 
+
     $("codeBtn").onclick =
       function () {
 
@@ -1058,6 +1469,7 @@
           openAuth();
 
           return;
+
         }
 
 
@@ -1072,26 +1484,30 @@
     /* BALANCE */
     /* ========================= */
 
+
     async function loadBalance() {
 
       if (!currentUser) {
+
         return;
+
       }
 
 
       const {
         data,
         error
-      } = await sb
-        .from("profiles")
-        .select(
-          "psc_balance,username"
-        )
-        .eq(
-          "id",
-          currentUser.id
-        )
-        .single();
+      } =
+        await sb
+          .from("profiles")
+          .select(
+            "psc_balance,username"
+          )
+          .eq(
+            "id",
+            currentUser.id
+          )
+          .single();
 
 
       if (error) {
@@ -1102,6 +1518,7 @@
         );
 
         return;
+
       }
 
 
@@ -1110,7 +1527,8 @@
         $("bal")
       ) {
 
-        $("bal").textContent =
+        $("bal")
+          .textContent =
           "🪙 " +
           Number(
             data.psc_balance || 0
@@ -1126,6 +1544,7 @@
     /* PROMO CODE */
     /* ========================= */
 
+
     $("redeem").onclick =
       async function () {
 
@@ -1134,24 +1553,34 @@
             .value
             .trim();
 
+
         const status =
           $("codeStatus");
 
 
         if (!code) {
+
+          msg(
+            status,
+            "Wpisz kod."
+          );
+
           return;
+
         }
 
 
         const {
           data,
           error
-        } = await sb.rpc(
-          "redeem_promo",
-          {
-            p_code: code
-          }
-        );
+        } =
+          await sb.rpc(
+            "redeem_promo",
+            {
+              p_code:
+                code
+            }
+          );
 
 
         if (error) {
@@ -1162,10 +1591,12 @@
           );
 
           return;
+
         }
 
 
         msg(
+
           status,
 
           "Dodano " +
@@ -1174,11 +1605,12 @@
             " zł do wirtualnego salda.",
 
           true
+
         );
 
 
-        $("promoCode").value =
-          "";
+        $("promoCode")
+          .value = "";
 
 
         loadBalance();
@@ -1187,8 +1619,9 @@
 
 
     /* ========================= */
-    /* UPLOAD VIDEO */
+    /* UPLOAD */
     /* ========================= */
+
 
     $("publish").onclick =
       async function () {
@@ -1224,6 +1657,7 @@
           );
 
           return;
+
         }
 
 
@@ -1240,10 +1674,12 @@
           );
 
           return;
+
         }
 
 
         try {
+
 
           msg(
             status,
@@ -1269,7 +1705,9 @@
             safeName;
 
 
-          /* VIDEO STORAGE */
+          /*
+            UPLOAD VIDEO
+          */
 
           let result =
             await sb.storage
@@ -1278,9 +1716,13 @@
                 videoPath,
                 videoFile,
                 {
-                  upsert: false,
+
+                  upsert:
+                    false,
+
                   contentType:
                     videoFile.type
+
                 }
               );
 
@@ -1294,13 +1736,18 @@
           }
 
 
-          /* THUMBNAIL */
+          /*
+            UPLOAD THUMBNAIL
+          */
 
           let thumbnailPath =
             null;
 
 
-          if (thumbnailFile) {
+          if (
+            thumbnailFile
+          ) {
+
 
             const safeThumb =
               (
@@ -1327,9 +1774,13 @@
                   thumbnailPath,
                   thumbnailFile,
                   {
-                    upsert: false,
+
+                    upsert:
+                      false,
+
                     contentType:
                       thumbnailFile.type
+
                   }
                 );
 
@@ -1352,7 +1803,9 @@
           }
 
 
-          /* FIND CHANNEL */
+          /*
+            FIND CHANNEL
+          */
 
           const channel =
             await sb
@@ -1367,7 +1820,17 @@
 
 
           if (
-            channel.error ||
+            channel.error
+          ) {
+
+            throw new Error(
+              channel.error.message
+            );
+
+          }
+
+
+          if (
             !channel.data
           ) {
 
@@ -1398,7 +1861,10 @@
           }
 
 
-          /* DATABASE */
+          /*
+            SAVE VIDEO
+            TO DATABASE
+          */
 
           result =
             await sb
@@ -1452,6 +1918,10 @@
           }
 
 
+          /*
+            SUCCESS
+          */
+
           msg(
             status,
             "Film opublikowany!",
@@ -1459,24 +1929,27 @@
           );
 
 
-          $("videoTitle").value =
-            "";
+          $("videoTitle")
+            .value = "";
 
-          $("videoFile").value =
-            "";
 
-          $("thumbFile").value =
-            "";
+          $("videoFile")
+            .value = "";
+
+
+          $("thumbFile")
+            .value = "";
 
 
           setTimeout(
-            function () {
+            async function () {
 
               closeModal(
                 "uploadModal"
               );
 
-              loadVideos();
+
+              await loadVideos();
 
             },
             700
@@ -1505,12 +1978,18 @@
     /* LOAD VIDEOS */
     /* ========================= */
 
+
     async function loadVideos() {
 
       const search =
         $("search")
           .value
           .trim();
+
+
+      console.log(
+        "Loading videos..."
+      );
 
 
       let query =
@@ -1520,7 +1999,8 @@
           .order(
             "created_at",
             {
-              ascending: false
+              ascending:
+                false
             }
           );
 
@@ -1541,7 +2021,8 @@
       const {
         data,
         error
-      } = await query;
+      } =
+        await query;
 
 
       const list =
@@ -1560,29 +2041,42 @@
       );
 
 
-      /* ERROR */
+      /*
+        DATABASE ERROR
+      */
 
       if (error) {
 
         list.innerHTML = `
+
           <div class="empty">
 
+            <div class="big">
+              ⚠️
+            </div>
+
             <h2>
-              Błąd
+              Błąd ładowania filmów
             </h2>
 
             <p class="muted">
-              ${esc(error.message)}
+              ${esc(
+                error.message
+              )}
             </p>
 
           </div>
+
         `;
 
         return;
+
       }
 
 
-      /* NO VIDEOS */
+      /*
+        NO VIDEOS
+      */
 
       if (
         !data ||
@@ -1590,6 +2084,7 @@
       ) {
 
         list.innerHTML = `
+
           <div class="empty">
 
             <div class="big">
@@ -1601,90 +2096,130 @@
             </h2>
 
             <p class="muted">
-              Zaloguj się i wrzuć pierwszy film.
+
+              Zaloguj się
+              i wrzuć pierwszy film.
+
             </p>
 
           </div>
+
         `;
 
         return;
+
       }
 
 
-      /* VIDEO GRID */
+      /*
+        VIDEO GRID
+      */
 
       list.innerHTML = `
 
         <div class="grid">
 
           ${data
-            .map(function (videoData) {
-
-              const videoUrl =
-                sb.storage
-                  .from("videos")
-                  .getPublicUrl(
-                    videoData.video_path
-                  )
-                  .data.publicUrl;
+            .map(
+              function (videoData) {
 
 
-              let thumbnailUrl =
-                "";
+                /*
+                  VIDEO URL
+                */
 
-
-              if (
-                videoData.thumbnail_path
-              ) {
-
-                thumbnailUrl =
+                const videoUrl =
                   sb.storage
-                    .from(
-                      "thumbnails"
-                    )
+                    .from("videos")
                     .getPublicUrl(
-                      videoData.thumbnail_path
+                      videoData.video_path
                     )
-                    .data.publicUrl;
+                    .data
+                    .publicUrl;
+
+
+                /*
+                  THUMBNAIL URL
+                */
+
+                let thumbnailUrl =
+                  "";
+
+
+                if (
+                  videoData.thumbnail_path
+                ) {
+
+                  thumbnailUrl =
+                    sb.storage
+                      .from(
+                        "thumbnails"
+                      )
+                      .getPublicUrl(
+                        videoData.thumbnail_path
+                      )
+                      .data
+                      .publicUrl;
+
+                }
+
+
+                /*
+                  CARD
+                */
+
+                return `
+
+                  <article
+                    class="card"
+                  >
+
+                    <video
+                      class="thumb"
+                      src="${videoUrl}"
+
+                      ${
+                        thumbnailUrl
+                          ? `
+                            poster="${thumbnailUrl}"
+                          `
+                          : ""
+                      }
+
+                      controls
+
+                      preload="metadata"
+
+                    ></video>
+
+
+                    <div
+                      class="info"
+                    >
+
+                      <div
+                        class="title"
+                      >
+                        ${esc(
+                          videoData.title
+                        )}
+                      </div>
+
+
+                      <div
+                        class="meta"
+                      >
+                        SillyTube
+                      </div>
+
+                    </div>
+
+                  </article>
+
+                `;
 
               }
-
-
-              return `
-
-                <article class="card">
-
-                  <video
-                    class="thumb"
-                    src="${videoUrl}"
-                    ${
-                      thumbnailUrl
-                        ? `poster="${thumbnailUrl}"`
-                        : ""
-                    }
-                    controls
-                    preload="metadata"
-                  ></video>
-
-                  <div class="info">
-
-                    <div class="title">
-                      ${esc(
-                        videoData.title
-                      )}
-                    </div>
-
-                    <div class="meta">
-                      SillyTube
-                    </div>
-
-                  </div>
-
-                </article>
-
-              `;
-
-            })
+            )
             .join("")}
 
         </div>
@@ -1698,24 +2233,34 @@
     /* ESCAPE HTML */
     /* ========================= */
 
+
     function esc(value) {
 
       return String(value)
+
         .replace(
           /[&<>"']/g,
-          function (character) {
+
+          function (
+            character
+          ) {
 
             const replacements = {
 
-              "&": "&amp;",
+              "&":
+                "&amp;",
 
-              "<": "&lt;",
+              "<":
+                "&lt;",
 
-              ">": "&gt;",
+              ">":
+                "&gt;",
 
-              '"': "&quot;",
+              '"':
+                "&quot;",
 
-              "'": "&#039;"
+              "'":
+                "&#039;"
 
             };
 
@@ -1734,10 +2279,15 @@
     /* SEARCH */
     /* ========================= */
 
+
     $("search")
       .addEventListener(
         "input",
-        loadVideos
+        function () {
+
+          loadVideos();
+
+        }
       );
 
 
@@ -1745,9 +2295,18 @@
     /* START */
     /* ========================= */
 
-    init();
+    window.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        init();
+
+      }
+    );
+
 
   </script>
+
 
 </body>
 
