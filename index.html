@@ -1,88 +1,1755 @@
-async function loadVideos() {
-  const q = $("search").value.trim();
+```html
+<!doctype html>
+<html lang="pl">
 
-  let query = sb
-    .from("videos")
-    .select("*")
-    .order("created_at", { ascending: false });
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  if (q) {
-    query = query.ilike("title", "%" + q + "%");
-  }
+  <title>SillyTube</title>
 
-  const { data, error } = await query;
+  <!-- SUPABASE -->
+  <script type="module">
+    import {
+      createClient
+    } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-  const el = $("list");
+    window.sb = createClient(
+      "https://czyklqosqoqxgaxoejpz.supabase.co",
+      "sb_publishable_xChRH3i5kMb0ErQALcXKHA_Gogcykzj"
+    );
+  </script>
 
-  console.log("VIDEOS:", data);
-  console.log("VIDEO ERROR:", error);
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-  if (error) {
-    el.innerHTML =
-      '<div class="empty">Błąd: ' +
-      esc(error.message) +
-      "</div>";
-    return;
-  }
+    body {
+      margin: 0;
+      background: #0f0f0f;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
 
-  if (!data || data.length === 0) {
-    el.innerHTML = `
-      <div class="empty">
-        <div class="big">🎬</div>
-        <h2>Nie ma jeszcze żadnych filmów</h2>
-        <p class="muted">
-          Zaloguj się i wrzuć pierwszy film.
-        </p>
+    /* HEADER */
+
+    header {
+      height: 64px;
+      background: #181818;
+      border-bottom: 1px solid #292929;
+
+      display: flex;
+      align-items: center;
+
+      gap: 18px;
+      padding: 0 22px;
+
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .logo span {
+      background: #f03;
+      padding: 7px 10px;
+      border-radius: 9px;
+      margin-right: 7px;
+    }
+
+    .free {
+      color: #5ee68a;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .search {
+      flex: 1;
+      max-width: 620px;
+      margin: auto;
+    }
+
+    .search input {
+      width: 100%;
+
+      background: #101010;
+      color: white;
+
+      border: 1px solid #444;
+      border-radius: 24px;
+
+      padding: 11px 16px;
+      outline: none;
+    }
+
+    /* BUTTONS */
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+
+      padding: 10px 15px;
+
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .red {
+      background: #f03;
+      color: white;
+    }
+
+    .gray {
+      background: #303030;
+      color: white;
+    }
+
+    /* MAIN */
+
+    .main {
+      max-width: 1250px;
+      margin: auto;
+      padding: 25px 20px;
+    }
+
+    /* HERO */
+
+    .hero {
+      background:
+        linear-gradient(
+          120deg,
+          #25102a,
+          #121c35
+        );
+
+      border: 1px solid #303030;
+      border-radius: 18px;
+
+      padding: 26px;
+      margin-bottom: 25px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 34px;
+    }
+
+    .hero p {
+      margin: 10px 0;
+    }
+
+    .muted {
+      color: #999;
+    }
+
+    /* VIDEO GRID */
+
+    .grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fill,
+          minmax(250px, 1fr)
+        );
+
+      gap: 20px;
+    }
+
+    /* VIDEO CARD */
+
+    .card {
+      background: #181818;
+
+      border-radius: 12px;
+      overflow: hidden;
+
+      border: 1px solid #242424;
+    }
+
+    .card:hover {
+      border-color: #444;
+    }
+
+    .thumb {
+      display: block;
+
+      width: 100%;
+      aspect-ratio: 16 / 9;
+
+      object-fit: cover;
+
+      background: #292929;
+    }
+
+    .info {
+      padding: 13px;
+    }
+
+    .title {
+      font-weight: 700;
+      font-size: 16px;
+
+      word-break: break-word;
+    }
+
+    .meta {
+      color: #999;
+      font-size: 13px;
+
+      margin-top: 7px;
+    }
+
+    /* EMPTY */
+
+    .empty {
+      text-align: center;
+
+      padding: 65px 20px;
+
+      border: 1px dashed #444;
+      border-radius: 18px;
+
+      background: #141414;
+    }
+
+    .empty .big {
+      font-size: 55px;
+    }
+
+    /* ACCOUNT */
+
+    .userbox {
+      display: flex;
+      align-items: center;
+
+      gap: 8px;
+
+      white-space: nowrap;
+    }
+
+    .balance {
+      color: #5ee68a;
+      font-weight: 800;
+    }
+
+    /* MODALS */
+
+    .modal {
+      display: none;
+
+      position: fixed;
+      inset: 0;
+
+      background: #000c;
+
+      z-index: 100;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 18px;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .box {
+      width: min(540px, 100%);
+
+      background: #181818;
+
+      border: 1px solid #444;
+
+      border-radius: 18px;
+
+      padding: 24px;
+
+      max-height: 90vh;
+      overflow: auto;
+    }
+
+    .box h2 {
+      margin-top: 0;
+    }
+
+    .box input {
+      width: 100%;
+
+      padding: 11px;
+
+      margin: 7px 0 14px;
+
+      background: #101010;
+      color: white;
+
+      border: 1px solid #444;
+
+      border-radius: 9px;
+    }
+
+    .row {
+      display: flex;
+
+      gap: 8px;
+
+      justify-content: flex-end;
+
+      flex-wrap: wrap;
+    }
+
+    .status {
+      padding: 12px;
+
+      border-radius: 10px;
+
+      background: #222;
+
+      margin: 10px 0;
+
+      display: none;
+
+      word-break: break-word;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
+
+      header {
+        padding: 0 10px;
+        gap: 8px;
+      }
+
+      .logo {
+        font-size: 17px;
+      }
+
+      .free {
+        display: none;
+      }
+
+      .search {
+        display: none;
+      }
+
+      .main {
+        padding: 16px 12px;
+      }
+
+      .grid {
+        grid-template-columns:
+          repeat(
+            1,
+            minmax(0, 1fr)
+          );
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <!-- ========================= -->
+  <!-- HEADER -->
+  <!-- ========================= -->
+
+  <header>
+
+    <div class="logo">
+      <span>▶</span>
+      SillyTube
+    </div>
+
+    <div class="free">
+      100% FREE
+    </div>
+
+    <div class="search">
+
+      <input
+        id="search"
+        type="text"
+        placeholder="Szukaj filmów..."
+      >
+
+    </div>
+
+    <div id="account">
+
+      <button
+        class="btn gray"
+        id="loginBtn"
+      >
+        Zaloguj się
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- ========================= -->
+  <!-- MAIN -->
+  <!-- ========================= -->
+
+  <main class="main">
+
+    <section class="hero">
+
+      <h1>
+        SillyTube 🎬
+      </h1>
+
+      <p>
+        Darmowa platforma wideo.
+      </p>
+
+      <p class="muted">
+        Subskrypcje dają twórcy
+        <b>10 zł wirtualnego salda</b>.
+        To saldo nie jest prawdziwymi pieniędzmi
+        ani prawdziwym PSC.
+      </p>
+
+      <button
+        class="btn red"
+        id="uploadBtn"
+      >
+        ⬆ Upload filmu
+      </button>
+
+      <button
+        class="btn gray"
+        id="codeBtn"
+      >
+        🎟 Kod
+      </button>
+
+    </section>
+
+
+    <!-- FILMY -->
+
+    <div id="list"></div>
+
+  </main>
+
+
+  <!-- ========================= -->
+  <!-- LOGIN / REGISTER -->
+  <!-- ========================= -->
+
+  <div
+    class="modal"
+    id="authModal"
+  >
+
+    <div class="box">
+
+      <h2 id="authTitle">
+        Zaloguj się
+      </h2>
+
+      <input
+        id="authEmail"
+        type="email"
+        placeholder="E-mail"
+        autocomplete="email"
+      >
+
+      <input
+        id="authPass"
+        type="password"
+        placeholder="Hasło"
+        autocomplete="current-password"
+      >
+
+      <div class="row">
+
+        <button
+          class="btn gray"
+          onclick="closeModal('authModal')"
+        >
+          Anuluj
+        </button>
+
+        <button
+          class="btn red"
+          id="authAction"
+        >
+          Zaloguj
+        </button>
+
       </div>
-    `;
-    return;
-  }
 
-  el.innerHTML = `
-    <div class="grid">
-      ${data.map(v => {
+      <p
+        class="muted"
+        id="authSwitch"
+      >
+        Nie masz konta?
 
-        const video =
-          sb.storage
-            .from("videos")
-            .getPublicUrl(v.video_path)
-            .data.publicUrl;
+        <button
+          class="btn gray"
+          id="switchAuth"
+        >
+          Załóż konto
+        </button>
+      </p>
 
-        const thumb =
-          v.thumbnail_path
-            ? sb.storage
-                .from("thumbnails")
-                .getPublicUrl(v.thumbnail_path)
-                .data.publicUrl
-            : "";
+      <div
+        class="status"
+        id="authStatus"
+      ></div>
 
-        return `
-          <article class="card">
+    </div>
 
-            <video
-              class="thumb"
-              src="${video}"
-              ${thumb ? `poster="${thumb}"` : ""}
-              controls
-              preload="metadata"
-            ></video>
+  </div>
 
-            <div class="info">
 
-              <div class="title">
-                ${esc(v.title)}
-              </div>
+  <!-- ========================= -->
+  <!-- UPLOAD -->
+  <!-- ========================= -->
 
-              <div class="meta">
-                SillyTube
-              </div>
+  <div
+    class="modal"
+    id="uploadModal"
+  >
 
-            </div>
+    <div class="box">
 
-          </article>
+      <h2>
+        Upload filmu
+      </h2>
+
+      <input
+        id="videoTitle"
+        placeholder="Tytuł filmu"
+      >
+
+      <label class="muted">
+        Film
+      </label>
+
+      <input
+        id="videoFile"
+        type="file"
+        accept="video/*"
+      >
+
+      <label class="muted">
+        Miniaturka JPG, PNG lub GIF
+      </label>
+
+      <input
+        id="thumbFile"
+        type="file"
+        accept="image/jpeg,image/png,image/gif"
+      >
+
+      <div
+        class="status"
+        id="uploadStatus"
+      ></div>
+
+      <div class="row">
+
+        <button
+          class="btn gray"
+          onclick="closeModal('uploadModal')"
+        >
+          Anuluj
+        </button>
+
+        <button
+          class="btn red"
+          id="publish"
+        >
+          Opublikuj
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- PROMO CODE -->
+  <!-- ========================= -->
+
+  <div
+    class="modal"
+    id="codeModal"
+  >
+
+    <div class="box">
+
+      <h2>
+        Wpisz kod
+      </h2>
+
+      <input
+        id="promoCode"
+        placeholder="Np. SILLY10"
+      >
+
+      <div class="row">
+
+        <button
+          class="btn gray"
+          onclick="closeModal('codeModal')"
+        >
+          Anuluj
+        </button>
+
+        <button
+          class="btn red"
+          id="redeem"
+        >
+          Zrealizuj
+        </button>
+
+      </div>
+
+      <div
+        class="status"
+        id="codeStatus"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- JAVASCRIPT -->
+  <!-- ========================= -->
+
+  <script>
+
+    let currentUser = null;
+
+    let authMode = "login";
+
+
+    /* HELPER */
+
+    function $(id) {
+      return document.getElementById(id);
+    }
+
+
+    function openModal(id) {
+      $(id).classList.add("open");
+    }
+
+
+    function closeModal(id) {
+      $(id).classList.remove("open");
+    }
+
+
+    function msg(
+      element,
+      text,
+      success = false
+    ) {
+
+      element.style.display =
+        "block";
+
+      element.textContent =
+        text;
+
+      element.style.color =
+        success
+          ? "#5ee68a"
+          : "#ff8a8a";
+    }
+
+
+    /* ========================= */
+    /* AUTH INITIALIZATION */
+    /* ========================= */
+
+    async function init() {
+
+      console.log(
+        "SillyTube start"
+      );
+
+
+      const {
+        data,
+        error
+      } = await sb.auth.getSession();
+
+
+      if (error) {
+
+        console.error(
+          "Session error:",
+          error
+        );
+
+      }
+
+
+      currentUser =
+        data?.session?.user || null;
+
+
+      renderAccount();
+
+      loadVideos();
+
+
+      sb.auth.onAuthStateChange(
+        function (
+          event,
+          session
+        ) {
+
+          console.log(
+            "Auth:",
+            event
+          );
+
+
+          currentUser =
+            session?.user || null;
+
+
+          renderAccount();
+
+          loadVideos();
+
+        }
+      );
+
+    }
+
+
+    /* ========================= */
+    /* ACCOUNT */
+    /* ========================= */
+
+    function renderAccount() {
+
+      const account =
+        $("account");
+
+
+      if (!currentUser) {
+
+        account.innerHTML = `
+          <button
+            class="btn gray"
+            id="loginBtn"
+          >
+            Zaloguj się
+          </button>
         `;
 
-      }).join("")}
-    </div>
-  `;
-}
+
+        $("loginBtn").onclick =
+          openAuth;
+
+
+        return;
+      }
+
+
+      account.innerHTML = `
+        <div class="userbox">
+
+          <span
+            id="bal"
+            class="balance"
+          >
+            🪙 ...
+          </span>
+
+          <button
+            class="btn gray"
+            id="logout"
+          >
+            Wyloguj
+          </button>
+
+        </div>
+      `;
+
+
+      $("logout").onclick =
+        async function () {
+
+          const {
+            error
+          } = await sb.auth.signOut();
+
+
+          if (error) {
+
+            alert(
+              error.message
+            );
+
+          }
+
+        };
+
+
+      loadBalance();
+
+    }
+
+
+    function openAuth() {
+      openModal(
+        "authModal"
+      );
+    }
+
+
+    /* ========================= */
+    /* LOGIN / REGISTER */
+    /* ========================= */
+
+    $("authAction").onclick =
+      async function () {
+
+        const email =
+          $("authEmail")
+            .value
+            .trim();
+
+        const password =
+          $("authPass")
+            .value;
+
+        const status =
+          $("authStatus");
+
+
+        if (
+          !email ||
+          password.length < 6
+        ) {
+
+          msg(
+            status,
+            "Podaj e-mail i hasło (minimum 6 znaków)."
+          );
+
+          return;
+        }
+
+
+        $("authAction").disabled =
+          true;
+
+
+        $("authAction").textContent =
+          "Ładowanie...";
+
+
+        let result;
+
+
+        if (
+          authMode === "login"
+        ) {
+
+          result =
+            await sb.auth
+              .signInWithPassword({
+                email: email,
+                password: password
+              });
+
+        } else {
+
+          result =
+            await sb.auth
+              .signUp({
+
+                email: email,
+
+                password: password,
+
+                options: {
+
+                  emailRedirectTo:
+                    "https://sillytube.ksj60502.workers.dev"
+
+                }
+
+              });
+
+        }
+
+
+        $("authAction").disabled =
+          false;
+
+
+        $("authAction").textContent =
+          authMode === "login"
+            ? "Zaloguj"
+            : "Zarejestruj";
+
+
+        if (result.error) {
+
+          msg(
+            status,
+            result.error.message
+          );
+
+          return;
+        }
+
+
+        if (
+          authMode === "signup"
+        ) {
+
+          if (
+            result.data?.session
+          ) {
+
+            currentUser =
+              result.data.session.user;
+
+
+            renderAccount();
+
+            closeModal(
+              "authModal"
+            );
+
+          } else {
+
+            msg(
+              status,
+              "Konto utworzone. Sprawdź e-mail i kliknij link potwierdzający.",
+              true
+            );
+
+          }
+
+        } else {
+
+          if (
+            result.data?.session
+          ) {
+
+            currentUser =
+              result.data.session.user;
+
+
+            renderAccount();
+
+            closeModal(
+              "authModal"
+            );
+
+          } else {
+
+            msg(
+              status,
+              "Logowanie nie utworzyło sesji."
+            );
+
+          }
+
+        }
+
+      };
+
+
+    /* ========================= */
+    /* SWITCH LOGIN / REGISTER */
+    /* ========================= */
+
+    $("switchAuth").onclick =
+      function () {
+
+        authMode =
+          authMode === "login"
+            ? "signup"
+            : "login";
+
+
+        $("authTitle").textContent =
+          authMode === "login"
+            ? "Zaloguj się"
+            : "Załóż konto";
+
+
+        $("authAction").textContent =
+          authMode === "login"
+            ? "Zaloguj"
+            : "Zarejestruj";
+
+
+        $("authSwitch")
+          .firstChild
+          .textContent =
+            authMode === "login"
+              ? "Nie masz konta? "
+              : "Masz już konto? ";
+
+
+        $("authStatus")
+          .style
+          .display =
+          "none";
+
+      };
+
+
+    /* ========================= */
+    /* UPLOAD BUTTON */
+    /* ========================= */
+
+    $("uploadBtn").onclick =
+      function () {
+
+        if (!currentUser) {
+
+          openAuth();
+
+          return;
+        }
+
+
+        openModal(
+          "uploadModal"
+        );
+
+      };
+
+
+    /* ========================= */
+    /* CODE BUTTON */
+    /* ========================= */
+
+    $("codeBtn").onclick =
+      function () {
+
+        if (!currentUser) {
+
+          openAuth();
+
+          return;
+        }
+
+
+        openModal(
+          "codeModal"
+        );
+
+      };
+
+
+    /* ========================= */
+    /* BALANCE */
+    /* ========================= */
+
+    async function loadBalance() {
+
+      if (!currentUser) {
+        return;
+      }
+
+
+      const {
+        data,
+        error
+      } = await sb
+        .from("profiles")
+        .select(
+          "psc_balance,username"
+        )
+        .eq(
+          "id",
+          currentUser.id
+        )
+        .single();
+
+
+      if (error) {
+
+        console.error(
+          "Profile error:",
+          error
+        );
+
+        return;
+      }
+
+
+      if (
+        data &&
+        $("bal")
+      ) {
+
+        $("bal").textContent =
+          "🪙 " +
+          Number(
+            data.psc_balance || 0
+          ).toFixed(2) +
+          " zł";
+
+      }
+
+    }
+
+
+    /* ========================= */
+    /* PROMO CODE */
+    /* ========================= */
+
+    $("redeem").onclick =
+      async function () {
+
+        const code =
+          $("promoCode")
+            .value
+            .trim();
+
+        const status =
+          $("codeStatus");
+
+
+        if (!code) {
+          return;
+        }
+
+
+        const {
+          data,
+          error
+        } = await sb.rpc(
+          "redeem_promo",
+          {
+            p_code: code
+          }
+        );
+
+
+        if (error) {
+
+          msg(
+            status,
+            error.message
+          );
+
+          return;
+        }
+
+
+        msg(
+          status,
+
+          "Dodano " +
+            Number(data)
+              .toFixed(2) +
+            " zł do wirtualnego salda.",
+
+          true
+        );
+
+
+        $("promoCode").value =
+          "";
+
+
+        loadBalance();
+
+      };
+
+
+    /* ========================= */
+    /* UPLOAD VIDEO */
+    /* ========================= */
+
+    $("publish").onclick =
+      async function () {
+
+        const title =
+          $("videoTitle")
+            .value
+            .trim();
+
+
+        const videoFile =
+          $("videoFile")
+            .files[0];
+
+
+        const thumbnailFile =
+          $("thumbFile")
+            .files[0];
+
+
+        const status =
+          $("uploadStatus");
+
+
+        if (
+          !title ||
+          !videoFile
+        ) {
+
+          msg(
+            status,
+            "Podaj tytuł i wybierz film."
+          );
+
+          return;
+        }
+
+
+        if (
+          videoFile.size >
+          500 *
+          1024 *
+          1024
+        ) {
+
+          msg(
+            status,
+            "Film jest większy niż 500 MB."
+          );
+
+          return;
+        }
+
+
+        try {
+
+          msg(
+            status,
+            "Wysyłanie filmu..."
+          );
+
+
+          const safeName =
+            (
+              videoFile.name ||
+              "video"
+            ).replace(
+              /[^a-zA-Z0-9._-]/g,
+              "_"
+            );
+
+
+          const videoPath =
+            currentUser.id +
+            "/" +
+            Date.now() +
+            "-" +
+            safeName;
+
+
+          /* VIDEO STORAGE */
+
+          let result =
+            await sb.storage
+              .from("videos")
+              .upload(
+                videoPath,
+                videoFile,
+                {
+                  upsert: false,
+                  contentType:
+                    videoFile.type
+                }
+              );
+
+
+          if (result.error) {
+
+            throw new Error(
+              result.error.message
+            );
+
+          }
+
+
+          /* THUMBNAIL */
+
+          let thumbnailPath =
+            null;
+
+
+          if (thumbnailFile) {
+
+            const safeThumb =
+              (
+                thumbnailFile.name ||
+                "thumbnail"
+              ).replace(
+                /[^a-zA-Z0-9._-]/g,
+                "_"
+              );
+
+
+            thumbnailPath =
+              currentUser.id +
+              "/" +
+              Date.now() +
+              "-" +
+              safeThumb;
+
+
+            result =
+              await sb.storage
+                .from("thumbnails")
+                .upload(
+                  thumbnailPath,
+                  thumbnailFile,
+                  {
+                    upsert: false,
+                    contentType:
+                      thumbnailFile.type
+                  }
+                );
+
+
+            if (result.error) {
+
+              await sb.storage
+                .from("videos")
+                .remove([
+                  videoPath
+                ]);
+
+
+              throw new Error(
+                result.error.message
+              );
+
+            }
+
+          }
+
+
+          /* FIND CHANNEL */
+
+          const channel =
+            await sb
+              .from("channels")
+              .select("id")
+              .eq(
+                "owner_id",
+                currentUser.id
+              )
+              .limit(1)
+              .maybeSingle();
+
+
+          if (
+            channel.error ||
+            !channel.data
+          ) {
+
+            await sb.storage
+              .from("videos")
+              .remove([
+                videoPath
+              ]);
+
+
+            if (
+              thumbnailPath
+            ) {
+
+              await sb.storage
+                .from("thumbnails")
+                .remove([
+                  thumbnailPath
+                ]);
+
+            }
+
+
+            throw new Error(
+              "Nie znaleziono kanału."
+            );
+
+          }
+
+
+          /* DATABASE */
+
+          result =
+            await sb
+              .from("videos")
+              .insert({
+
+                owner_id:
+                  currentUser.id,
+
+                channel_id:
+                  channel.data.id,
+
+                title:
+                  title,
+
+                video_path:
+                  videoPath,
+
+                thumbnail_path:
+                  thumbnailPath
+
+              });
+
+
+          if (result.error) {
+
+            await sb.storage
+              .from("videos")
+              .remove([
+                videoPath
+              ]);
+
+
+            if (
+              thumbnailPath
+            ) {
+
+              await sb.storage
+                .from("thumbnails")
+                .remove([
+                  thumbnailPath
+                ]);
+
+            }
+
+
+            throw new Error(
+              result.error.message
+            );
+
+          }
+
+
+          msg(
+            status,
+            "Film opublikowany!",
+            true
+          );
+
+
+          $("videoTitle").value =
+            "";
+
+          $("videoFile").value =
+            "";
+
+          $("thumbFile").value =
+            "";
+
+
+          setTimeout(
+            function () {
+
+              closeModal(
+                "uploadModal"
+              );
+
+              loadVideos();
+
+            },
+            700
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "UPLOAD ERROR:",
+            error
+          );
+
+
+          msg(
+            status,
+            error.message
+          );
+
+        }
+
+      };
+
+
+    /* ========================= */
+    /* LOAD VIDEOS */
+    /* ========================= */
+
+    async function loadVideos() {
+
+      const search =
+        $("search")
+          .value
+          .trim();
+
+
+      let query =
+        sb
+          .from("videos")
+          .select("*")
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          );
+
+
+      if (search) {
+
+        query =
+          query.ilike(
+            "title",
+            "%" +
+              search +
+              "%"
+          );
+
+      }
+
+
+      const {
+        data,
+        error
+      } = await query;
+
+
+      const list =
+        $("list");
+
+
+      console.log(
+        "VIDEOS:",
+        data
+      );
+
+
+      console.log(
+        "VIDEO ERROR:",
+        error
+      );
+
+
+      /* ERROR */
+
+      if (error) {
+
+        list.innerHTML = `
+          <div class="empty">
+
+            <h2>
+              Błąd
+            </h2>
+
+            <p class="muted">
+              ${esc(error.message)}
+            </p>
+
+          </div>
+        `;
+
+        return;
+      }
+
+
+      /* NO VIDEOS */
+
+      if (
+        !data ||
+        data.length === 0
+      ) {
+
+        list.innerHTML = `
+          <div class="empty">
+
+            <div class="big">
+              🎬
+            </div>
+
+            <h2>
+              Nie ma jeszcze żadnych filmów
+            </h2>
+
+            <p class="muted">
+              Zaloguj się i wrzuć pierwszy film.
+            </p>
+
+          </div>
+        `;
+
+        return;
+      }
+
+
+      /* VIDEO GRID */
+
+      list.innerHTML = `
+
+        <div class="grid">
+
+          ${data
+            .map(function (videoData) {
+
+              const videoUrl =
+                sb.storage
+                  .from("videos")
+                  .getPublicUrl(
+                    videoData.video_path
+                  )
+                  .data.publicUrl;
+
+
+              let thumbnailUrl =
+                "";
+
+
+              if (
+                videoData.thumbnail_path
+              ) {
+
+                thumbnailUrl =
+                  sb.storage
+                    .from(
+                      "thumbnails"
+                    )
+                    .getPublicUrl(
+                      videoData.thumbnail_path
+                    )
+                    .data.publicUrl;
+
+              }
+
+
+              return `
+
+                <article class="card">
+
+                  <video
+                    class="thumb"
+                    src="${videoUrl}"
+                    ${
+                      thumbnailUrl
+                        ? `poster="${thumbnailUrl}"`
+                        : ""
+                    }
+                    controls
+                    preload="metadata"
+                  ></video>
+
+                  <div class="info">
+
+                    <div class="title">
+                      ${esc(
+                        videoData.title
+                      )}
+                    </div>
+
+                    <div class="meta">
+                      SillyTube
+                    </div>
+
+                  </div>
+
+                </article>
+
+              `;
+
+            })
+            .join("")}
+
+        </div>
+
+      `;
+
+    }
+
+
+    /* ========================= */
+    /* ESCAPE HTML */
+    /* ========================= */
+
+    function esc(value) {
+
+      return String(value)
+        .replace(
+          /[&<>"']/g,
+          function (character) {
+
+            const replacements = {
+
+              "&": "&amp;",
+
+              "<": "&lt;",
+
+              ">": "&gt;",
+
+              '"': "&quot;",
+
+              "'": "&#039;"
+
+            };
+
+
+            return replacements[
+              character
+            ];
+
+          }
+        );
+
+    }
+
+
+    /* ========================= */
+    /* SEARCH */
+    /* ========================= */
+
+    $("search")
+      .addEventListener(
+        "input",
+        loadVideos
+      );
+
+
+    /* ========================= */
+    /* START */
+    /* ========================= */
+
+    init();
+
+  </script>
+
+</body>
+
+</html>
+```
