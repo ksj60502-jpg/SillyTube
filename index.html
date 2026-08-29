@@ -1,55 +1,409 @@
+```html
 <!doctype html>
 <html lang="pl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>SillyTube</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/tus-js-client@4/dist/tus.min.js"></script>
+
   <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
     window.sb = createClient(
       "https://czyklqosqoqxgaxoejpz.supabase.co",
       "sb_publishable_xChRH3i5kMb0ErQALcXKHA_Gogcykzj"
     );
+
     window.dispatchEvent(new Event("supabase-ready"));
   </script>
+
   <style>
-    :root{--bg:#0f0f0f;--panel:#181818;--panel2:#222;--line:#303030;--text:#fff;--muted:#aaa;--accent:#f03;--ok:#5ee68a}
-    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-    button,input,textarea,select{font:inherit}.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:700;cursor:pointer}
-    .red{background:var(--accent);color:#fff}.gray{background:#303030;color:#fff}.btn:disabled{opacity:.55;cursor:not-allowed}
-    header{height:64px;background:#181818;border-bottom:1px solid #292929;display:flex;align-items:center;gap:14px;padding:0 18px;position:sticky;top:0;z-index:30}
-    .logo{font-size:22px;font-weight:800;white-space:nowrap}.logo span{background:#f03;padding:7px 10px;border-radius:9px;margin-right:7px}
-    .free{color:var(--ok);font-weight:800;font-size:13px}.search{flex:1;max-width:650px;margin:auto}.search input{width:100%;background:#101010;color:#fff;border:1px solid #444;border-radius:24px;padding:11px 16px;outline:none}
-    .userbox{display:flex;align-items:center;gap:7px;white-space:nowrap}.balance{color:var(--ok);font-weight:800;font-size:13px}
-    .main{max-width:1280px;margin:auto;padding:22px 18px}.hero{background:linear-gradient(120deg,#25102a,#121c35);border:1px solid #303030;border-radius:18px;padding:25px;margin-bottom:22px}
-    .hero h1{margin:0 0 7px;font-size:34px}.muted{color:var(--muted)}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}.card{background:var(--panel);border-radius:12px;overflow:hidden;border:1px solid transparent}.card:hover{border-color:#444}
-    .thumb{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#292929}.info{padding:13px}.title{font-weight:700;font-size:17px}.description{color:#bbb;margin-top:8px;line-height:1.4;word-break:break-word}.meta{color:#999;font-size:13px;margin-top:8px}
-    .actions{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}.small-btn{padding:7px 10px;border-radius:8px;border:0;background:#303030;color:#fff;cursor:pointer;font-weight:700}
-    .empty{text-align:center;padding:60px 20px;border:1px dashed #444;border-radius:18px;background:#141414}.big{font-size:50px}
-    .modal{display:none;position:fixed;inset:0;background:#000c;z-index:50;align-items:center;justify-content:center;padding:18px}.modal.open{display:flex}
-    .box{width:min(650px,100%);background:#181818;border:1px solid #444;border-radius:18px;padding:23px;max-height:92vh;overflow:auto}
-    .box h2{margin-top:0}.box input,.box textarea,.box select{width:100%;padding:11px;margin:7px 0 13px;background:#101010;color:#fff;border:1px solid #444;border-radius:9px}
-    .box textarea{min-height:110px;resize:vertical}.row{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.status{padding:12px;border-radius:10px;background:#222;margin:10px 0;display:none;white-space:pre-wrap}
-    .tabs{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 18px}.tab{border:0;background:#292929;color:#fff;border-radius:20px;padding:8px 13px;cursor:pointer}.tab.active{background:#fff;color:#111}
-    .watch{background:#181818;border-radius:14px;padding:14px;margin-bottom:18px}.watch video{width:100%;max-height:70vh;background:#000;border-radius:10px}.watch-head{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.comment{border-top:1px solid #333;padding:12px 0}.comment strong{margin-right:8px}.member{border:1px solid #444;background:#202020;border-radius:12px;padding:15px}.member h3{margin:0 0 7px}.price{font-size:20px;font-weight:800;color:var(--ok)}
-    .profile{display:flex;align-items:center;gap:14px;background:#181818;border-radius:14px;padding:18px;margin-bottom:18px}.avatar{width:58px;height:58px;border-radius:50%;background:#333;display:grid;place-items:center;font-size:25px}
-    .hide{display:none!important}@media(max-width:700px){header{padding:0 9px}.free{display:none}.logo{font-size:17px}.search{display:none}.main{padding:14px 10px}.hero h1{font-size:27px}}
+    :root{
+      --bg:#0f0f0f;
+      --panel:#181818;
+      --panel2:#222;
+      --line:#303030;
+      --text:#fff;
+      --muted:#aaa;
+      --accent:#f03;
+      --ok:#5ee68a
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:Arial,sans-serif
+    }
+
+    button,input,textarea,select{font:inherit}
+
+    .btn{
+      border:0;
+      border-radius:10px;
+      padding:10px 15px;
+      font-weight:700;
+      cursor:pointer
+    }
+
+    .red{background:var(--accent);color:#fff}
+    .gray{background:#303030;color:#fff}
+
+    .btn:disabled{
+      opacity:.55;
+      cursor:not-allowed
+    }
+
+    header{
+      height:64px;
+      background:#181818;
+      border-bottom:1px solid #292929;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:0 18px;
+      position:sticky;
+      top:0;
+      z-index:30
+    }
+
+    .logo{
+      font-size:22px;
+      font-weight:800;
+      white-space:nowrap
+    }
+
+    .logo span{
+      background:#f03;
+      padding:7px 10px;
+      border-radius:9px;
+      margin-right:7px
+    }
+
+    .free{
+      color:var(--ok);
+      font-weight:800;
+      font-size:13px
+    }
+
+    .search{
+      flex:1;
+      max-width:650px;
+      margin:auto
+    }
+
+    .search input{
+      width:100%;
+      background:#101010;
+      color:#fff;
+      border:1px solid #444;
+      border-radius:24px;
+      padding:11px 16px;
+      outline:none
+    }
+
+    .userbox{
+      display:flex;
+      align-items:center;
+      gap:7px;
+      white-space:nowrap
+    }
+
+    .balance{
+      color:var(--ok);
+      font-weight:800;
+      font-size:13px
+    }
+
+    .main{
+      max-width:1280px;
+      margin:auto;
+      padding:22px 18px
+    }
+
+    .hero{
+      background:linear-gradient(120deg,#25102a,#121c35);
+      border:1px solid #303030;
+      border-radius:18px;
+      padding:25px;
+      margin-bottom:22px
+    }
+
+    .hero h1{
+      margin:0 0 7px;
+      font-size:34px
+    }
+
+    .muted{color:var(--muted)}
+
+    .toolbar{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:15px
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+      gap:18px
+    }
+
+    .card{
+      background:var(--panel);
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid transparent
+    }
+
+    .card:hover{border-color:#444}
+
+    .thumb{
+      display:block;
+      width:100%;
+      aspect-ratio:16/9;
+      object-fit:cover;
+      background:#292929
+    }
+
+    .info{padding:13px}
+
+    .title{
+      font-weight:700;
+      font-size:17px
+    }
+
+    .description{
+      color:#bbb;
+      margin-top:8px;
+      line-height:1.4;
+      word-break:break-word
+    }
+
+    .meta{
+      color:#999;
+      font-size:13px;
+      margin-top:8px
+    }
+
+    .actions{
+      display:flex;
+      gap:7px;
+      margin-top:12px;
+      flex-wrap:wrap
+    }
+
+    .small-btn{
+      padding:7px 10px;
+      border-radius:8px;
+      border:0;
+      background:#303030;
+      color:#fff;
+      cursor:pointer;
+      font-weight:700
+    }
+
+    .empty{
+      text-align:center;
+      padding:60px 20px;
+      border:1px dashed #444;
+      border-radius:18px;
+      background:#141414
+    }
+
+    .big{font-size:50px}
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:#000c;
+      z-index:50;
+      align-items:center;
+      justify-content:center;
+      padding:18px
+    }
+
+    .modal.open{display:flex}
+
+    .box{
+      width:min(650px,100%);
+      background:#181818;
+      border:1px solid #444;
+      border-radius:18px;
+      padding:23px;
+      max-height:92vh;
+      overflow:auto
+    }
+
+    .box h2{margin-top:0}
+
+    .box input,
+    .box textarea,
+    .box select{
+      width:100%;
+      padding:11px;
+      margin:7px 0 13px;
+      background:#101010;
+      color:#fff;
+      border:1px solid #444;
+      border-radius:9px
+    }
+
+    .box textarea{
+      min-height:110px;
+      resize:vertical
+    }
+
+    .row{
+      display:flex;
+      gap:8px;
+      justify-content:flex-end;
+      flex-wrap:wrap
+    }
+
+    .status{
+      padding:12px;
+      border-radius:10px;
+      background:#222;
+      margin:10px 0;
+      display:none;
+      white-space:pre-wrap
+    }
+
+    .progress-wrap{
+      display:none;
+      margin:12px 0
+    }
+
+    .progress{
+      width:100%;
+      height:16px;
+      background:#303030;
+      border-radius:20px;
+      overflow:hidden
+    }
+
+    .progress-bar{
+      width:0%;
+      height:100%;
+      background:#f03;
+      transition:width .2s
+    }
+
+    .progress-text{
+      margin-top:7px;
+      text-align:center;
+      font-weight:700
+    }
+
+    .tabs{
+      display:flex;
+      gap:7px;
+      flex-wrap:wrap;
+      margin:0 0 18px
+    }
+
+    .tab{
+      border:0;
+      background:#292929;
+      color:#fff;
+      border-radius:20px;
+      padding:8px 13px;
+      cursor:pointer
+    }
+
+    .tab.active{
+      background:#fff;
+      color:#111
+    }
+
+    .comment{
+      border-top:1px solid #333;
+      padding:12px 0
+    }
+
+    .comment strong{margin-right:8px}
+
+    .member{
+      border:1px solid #444;
+      background:#202020;
+      border-radius:12px;
+      padding:15px
+    }
+
+    .member h3{margin:0 0 7px}
+
+    .price{
+      font-size:20px;
+      font-weight:800;
+      color:var(--ok)
+    }
+
+    .profile{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      background:#181818;
+      border-radius:14px;
+      padding:18px;
+      margin-bottom:18px
+    }
+
+    .avatar{
+      width:58px;
+      height:58px;
+      border-radius:50%;
+      background:#333;
+      display:grid;
+      place-items:center;
+      font-size:25px
+    }
+
+    .hide{display:none!important}
+
+    @media(max-width:700px){
+      header{padding:0 9px}
+      .free{display:none}
+      .logo{font-size:17px}
+      .search{display:none}
+      .main{padding:14px 10px}
+      .hero h1{font-size:27px}
+    }
   </style>
 </head>
+
 <body>
+
 <header>
   <div class="logo"><span>▶</span>SillyTube</div>
   <div class="free">100% FREE</div>
-  <div class="search"><input id="search" placeholder="Szukaj filmów..."></div>
-  <div id="account"><button class="btn gray" id="loginBtn">Zaloguj się</button></div>
+
+  <div class="search">
+    <input id="search" placeholder="Szukaj filmów...">
+  </div>
+
+  <div id="account">
+    <button class="btn gray" id="loginBtn">Zaloguj się</button>
+  </div>
 </header>
 
 <main class="main">
+
   <section class="hero">
     <h1>SillyTube 🎬</h1>
+
     <p>Darmowa platforma wideo dla twórców.</p>
-    <p class="muted">Subskrypcje i członkostwa używają <b>wirtualnego salda</b> — to nie są prawdziwe pieniądze.</p>
+
+    <p class="muted">
+      Subskrypcje i członkostwa używają
+      <b>wirtualnego salda</b> — to nie są prawdziwe pieniądze.
+    </p>
+
     <div class="toolbar">
       <button class="btn red" id="uploadBtn">⬆ Upload filmu</button>
       <button class="btn gray" id="codeBtn">🎟 Kod</button>
@@ -67,187 +421,1846 @@
   <section id="profileArea"></section>
   <section id="watchArea"></section>
   <section id="list"></section>
+
 </main>
 
-<div class="modal" id="authModal"><div class="box">
-  <h2 id="authTitle">Zaloguj się</h2>
-  <input id="authEmail" type="email" placeholder="E-mail">
-  <input id="authPass" type="password" placeholder="Hasło (min. 6 znaków)">
-  <div class="row"><button class="btn gray" onclick="closeModal('authModal')">Anuluj</button><button class="btn red" id="authAction">Zaloguj</button></div>
-  <p class="muted" id="authSwitch">Nie masz konta? <button class="btn gray" id="switchAuth">Załóż konto</button></p>
-  <div class="status" id="authStatus"></div>
-</div></div>
 
-<div class="modal" id="uploadModal"><div class="box">
-  <h2>Upload filmu</h2>
-  <input id="videoTitle" placeholder="Tytuł filmu">
-  <textarea id="videoDescription" placeholder="Opis filmu..."></textarea>
-  <label class="muted">Film</label><input id="videoFile" type="file" accept="video/*">
-  <div class="muted" id="videoFileInfo"></div>
-  <label class="muted">Miniaturka</label><input id="thumbFile" type="file" accept="image/jpeg,image/png,image/gif,image/webp">
-  <div class="status" id="uploadStatus"></div>
-  <div class="row"><button class="btn gray" onclick="closeModal('uploadModal')">Anuluj</button><button class="btn red" id="publish">Opublikuj</button></div>
-</div></div>
+<!-- LOGIN -->
 
-<div class="modal" id="codeModal"><div class="box">
-  <h2>Wpisz kod</h2><input id="promoCode" placeholder="Np. SILLY10">
-  <div class="row"><button class="btn gray" onclick="closeModal('codeModal')">Anuluj</button><button class="btn red" id="redeem">Zrealizuj</button></div>
-  <div class="status" id="codeStatus"></div>
-</div></div>
+<div class="modal" id="authModal">
+  <div class="box">
 
-<div class="modal" id="membershipModal"><div class="box">
-  <h2>⭐ Członkostwo kanału</h2>
-  <p id="membershipChannel" class="muted"></p>
-  <select id="membershipTier"><option value="5">Fan — 5 zł / miesiąc</option><option value="10">Super Fan — 10 zł / miesiąc</option><option value="20">VIP — 20 zł / miesiąc</option></select>
-  <div class="status" id="membershipStatus"></div>
-  <div class="row"><button class="btn gray" onclick="closeModal('membershipModal')">Anuluj</button><button class="btn red" id="joinMembership">Dołącz</button></div>
-</div></div>
+    <h2 id="authTitle">Zaloguj się</h2>
 
-<div class="modal" id="commentsModal"><div class="box">
-  <h2>Komentarze</h2>
-  <div id="commentsList"></div>
-  <textarea id="commentText" placeholder="Napisz komentarz..."></textarea>
-  <div class="row"><button class="btn gray" onclick="closeModal('commentsModal')">Zamknij</button><button class="btn red" id="sendComment">Dodaj komentarz</button></div>
-  <div class="status" id="commentStatus"></div>
-</div></div>
+    <input id="authEmail" type="email" placeholder="E-mail">
+
+    <input
+      id="authPass"
+      type="password"
+      placeholder="Hasło (min. 6 znaków)"
+    >
+
+    <div class="row">
+      <button
+        class="btn gray"
+        onclick="closeModal('authModal')"
+      >
+        Anuluj
+      </button>
+
+      <button
+        class="btn red"
+        id="authAction"
+      >
+        Zaloguj
+      </button>
+    </div>
+
+    <p class="muted" id="authSwitch">
+      Nie masz konta?
+      <button class="btn gray" id="switchAuth">
+        Załóż konto
+      </button>
+    </p>
+
+    <div class="status" id="authStatus"></div>
+
+  </div>
+</div>
+
+
+<!-- UPLOAD -->
+
+<div class="modal" id="uploadModal">
+  <div class="box">
+
+    <h2>Upload filmu</h2>
+
+    <p class="muted">
+      Maksymalny rozmiar filmu: <b>10 GB</b>
+    </p>
+
+    <input
+      id="videoTitle"
+      placeholder="Tytuł filmu"
+    >
+
+    <textarea
+      id="videoDescription"
+      placeholder="Opis filmu..."
+    ></textarea>
+
+    <label class="muted">Film</label>
+
+    <input
+      id="videoFile"
+      type="file"
+      accept="video/*"
+    >
+
+    <div class="muted" id="videoFileInfo"></div>
+
+    <label class="muted">Miniaturka</label>
+
+    <input
+      id="thumbFile"
+      type="file"
+      accept="image/jpeg,image/png,image/gif,image/webp"
+    >
+
+    <div class="progress-wrap" id="uploadProgressWrap">
+
+      <div class="progress">
+        <div
+          class="progress-bar"
+          id="uploadProgressBar"
+        ></div>
+      </div>
+
+      <div
+        class="progress-text"
+        id="uploadProgressText"
+      >
+        0%
+      </div>
+
+    </div>
+
+    <div class="status" id="uploadStatus"></div>
+
+    <div class="row">
+
+      <button
+        class="btn gray"
+        onclick="closeModal('uploadModal')"
+      >
+        Anuluj
+      </button>
+
+      <button
+        class="btn red"
+        id="publish"
+      >
+        Opublikuj
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- PROMO -->
+
+<div class="modal" id="codeModal">
+  <div class="box">
+
+    <h2>Wpisz kod</h2>
+
+    <input
+      id="promoCode"
+      placeholder="Np. SILLY10"
+    >
+
+    <div class="row">
+
+      <button
+        class="btn gray"
+        onclick="closeModal('codeModal')"
+      >
+        Anuluj
+      </button>
+
+      <button
+        class="btn red"
+        id="redeem"
+      >
+        Zrealizuj
+      </button>
+
+    </div>
+
+    <div class="status" id="codeStatus"></div>
+
+  </div>
+</div>
+
+
+<!-- MEMBERSHIP -->
+
+<div class="modal" id="membershipModal">
+  <div class="box">
+
+    <h2>⭐ Członkostwo kanału</h2>
+
+    <p id="membershipChannel" class="muted"></p>
+
+    <select id="membershipTier">
+
+      <option value="5">
+        Fan — 5 zł / miesiąc
+      </option>
+
+      <option value="10">
+        Super Fan — 10 zł / miesiąc
+      </option>
+
+      <option value="20">
+        VIP — 20 zł / miesiąc
+      </option>
+
+    </select>
+
+    <div
+      class="status"
+      id="membershipStatus"
+    ></div>
+
+    <div class="row">
+
+      <button
+        class="btn gray"
+        onclick="closeModal('membershipModal')"
+      >
+        Anuluj
+      </button>
+
+      <button
+        class="btn red"
+        id="joinMembership"
+      >
+        Dołącz
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- COMMENTS -->
+
+<div class="modal" id="commentsModal">
+  <div class="box">
+
+    <h2>Komentarze</h2>
+
+    <div id="commentsList"></div>
+
+    <textarea
+      id="commentText"
+      placeholder="Napisz komentarz..."
+    ></textarea>
+
+    <div class="row">
+
+      <button
+        class="btn gray"
+        onclick="closeModal('commentsModal')"
+      >
+        Zamknij
+      </button>
+
+      <button
+        class="btn red"
+        id="sendComment"
+      >
+        Dodaj komentarz
+      </button>
+
+    </div>
+
+    <div
+      class="status"
+      id="commentStatus"
+    ></div>
+
+  </div>
+</div>
+
 
 <script>
-let currentUser=null, authMode="login", activeTab="home", activeVideoId=null, activeChannelId=null;
-const $=id=>document.getElementById(id);
-const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-function openModal(id){$(id).classList.add("open")} function closeModal(id){$(id).classList.remove("open")}
-function msg(el,text,ok=false){el.style.display="block";el.textContent=text;el.style.color=ok?"#5ee68a":"#ff8a8a"}
-function requireAuth(){if(!currentUser){openAuth();return false}return true}
-function openAuth(){openModal("authModal")}
-function avatarLetter(){return (currentUser?.email?.[0]||"U").toUpperCase()}
+
+let currentUser=null;
+let authMode="login";
+let activeTab="home";
+let activeVideoId=null;
+let activeChannelId=null;
+
+const MAX_VIDEO_SIZE = 10 * 1024 * 1024 * 1024;
+
+const $ = id => document.getElementById(id);
+
+const esc = v =>
+  String(v ?? "").replace(
+    /[&<>"']/g,
+    m => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    }[m])
+  );
+
+function openModal(id){
+  $(id).classList.add("open");
+}
+
+function closeModal(id){
+  $(id).classList.remove("open");
+}
+
+function msg(el,text,ok=false){
+  el.style.display="block";
+  el.textContent=text;
+  el.style.color=ok ? "#5ee68a" : "#ff8a8a";
+}
+
+function requireAuth(){
+  if(!currentUser){
+    openAuth();
+    return false;
+  }
+
+  return true;
+}
+
+function openAuth(){
+  openModal("authModal");
+}
+
+function avatarLetter(){
+  return (
+    currentUser?.email?.[0] || "U"
+  ).toUpperCase();
+}
+
+
+/* INIT */
 
 async function init(){
-  const {data}=await sb.auth.getSession(); currentUser=data.session?.user||null;
-  sb.auth.onAuthStateChange((_e,session)=>{currentUser=session?.user||null;renderAccount();loadVideos();});
-  renderAccount(); loadVideos();
+
+  const {data} = await sb.auth.getSession();
+
+  currentUser =
+    data.session?.user || null;
+
+  sb.auth.onAuthStateChange(
+    (_e,session)=>{
+      currentUser =
+        session?.user || null;
+
+      renderAccount();
+      loadVideos();
+    }
+  );
+
+  renderAccount();
+  loadVideos();
 }
+
+
+/* ACCOUNT */
+
 function renderAccount(){
-  const a=$("account");
-  if(!currentUser){a.innerHTML='<button class="btn gray" id="loginBtn">Zaloguj się</button>'; $("loginBtn").onclick=openAuth; return}
-  a.innerHTML=`<div class="userbox"><span class="balance" id="bal">🪙 ...</span><button class="btn gray" id="accountBtn">👤 Konto</button><button class="btn gray" id="logout">Wyloguj</button></div>`;
-  $("accountBtn").onclick=showMyProfile; $("logout").onclick=async()=>{await sb.auth.signOut();}; loadBalance();
+
+  const a = $("account");
+
+  if(!currentUser){
+
+    a.innerHTML =
+      '<button class="btn gray" id="loginBtn">Zaloguj się</button>';
+
+    $("loginBtn").onclick=openAuth;
+
+    return;
+  }
+
+  a.innerHTML = `
+
+    <div class="userbox">
+
+      <span
+        class="balance"
+        id="bal"
+      >
+        🪙 ...
+      </span>
+
+      <button
+        class="btn gray"
+        id="accountBtn"
+      >
+        👤 Konto
+      </button>
+
+      <button
+        class="btn gray"
+        id="logout"
+      >
+        Wyloguj
+      </button>
+
+    </div>
+
+  `;
+
+  $("accountBtn").onclick=showMyProfile;
+
+  $("logout").onclick=async()=>{
+    await sb.auth.signOut();
+  };
+
+  loadBalance();
 }
-$("authAction").onclick=async()=>{
-  const email=$("authEmail").value.trim(), password=$("authPass").value, status=$("authStatus");
-  if(!email||password.length<6)return msg(status,"Podaj e-mail i hasło (minimum 6 znaków).");
-  const redirectTo=location.origin+location.pathname;
-  const result=authMode==="login"
-    ? await sb.auth.signInWithPassword({email,password})
-    : await sb.auth.signUp({email,password,options:{emailRedirectTo:redirectTo}});
-  if(result.error)return msg(status,result.error.message);
-  if(authMode==="signup" && !result.data.session){msg(status,"Konto utworzone. Sprawdź e-mail i kliknij potwierdzenie.",true);return}
+
+
+/* AUTH */
+
+$("authAction").onclick = async()=>{
+
+  const email =
+    $("authEmail").value.trim();
+
+  const password =
+    $("authPass").value;
+
+  const status =
+    $("authStatus");
+
+  if(
+    !email ||
+    password.length < 6
+  ){
+    return msg(
+      status,
+      "Podaj e-mail i hasło (minimum 6 znaków)."
+    );
+  }
+
+  const redirectTo =
+    location.origin + location.pathname;
+
+  const result =
+    authMode==="login"
+
+      ? await sb.auth.signInWithPassword({
+          email,
+          password
+        })
+
+      : await sb.auth.signUp({
+          email,
+          password,
+          options:{
+            emailRedirectTo:redirectTo
+          }
+        });
+
+  if(result.error){
+    return msg(
+      status,
+      result.error.message
+    );
+  }
+
+  if(
+    authMode==="signup" &&
+    !result.data.session
+  ){
+
+    msg(
+      status,
+      "Konto utworzone. Sprawdź e-mail i kliknij potwierdzenie.",
+      true
+    );
+
+    return;
+  }
+
   closeModal("authModal");
 };
-$("switchAuth").onclick=()=>{authMode=authMode==="login"?"signup":"login";$("authTitle").textContent=authMode==="login"?"Zaloguj się":"Załóż konto";$("authAction").textContent=authMode==="login"?"Zaloguj":"Zarejestruj";$("authSwitch").firstChild.textContent=authMode==="login"?"Nie masz konta? ":"Masz już konto? "};
+
+
+$("switchAuth").onclick=()=>{
+
+  authMode =
+    authMode==="login"
+      ? "signup"
+      : "login";
+
+  $("authTitle").textContent =
+    authMode==="login"
+      ? "Zaloguj się"
+      : "Załóż konto";
+
+  $("authAction").textContent =
+    authMode==="login"
+      ? "Zaloguj"
+      : "Zarejestruj";
+
+  $("authSwitch").firstChild.textContent =
+    authMode==="login"
+      ? "Nie masz konta? "
+      : "Masz już konto? ";
+};
+
+
+/* BALANCE */
 
 async function loadBalance(){
-  if(!currentUser)return; const r=await sb.from("profiles").select("psc_balance,username").eq("id",currentUser.id).maybeSingle();
-  if(r.data&&$("bal"))$("bal").textContent="🪙 "+Number(r.data.psc_balance||0).toFixed(2)+" zł";
+
+  if(!currentUser)return;
+
+  const r =
+    await sb
+      .from("profiles")
+      .select("psc_balance,username")
+      .eq("id",currentUser.id)
+      .maybeSingle();
+
+  if(
+    r.data &&
+    $("bal")
+  ){
+
+    $("bal").textContent =
+      "🪙 " +
+      Number(
+        r.data.psc_balance || 0
+      ).toFixed(2) +
+      " zł";
+  }
 }
+
+
+/* CHANNEL */
+
 async function getOrCreateChannel(){
-  if(!currentUser)throw new Error("Musisz być zalogowany.");
-  let r=await sb.from("channels").select("id,name,owner_id").eq("owner_id",currentUser.id).limit(1).maybeSingle();
-  if(r.error)throw new Error(r.error.message); if(r.data)return r.data;
-  const username=currentUser.user_metadata?.username||currentUser.email?.split("@")[0]||"Użytkownik";
-  r=await sb.from("channels").insert({owner_id:currentUser.id,name:username+" - kanał",description:"Kanał SillyTube"}).select("id,name,owner_id").single();
-  if(r.error)throw new Error("Nie udało się utworzyć kanału: "+r.error.message); return r.data;
+
+  if(!currentUser){
+    throw new Error(
+      "Musisz być zalogowany."
+    );
+  }
+
+  let r =
+    await sb
+      .from("channels")
+      .select("id,name,owner_id")
+      .eq("owner_id",currentUser.id)
+      .limit(1)
+      .maybeSingle();
+
+  if(r.error){
+    throw new Error(r.error.message);
+  }
+
+  if(r.data){
+    return r.data;
+  }
+
+  const username =
+    currentUser.user_metadata?.username ||
+    currentUser.email?.split("@")[0] ||
+    "Użytkownik";
+
+  r =
+    await sb
+      .from("channels")
+      .insert({
+        owner_id:currentUser.id,
+        name:username+" - kanał",
+        description:"Kanał SillyTube"
+      })
+      .select("id,name,owner_id")
+      .single();
+
+  if(r.error){
+
+    throw new Error(
+      "Nie udało się utworzyć kanału: " +
+      r.error.message
+    );
+  }
+
+  return r.data;
 }
-$("uploadBtn").onclick=()=>{if(requireAuth())openModal("uploadModal")};
-$("myChannelBtn").onclick=()=>{if(requireAuth())showMyProfile()};
-$("codeBtn").onclick=()=>{if(requireAuth())openModal("codeModal")};
-$("videoFile").onchange=()=>{const f=$("videoFile").files[0];$("videoFileInfo").textContent=f?`Wybrano: ${f.name} (${(f.size/1048576).toFixed(1)} MB)`:""};
+
+
+/* BUTTONS */
+
+$("uploadBtn").onclick=()=>{
+  if(requireAuth()){
+    openModal("uploadModal");
+  }
+};
+
+$("myChannelBtn").onclick=()=>{
+  if(requireAuth()){
+    showMyProfile();
+  }
+};
+
+$("codeBtn").onclick=()=>{
+  if(requireAuth()){
+    openModal("codeModal");
+  }
+};
+
+
+/* FILE INFO */
+
+$("videoFile").onchange=()=>{
+
+  const f =
+    $("videoFile").files[0];
+
+  $("videoFileInfo").textContent =
+    f
+      ? `Wybrano: ${f.name} (${(f.size/1073741824).toFixed(2)} GB)`
+      : "";
+};
+
+
+/* TUS UPLOAD */
+
+async function uploadLargeFile(
+  file,
+  path,
+  bucket,
+  contentType,
+  onProgress
+){
+
+  const {
+    data:{
+      session
+    }
+  } =
+    await sb.auth.getSession();
+
+  if(!session){
+    throw new Error(
+      "Sesja wygasła. Zaloguj się ponownie."
+    );
+  }
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const upload =
+        new tus.Upload(
+          file,
+          {
+
+            endpoint:
+              "https://czyklqosqoqxgaxoejpz.storage.supabase.co/storage/v1/upload/resumable",
+
+            retryDelays:[
+              0,
+              3000,
+              5000,
+              10000,
+              20000
+            ],
+
+            headers:{
+              authorization:
+                "Bearer " +
+                session.access_token,
+
+              "x-upsert":
+                "false"
+            },
+
+            metadata:{
+              bucketName:bucket,
+              objectName:path,
+              contentType:
+                contentType ||
+                "application/octet-stream",
+              cacheControl:"3600"
+            },
+
+            chunkSize:
+              6 * 1024 * 1024,
+
+            uploadDataDuringCreation:true,
+
+            removeFingerprintOnSuccess:true,
+
+            onError(error){
+
+              reject(
+                new Error(
+                  error?.message ||
+                  "Błąd uploadu."
+                )
+              );
+            },
+
+            onProgress(bytesUploaded,bytesTotal){
+
+              const percent =
+                Math.floor(
+                  (bytesUploaded /
+                  bytesTotal) * 100
+                );
+
+              if(onProgress){
+                onProgress(
+                  percent,
+                  bytesUploaded,
+                  bytesTotal
+                );
+              }
+            },
+
+            onSuccess(){
+
+              resolve(true);
+            }
+
+          }
+        );
+
+      upload.start();
+
+    }
+  );
+}
+
+
+/* PUBLISH */
 
 $("publish").onclick=async()=>{
-  const title=$("videoTitle").value.trim(),description=$("videoDescription").value.trim(),vf=$("videoFile").files[0],tf=$("thumbFile").files[0],status=$("uploadStatus"),btn=$("publish");
-  if(!currentUser)return msg(status,"Musisz być zalogowany."); if(!title)return msg(status,"Podaj tytuł filmu."); if(!vf)return msg(status,"Wybierz film.");
-  if(vf.size>500*1024*1024)return msg(status,"Film jest większy niż 500 MB.");
-  btn.disabled=true; let vp=null,tp=null;
+
+  const title =
+    $("videoTitle").value.trim();
+
+  const description =
+    $("videoDescription").value.trim();
+
+  const vf =
+    $("videoFile").files[0];
+
+  const tf =
+    $("thumbFile").files[0];
+
+  const status =
+    $("uploadStatus");
+
+  const btn =
+    $("publish");
+
+  const progressWrap =
+    $("uploadProgressWrap");
+
+  const progressBar =
+    $("uploadProgressBar");
+
+  const progressText =
+    $("uploadProgressText");
+
+  if(!currentUser){
+    return msg(
+      status,
+      "Musisz być zalogowany."
+    );
+  }
+
+  if(!title){
+    return msg(
+      status,
+      "Podaj tytuł filmu."
+    );
+  }
+
+  if(!vf){
+    return msg(
+      status,
+      "Wybierz film."
+    );
+  }
+
+  if(vf.size > MAX_VIDEO_SIZE){
+
+    return msg(
+      status,
+      "Film jest większy niż 10 GB."
+    );
+  }
+
+  btn.disabled=true;
+
+  progressWrap.style.display="block";
+
+  let vp=null;
+  let tp=null;
+
   try{
-    msg(status,"Sprawdzanie kanału...");const ch=await getOrCreateChannel();
-    const safe=(vf.name||"video").replace(/[^a-zA-Z0-9._-]/g,"_");vp=`${currentUser.id}/${Date.now()}-${safe}`;
-    msg(status,"Wysyłanie filmu...");
-    let r=await sb.storage.from("videos").upload(vp,vf,{upsert:false,contentType:vf.type||"video/mp4"});
-    if(r.error)throw new Error("Błąd uploadu filmu: "+r.error.message);
+
+    msg(
+      status,
+      "Sprawdzanie kanału..."
+    );
+
+    const ch =
+      await getOrCreateChannel();
+
+    const safe =
+      (vf.name || "video")
+        .replace(
+          /[^a-zA-Z0-9._-]/g,
+          "_"
+        );
+
+    vp =
+      `${currentUser.id}/${Date.now()}-${safe}`;
+
+    msg(
+      status,
+      "Wysyłanie filmu... Nie zamykaj karty."
+    );
+
+    await uploadLargeFile(
+      vf,
+      vp,
+      "videos",
+      vf.type || "video/mp4",
+      (percent)=>{
+
+        progressBar.style.width =
+          percent + "%";
+
+        progressText.textContent =
+          "Upload filmu: " +
+          percent +
+          "%";
+
+      }
+    );
+
+    progressBar.style.width="100%";
+
+    progressText.textContent =
+      "Film wysłany — 100%";
+
     if(tf){
-      const ts=(tf.name||"thumbnail").replace(/[^a-zA-Z0-9._-]/g,"_");tp=`${currentUser.id}/${Date.now()}-${ts}`;
-      r=await sb.storage.from("thumbnails").upload(tp,tf,{upsert:false,contentType:tf.type});
-      if(r.error){await sb.storage.from("videos").remove([vp]);throw new Error("Błąd miniaturki: "+r.error.message)}
+
+      msg(
+        status,
+        "Wysyłanie miniaturki..."
+      );
+
+      const ts =
+        (tf.name || "thumbnail")
+          .replace(
+            /[^a-zA-Z0-9._-]/g,
+            "_"
+          );
+
+      tp =
+        `${currentUser.id}/${Date.now()}-${ts}`;
+
+      const r =
+        await sb
+          .storage
+          .from("thumbnails")
+          .upload(
+            tp,
+            tf,
+            {
+              upsert:false,
+              contentType:
+                tf.type
+            }
+          );
+
+      if(r.error){
+
+        await sb
+          .storage
+          .from("videos")
+          .remove([vp]);
+
+        throw new Error(
+          "Błąd miniaturki: " +
+          r.error.message
+        );
+      }
     }
-    r=await sb.from("videos").insert({owner_id:currentUser.id,channel_id:ch.id,title,description,video_path:vp,thumbnail_path:tp});
-    if(r.error){await sb.storage.from("videos").remove([vp]);if(tp)await sb.storage.from("thumbnails").remove([tp]);throw new Error("Nie udało się zapisać filmu: "+r.error.message)}
-    msg(status,"Film opublikowany! 🎉",true);setTimeout(()=>{closeModal("uploadModal");["videoTitle","videoDescription","videoFile","thumbFile"].forEach(id=>$(id).value="");loadVideos()},700);
-  }catch(e){msg(status,e.message||"Nieznany błąd.")}finally{btn.disabled=false}
+
+    msg(
+      status,
+      "Zapisywanie filmu..."
+    );
+
+    const r =
+      await sb
+        .from("videos")
+        .insert({
+          owner_id:currentUser.id,
+          channel_id:ch.id,
+          title,
+          description,
+          video_path:vp,
+          thumbnail_path:tp
+        });
+
+    if(r.error){
+
+      await sb
+        .storage
+        .from("videos")
+        .remove([vp]);
+
+      if(tp){
+
+        await sb
+          .storage
+          .from("thumbnails")
+          .remove([tp]);
+      }
+
+      throw new Error(
+        "Nie udało się zapisać filmu: " +
+        r.error.message
+      );
+    }
+
+    msg(
+      status,
+      "Film opublikowany! 🎉",
+      true
+    );
+
+    setTimeout(
+      ()=>{
+        closeModal("uploadModal");
+
+        [
+          "videoTitle",
+          "videoDescription",
+          "videoFile",
+          "thumbFile"
+        ].forEach(
+          id=>{
+            $(id).value="";
+          }
+        );
+
+        progressWrap.style.display="none";
+        progressBar.style.width="0%";
+        progressText.textContent="0%";
+        status.style.display="none";
+
+        loadVideos();
+
+      },
+      900
+    );
+
+  }catch(e){
+
+    msg(
+      status,
+      e.message ||
+      "Nieznany błąd."
+    );
+
+  }finally{
+
+    btn.disabled=false;
+
+  }
 };
 
+
+/* VIDEOS */
+
 async function loadVideos(){
-  const q=$("search").value.trim(); let query=sb.from("videos").select("*").order("created_at",{ascending:false});
-  if(q)query=query.ilike("title","%"+q+"%");
-  const r=await query,list=$("list"); if(r.error){list.innerHTML=`<div class="empty"><div class="big">⚠️</div><h2>Błąd ładowania filmów</h2><p class="muted">${esc(r.error.message)}</p></div>`;return}
-  let videos=r.data||[];
-  if(activeTab==="subscriptions"&&currentUser){
-    const s=await sb.from("subscriptions").select("channel_id").eq("subscriber_id",currentUser.id);const ids=(s.data||[]).map(x=>x.channel_id);videos=ids.length?videos.filter(v=>ids.includes(v.channel_id)):[];
+
+  const q =
+    $("search").value.trim();
+
+  let query =
+    sb
+      .from("videos")
+      .select("*")
+      .order(
+        "created_at",
+        {ascending:false}
+      );
+
+  if(q){
+
+    query =
+      query.ilike(
+        "title",
+        "%" + q + "%"
+      );
   }
-  if(!videos.length){list.innerHTML=`<div class="empty"><div class="big">🎬</div><h2>Nie ma jeszcze filmów</h2><p class="muted">${activeTab==="subscriptions"?"Zasubskrybuj kanał, aby zobaczyć jego filmy.":"Zaloguj się i wrzuć pierwszy film."}</p></div>`;return}
-  const ids=[...new Set(videos.map(v=>v.channel_id).filter(Boolean))];let channels=[];
-  if(ids.length){const cr=await sb.from("channels").select("id,name,owner_id").in("id",ids);channels=cr.data||[]}
-  const cmap=Object.fromEntries(channels.map(c=>[c.id,c]));
-  const likeCounts=await Promise.all(videos.map(v=>sb.from("video_likes").select("id",{count:"exact",head:true}).eq("video_id",v.id)));
-  list.innerHTML=`<div class="grid">${videos.map((v,i)=>{
-    const vu=sb.storage.from("videos").getPublicUrl(v.video_path).data.publicUrl;
-    const tu=v.thumbnail_path?sb.storage.from("thumbnails").getPublicUrl(v.thumbnail_path).data.publicUrl:"";
-    const c=cmap[v.channel_id],likes=likeCounts[i]?.count||0;
-    return `<article class="card"><video class="thumb" src="${esc(vu)}" ${tu?`poster="${esc(tu)}"`:""} controls preload="metadata"></video><div class="info"><div class="title">${esc(v.title)}</div>${v.description?`<div class="description">${esc(v.description)}</div>`:""}<div class="meta">${esc(c?.name||"SillyTube")} · ${v.created_at?new Date(v.created_at).toLocaleDateString("pl-PL"):""}</div><div class="actions"><button class="small-btn" onclick="likeVideo('${v.id}')">👍 ${likes}</button><button class="small-btn" onclick="openComments('${v.id}')">💬 Komentarze</button>${v.channel_id?`<button class="small-btn" onclick="subscribe('${v.channel_id}')">🔔 Sub</button><button class="small-btn" onclick="openMembership('${v.channel_id}','${esc(c?.name||"Kanał")}')">⭐ Membership</button>`:""}</div></div></article>`;
-  }).join("")}</div>`;
+
+  const r =
+    await query;
+
+  const list =
+    $("list");
+
+  if(r.error){
+
+    list.innerHTML = `
+      <div class="empty">
+        <div class="big">⚠️</div>
+        <h2>Błąd ładowania filmów</h2>
+        <p class="muted">
+          ${esc(r.error.message)}
+        </p>
+      </div>
+    `;
+
+    return;
+  }
+
+  let videos =
+    r.data || [];
+
+  if(
+    activeTab==="subscriptions" &&
+    currentUser
+  ){
+
+    const s =
+      await sb
+        .from("subscriptions")
+        .select("channel_id")
+        .eq(
+          "subscriber_id",
+          currentUser.id
+        );
+
+    const ids =
+      (s.data || [])
+        .map(x=>x.channel_id);
+
+    videos =
+      ids.length
+        ? videos.filter(
+            v=>ids.includes(
+              v.channel_id
+            )
+          )
+        : [];
+  }
+
+  if(!videos.length){
+
+    list.innerHTML = `
+      <div class="empty">
+        <div class="big">🎬</div>
+        <h2>Nie ma jeszcze filmów</h2>
+
+        <p class="muted">
+          ${
+            activeTab==="subscriptions"
+              ? "Zasubskrybuj kanał, aby zobaczyć jego filmy."
+              : "Zaloguj się i wrzuć pierwszy film."
+          }
+        </p>
+
+      </div>
+    `;
+
+    return;
+  }
+
+  const ids =
+    [
+      ...new Set(
+        videos
+          .map(v=>v.channel_id)
+          .filter(Boolean)
+      )
+    ];
+
+  let channels=[];
+
+  if(ids.length){
+
+    const cr =
+      await sb
+        .from("channels")
+        .select(
+          "id,name,owner_id"
+        )
+        .in(
+          "id",
+          ids
+        );
+
+    channels =
+      cr.data || [];
+  }
+
+  const cmap =
+    Object.fromEntries(
+      channels.map(
+        c=>[c.id,c]
+      )
+    );
+
+  const likeCounts =
+    await Promise.all(
+      videos.map(
+        v =>
+          sb
+            .from("video_likes")
+            .select(
+              "id",
+              {
+                count:"exact",
+                head:true
+              }
+            )
+            .eq(
+              "video_id",
+              v.id
+            )
+      )
+    );
+
+  list.innerHTML = `
+    <div class="grid">
+
+      ${videos.map((v,i)=>{
+
+        const vu =
+          sb.storage
+            .from("videos")
+            .getPublicUrl(
+              v.video_path
+            )
+            .data.publicUrl;
+
+        const tu =
+          v.thumbnail_path
+            ? sb.storage
+                .from("thumbnails")
+                .getPublicUrl(
+                  v.thumbnail_path
+                )
+                .data.publicUrl
+            : "";
+
+        const c =
+          cmap[v.channel_id];
+
+        const likes =
+          likeCounts[i]?.count || 0;
+
+        return `
+
+          <article class="card">
+
+            <video
+              class="thumb"
+              src="${esc(vu)}"
+              ${
+                tu
+                  ? `poster="${esc(tu)}"`
+                  : ""
+              }
+              controls
+              preload="metadata"
+            ></video>
+
+            <div class="info">
+
+              <div class="title">
+                ${esc(v.title)}
+              </div>
+
+              ${
+                v.description
+                  ? `
+                    <div class="description">
+                      ${esc(v.description)}
+                    </div>
+                  `
+                  : ""
+              }
+
+              <div class="meta">
+                ${esc(c?.name || "SillyTube")}
+                ·
+                ${
+                  v.created_at
+                    ? new Date(
+                        v.created_at
+                      ).toLocaleDateString(
+                        "pl-PL"
+                      )
+                    : ""
+                }
+              </div>
+
+              <div class="actions">
+
+                <button
+                  class="small-btn"
+                  onclick="likeVideo('${v.id}')"
+                >
+                  👍 ${likes}
+                </button>
+
+                <button
+                  class="small-btn"
+                  onclick="openComments('${v.id}')"
+                >
+                  💬 Komentarze
+                </button>
+
+                ${
+                  v.channel_id
+                    ? `
+                      <button
+                        class="small-btn"
+                        onclick="subscribe('${v.channel_id}')"
+                      >
+                        🔔 Sub
+                      </button>
+
+                      <button
+                        class="small-btn"
+                        onclick="openMembership(
+                          '${v.channel_id}',
+                          '${esc(c?.name || "Kanał")}'
+                        )"
+                      >
+                        ⭐ Membership
+                      </button>
+                    `
+                    : ""
+                }
+
+              </div>
+
+            </div>
+
+          </article>
+
+        `;
+
+      }).join("")}
+
+    </div>
+  `;
 }
-let searchTimer; $("search").oninput=()=>{clearTimeout(searchTimer);searchTimer=setTimeout(loadVideos,250)};
+
+
+/* SEARCH */
+
+let searchTimer;
+
+$("search").oninput=()=>{
+
+  clearTimeout(searchTimer);
+
+  searchTimer =
+    setTimeout(
+      loadVideos,
+      250
+    );
+};
+
+
+/* LIKE */
+
 async function likeVideo(videoId){
-  let visitorId=localStorage.getItem("sillytube_visitor_id");if(!visitorId){visitorId=crypto.randomUUID();localStorage.setItem("sillytube_visitor_id",visitorId)}
-  const r=await sb.from("video_likes").insert({video_id:videoId,visitor_id:visitorId});
-  if(r.error)alert(r.error.code==="23505"?"Już polubiłeś ten film 👍":"Błąd lajka: "+r.error.message);else{alert("Polubiono 👍");loadVideos()}
+
+  let visitorId =
+    localStorage.getItem(
+      "sillytube_visitor_id"
+    );
+
+  if(!visitorId){
+
+    visitorId =
+      crypto.randomUUID();
+
+    localStorage.setItem(
+      "sillytube_visitor_id",
+      visitorId
+    );
+  }
+
+  const r =
+    await sb
+      .from("video_likes")
+      .insert({
+        video_id:videoId,
+        visitor_id:visitorId
+      });
+
+  if(r.error){
+
+    alert(
+      r.error.code==="23505"
+        ? "Już polubiłeś ten film 👍"
+        : "Błąd lajka: " +
+          r.error.message
+    );
+
+  }else{
+
+    alert("Polubiono 👍");
+
+    loadVideos();
+  }
 }
+
+
+/* SUBSCRIBE */
+
 async function subscribe(channelId){
-  if(!requireAuth())return; if(channelId===(await getOrCreateChannel()).id)return alert("Nie możesz subskrybować własnego kanału.");
-  const r=await sb.from("subscriptions").insert({subscriber_id:currentUser.id,channel_id:channelId});
-  if(r.error)alert(r.error.code==="23505"?"Już subskrybujesz ten kanał.":r.error.message);else alert("Subskrypcja dodana! 🔔");
+
+  if(!requireAuth())return;
+
+  if(
+    channelId ===
+    (await getOrCreateChannel()).id
+  ){
+
+    return alert(
+      "Nie możesz subskrybować własnego kanału."
+    );
+  }
+
+  const r =
+    await sb
+      .from("subscriptions")
+      .insert({
+        subscriber_id:
+          currentUser.id,
+        channel_id:
+          channelId
+      });
+
+  if(r.error){
+
+    alert(
+      r.error.code==="23505"
+        ? "Już subskrybujesz ten kanał."
+        : r.error.message
+    );
+
+  }else{
+
+    alert(
+      "Subskrypcja dodana! 🔔"
+    );
+  }
 }
+
+
+/* COMMENTS */
+
 async function openComments(videoId){
-  activeVideoId=videoId;$("commentsList").innerHTML="<p class='muted'>Ładowanie...</p>";openModal("commentsModal");
-  const r=await sb.from("comments").select("*").eq("video_id",videoId).order("created_at",{ascending:false});
-  if(r.error){$("commentsList").innerHTML=`<p class="muted">${esc(r.error.message)}<br>Uruchom dołączony SQL dla komentarzy.</p>`;return}
-  $("commentsList").innerHTML=(r.data||[]).length?(r.data||[]).map(c=>`<div class="comment"><strong>${esc(c.user_email||"Użytkownik")}</strong><span>${esc(c.content)}</span><div class="meta">${new Date(c.created_at).toLocaleString("pl-PL")}</div></div>`).join(""):"<p class='muted'>Brak komentarzy.</p>";
+
+  activeVideoId =
+    videoId;
+
+  $("commentsList").innerHTML =
+    "<p class='muted'>Ładowanie...</p>";
+
+  openModal(
+    "commentsModal"
+  );
+
+  const r =
+    await sb
+      .from("comments")
+      .select("*")
+      .eq(
+        "video_id",
+        videoId
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+  if(r.error){
+
+    $("commentsList").innerHTML = `
+      <p class="muted">
+        ${esc(r.error.message)}
+      </p>
+    `;
+
+    return;
+  }
+
+  $("commentsList").innerHTML =
+    (r.data || []).length
+
+      ? (r.data || []).map(
+          c=>`
+
+            <div class="comment">
+
+              <strong>
+                Użytkownik
+              </strong>
+
+              <span>
+                ${esc(c.content)}
+              </span>
+
+              <div class="meta">
+                ${
+                  new Date(
+                    c.created_at
+                  ).toLocaleString(
+                    "pl-PL"
+                  )
+                }
+              </div>
+
+            </div>
+
+          `
+        ).join("")
+
+      : "<p class='muted'>Brak komentarzy.</p>";
 }
-$("sendComment").onclick=async()=>{
-  if(!requireAuth())return;const content=$("commentText").value.trim(),st=$("commentStatus");if(!content)return msg(st,"Napisz komentarz.");
-  const r=await sb.from("comments").insert({video_id:activeVideoId,user_id:currentUser.id,content});if(r.error)msg(st,r.error.message);else{$("commentText").value="";msg(st,"Komentarz dodany.",true);openComments(activeVideoId)}
-};
-async function openMembership(channelId,name){if(!requireAuth())return;activeChannelId=channelId;$("membershipChannel").textContent="Kanał: "+name;openModal("membershipModal")}
-$("joinMembership").onclick=async()=>{
-  if(!currentUser||!activeChannelId)return;const amount=Number($("membershipTier").value),st=$("membershipStatus");
-  const p=await sb.from("profiles").select("psc_balance").eq("id",currentUser.id).maybeSingle();const bal=Number(p.data?.psc_balance||0);
-  if(p.error)return msg(st,p.error.message);if(bal<amount)return msg(st,`Za mało wirtualnego salda. Masz ${bal.toFixed(2)} zł.`);
-  const r=await sb.rpc("join_channel_membership",{p_channel_id:activeChannelId,p_amount:amount,p_tier:$("membershipTier").selectedOptions[0].text.split(" — ")[0]});
-  if(r.error)return msg(st,r.error.message);msg(st,"Członkostwo aktywne! ⭐",true);loadBalance();
-};
+
+
+$("sendComment").onclick =
+  async()=>{
+
+    if(!requireAuth())return;
+
+    const content =
+      $("commentText")
+        .value
+        .trim();
+
+    const st =
+      $("commentStatus");
+
+    if(!content){
+
+      return msg(
+        st,
+        "Napisz komentarz."
+      );
+    }
+
+    const r =
+      await sb
+        .from("comments")
+        .insert({
+          video_id:
+            activeVideoId,
+          user_id:
+            currentUser.id,
+          content
+        });
+
+    if(r.error){
+
+      msg(
+        st,
+        r.error.message
+      );
+
+    }else{
+
+      $("commentText").value="";
+
+      msg(
+        st,
+        "Komentarz dodany.",
+        true
+      );
+
+      openComments(
+        activeVideoId
+      );
+    }
+  };
+
+
+/* MEMBERSHIP */
+
+async function openMembership(
+  channelId,
+  name
+){
+
+  if(!requireAuth())return;
+
+  activeChannelId =
+    channelId;
+
+  $("membershipChannel")
+    .textContent =
+      "Kanał: " + name;
+
+  openModal(
+    "membershipModal"
+  );
+}
+
+
+$("joinMembership").onclick =
+  async()=>{
+
+    if(
+      !currentUser ||
+      !activeChannelId
+    )return;
+
+    const amount =
+      Number(
+        $("membershipTier")
+          .value
+      );
+
+    const st =
+      $("membershipStatus");
+
+    const p =
+      await sb
+        .from("profiles")
+        .select(
+          "psc_balance"
+        )
+        .eq(
+          "id",
+          currentUser.id
+        )
+        .maybeSingle();
+
+    const bal =
+      Number(
+        p.data?.psc_balance || 0
+      );
+
+    if(p.error){
+
+      return msg(
+        st,
+        p.error.message
+      );
+    }
+
+    if(bal < amount){
+
+      return msg(
+        st,
+        `Za mało wirtualnego salda. Masz ${bal.toFixed(2)} zł.`
+      );
+    }
+
+    const r =
+      await sb.rpc(
+        "join_channel_membership",
+        {
+          p_channel_id:
+            activeChannelId,
+
+          p_amount:
+            amount,
+
+          p_tier:
+            $("membershipTier")
+              .selectedOptions[0]
+              .text
+              .split(" — ")[0]
+        }
+      );
+
+    if(r.error){
+
+      return msg(
+        st,
+        r.error.message
+      );
+    }
+
+    msg(
+      st,
+      "Członkostwo aktywne! ⭐",
+      true
+    );
+
+    loadBalance();
+  };
+
+
+/* PROFILE */
+
 async function showMyProfile(){
-  if(!currentUser)return;const r=await sb.from("profiles").select("username,psc_balance").eq("id",currentUser.id).maybeSingle();
-  const ch=await getOrCreateChannel();const vc=await sb.from("videos").select("id",{count:"exact",head:true}).eq("owner_id",currentUser.id);
-  $("profileArea").innerHTML=`<div class="profile"><div class="avatar">${avatarLetter()}</div><div><h2>${esc(r.data?.username||currentUser.email?.split("@")[0]||"Użytkownik")}</h2><div class="muted">${esc(currentUser.email||"")} · ${vc.count||0} filmów · 🪙 ${Number(r.data?.psc_balance||0).toFixed(2)} zł</div><p class="muted">${esc(ch.name)}</p></div></div>`;
-  $("watchArea").innerHTML="";window.scrollTo({top:0,behavior:"smooth"});
+
+  if(!currentUser)return;
+
+  const r =
+    await sb
+      .from("profiles")
+      .select(
+        "username,psc_balance"
+      )
+      .eq(
+        "id",
+        currentUser.id
+      )
+      .maybeSingle();
+
+  const ch =
+    await getOrCreateChannel();
+
+  const vc =
+    await sb
+      .from("videos")
+      .select(
+        "id",
+        {
+          count:"exact",
+          head:true
+        }
+      )
+      .eq(
+        "owner_id",
+        currentUser.id
+      );
+
+  $("profileArea").innerHTML = `
+
+    <div class="profile">
+
+      <div class="avatar">
+        ${avatarLetter()}
+      </div>
+
+      <div>
+
+        <h2>
+          ${
+            esc(
+              r.data?.username ||
+              currentUser.email
+                ?.split("@")[0] ||
+              "Użytkownik"
+            )
+          }
+        </h2>
+
+        <div class="muted">
+
+          ${esc(currentUser.email || "")}
+
+          ·
+
+          ${vc.count || 0} filmów
+
+          ·
+
+          🪙
+          ${Number(
+            r.data?.psc_balance || 0
+          ).toFixed(2)}
+          zł
+
+        </div>
+
+        <p class="muted">
+          ${esc(ch.name)}
+        </p>
+
+      </div>
+
+    </div>
+
+  `;
+
+  $("watchArea").innerHTML="";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");activeTab=b.dataset.tab;if(activeTab==="memberships")showMemberships();else if(activeTab==="playlists")showPlaylists();else{ $("profileArea").innerHTML="";loadVideos()}});
+
+
+/* TABS */
+
+document
+  .querySelectorAll(".tab")
+  .forEach(
+    b=>{
+
+      b.onclick=()=>{
+
+        document
+          .querySelectorAll(".tab")
+          .forEach(
+            x=>
+              x.classList.remove(
+                "active"
+              )
+          );
+
+        b.classList.add(
+          "active"
+        );
+
+        activeTab =
+          b.dataset.tab;
+
+        if(
+          activeTab==="memberships"
+        ){
+
+          showMemberships();
+
+        }else if(
+          activeTab==="playlists"
+        ){
+
+          showPlaylists();
+
+        }else{
+
+          $("profileArea")
+            .innerHTML="";
+
+          loadVideos();
+        }
+      };
+
+    }
+  );
+
+
+/* MEMBERSHIPS */
+
 async function showMemberships(){
-  $("profileArea").innerHTML=`<div class="empty"><div class="big">⭐</div><h2>Członkostwa kanałów</h2><p class="muted">Otwórz film i kliknij „Membership”, aby dołączyć do kanału.</p></div>`;$("list").innerHTML="";
+
+  $("profileArea").innerHTML = `
+
+    <div class="empty">
+
+      <div class="big">⭐</div>
+
+      <h2>
+        Członkostwa kanałów
+      </h2>
+
+      <p class="muted">
+        Otwórz film i kliknij
+        „Membership”, aby dołączyć
+        do kanału.
+      </p>
+
+    </div>
+
+  `;
+
+  $("list").innerHTML="";
 }
+
+
+/* PLAYLISTS */
+
 async function showPlaylists(){
-  if(!requireAuth())return;$("profileArea").innerHTML=`<div class="empty"><div class="big">📚</div><h2>Playlisty</h2><p class="muted">Panel playlist jest przygotowany pod tabelę playlists/playlist_items z dołączonego SQL.</p></div>`;$("list").innerHTML="";
+
+  if(!requireAuth())return;
+
+  $("profileArea").innerHTML = `
+
+    <div class="empty">
+
+      <div class="big">📚</div>
+
+      <h2>Playlisty</h2>
+
+      <p class="muted">
+        Panel playlist jest przygotowany
+        pod tabelę playlists/playlist_items.
+      </p>
+
+    </div>
+
+  `;
+
+  $("list").innerHTML="";
 }
-$("redeem").onclick=async()=>{const code=$("promoCode").value.trim(),st=$("codeStatus");if(!code)return;const r=await sb.rpc("redeem_promo",{p_code:code});if(r.error)msg(st,r.error.message);else{msg(st,"Dodano "+Number(r.data).toFixed(2)+" zł.",true);$("promoCode").value="";loadBalance()}};
-window.addEventListener("supabase-ready",init);
+
+
+/* PROMO */
+
+$("redeem").onclick =
+  async()=>{
+
+    const code =
+      $("promoCode")
+        .value
+        .trim();
+
+    const st =
+      $("codeStatus");
+
+    if(!code)return;
+
+    const r =
+      await sb.rpc(
+        "redeem_promo",
+        {
+          p_code:code
+        }
+      );
+
+    if(r.error){
+
+      msg(
+        st,
+        r.error.message
+      );
+
+    }else{
+
+      msg(
+        st,
+        "Dodano " +
+        Number(r.data)
+          .toFixed(2) +
+        " zł.",
+        true
+      );
+
+      $("promoCode").value="";
+
+      loadBalance();
+    }
+  };
+
+
+/* START */
+
+window.addEventListener(
+  "supabase-ready",
+  init
+);
+
 </script>
+
 </body>
 </html>
+```
