@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="pl">
 <head>
   <meta charset="utf-8">
@@ -25,24 +24,18 @@
     body {
       margin: 0;
       background: #0f0f0f;
-      color: #fff;
+      color: white;
       font-family: Arial, sans-serif;
     }
 
-    button,
-    input,
-    textarea {
-      font: inherit;
-    }
-
     header {
-      min-height: 64px;
+      height: 64px;
       background: #181818;
       border-bottom: 1px solid #292929;
       display: flex;
       align-items: center;
       gap: 18px;
-      padding: 10px 22px;
+      padding: 0 22px;
       position: sticky;
       top: 0;
       z-index: 10;
@@ -52,7 +45,6 @@
       font-size: 23px;
       font-weight: 800;
       white-space: nowrap;
-      cursor: pointer;
     }
 
     .logo span {
@@ -78,8 +70,8 @@
       outline: none;
     }
 
-    .search input:focus {
-      border-color: #f03;
+    button {
+      font-family: inherit;
     }
 
     .btn {
@@ -88,11 +80,6 @@
       padding: 10px 15px;
       font-weight: 700;
       cursor: pointer;
-    }
-
-    .btn:disabled {
-      opacity: .6;
-      cursor: not-allowed;
     }
 
     .red {
@@ -122,10 +109,6 @@
     .hero h1 {
       margin: 0 0 8px;
       font-size: 34px;
-    }
-
-    .hero p {
-      margin: 8px 0;
     }
 
     .muted {
@@ -163,7 +146,7 @@
     .title {
       font-weight: 700;
       font-size: 16px;
-      line-height: 1.35;
+      line-height: 1.3;
     }
 
     .description {
@@ -171,7 +154,6 @@
       margin-top: 8px;
       line-height: 1.4;
       word-break: break-word;
-      white-space: pre-wrap;
     }
 
     .meta {
@@ -198,16 +180,8 @@
     }
 
     .small-btn:hover,
-    .btn.gray:hover {
-      background: #414141;
-    }
-
-    .small-btn.liked {
-      background: #f03;
-    }
-
-    .small-btn.subscribed {
-      background: #555;
+    .btn:hover {
+      filter: brightness(1.15);
     }
 
     .modal {
@@ -248,16 +222,11 @@
       color: white;
       border: 1px solid #444;
       border-radius: 9px;
-      outline: none;
-    }
-
-    .box input:focus,
-    .box textarea:focus {
-      border-color: #f03;
+      font-family: Arial, sans-serif;
     }
 
     .box textarea {
-      min-height: 130px;
+      min-height: 120px;
       resize: vertical;
     }
 
@@ -297,60 +266,26 @@
     }
 
     .profile {
-      background: #181818;
-      border: 1px solid #303030;
-      border-radius: 18px;
-      padding: 25px;
-      margin-bottom: 25px;
-    }
-
-    .profile-top {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
+      text-align: center;
     }
 
     .avatar {
-      width: 82px;
-      height: 82px;
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 15px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #f03, #7a00ff);
+      background: linear-gradient(135deg, #f03, #742cff);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 34px;
-      font-weight: 800;
-      flex-shrink: 0;
-    }
-
-    .profile-name {
-      font-size: 27px;
+      font-size: 38px;
       font-weight: 800;
     }
 
-    .profile-stats {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-      color: #bbb;
-    }
-
-    .stat strong {
-      color: white;
+    .subscriber-count {
       font-size: 18px;
-    }
-
-    .section-title {
-      margin: 25px 0 15px;
-      font-size: 23px;
-    }
-
-    .file-info {
-      color: #999;
-      font-size: 13px;
-      margin-bottom: 10px;
+      font-weight: 800;
+      margin: 15px 0 22px;
     }
 
     .loading {
@@ -361,7 +296,7 @@
 
     @media(max-width:700px) {
       header {
-        padding: 10px;
+        padding: 0 10px;
         gap: 8px;
       }
 
@@ -377,30 +312,18 @@
         padding: 16px 12px;
       }
 
-      .hero {
-        padding: 20px;
-      }
-
       .hero h1 {
-        font-size: 28px;
-      }
-
-      .profile-name {
-        font-size: 23px;
+        font-size: 27px;
       }
     }
   </style>
-
 </head>
 
 <body>
 
 <header>
 
-  <div
-    class="logo"
-    id="homeLogo"
-  >
+  <div class="logo">
     <span>▶</span>SillyTube
   </div>
 
@@ -413,10 +336,7 @@
   </div>
 
   <div id="account">
-    <button
-      class="btn gray"
-      id="loginBtn"
-    >
+    <button class="btn gray" id="loginBtn">
       Zaloguj się
     </button>
   </div>
@@ -425,243 +345,249 @@
 
 <main class="main">
 
-  <section
-    class="hero"
-    id="homeHero"
-  >
+  <section class="hero">
 
-```
-<h1>SillyTube 🎬</h1>
+    <h1>SillyTube 🎬</h1>
 
-<p>
-  Darmowa platforma wideo.
-</p>
+    <p>
+      Darmowa platforma wideo.
+    </p>
 
-<p class="muted">
-  Oglądaj, lajkuj, subskrybuj i publikuj własne filmy.
-</p>
+    <p class="muted">
+      Oglądaj i publikuj własne filmy.
+    </p>
 
-<button
-  class="btn red"
-  id="uploadBtn"
->
-  ⬆ Upload filmu
-</button>
+    <button
+      class="btn red"
+      id="uploadBtn"
+    >
+      ⬆ Upload filmu
+    </button>
 
-<button
-  class="btn gray"
-  id="myProfileBtn"
->
-  👤 Mój profil
-</button>
-```
+    <button
+      class="btn gray"
+      id="profileBtn"
+      style="display:none"
+    >
+      👤 Mój profil
+    </button>
 
   </section>
 
-  <div id="list"></div>
+  <div id="list">
+    <div class="loading">
+      Ładowanie filmów...
+    </div>
+  </div>
 
 </main>
 
-<!-- ================================================= -->
 
-<!-- LOGOWANIE -->
+<!-- =========================
+     LOGOWANIE
+========================= -->
 
-<!-- ================================================= -->
-
-<div
-  class="modal"
-  id="authModal"
->
+<div class="modal" id="authModal">
 
   <div class="box">
 
-```
-<h2 id="authTitle">
-  Zaloguj się
-</h2>
+    <h2 id="authTitle">
+      Zaloguj się
+    </h2>
 
-<input
-  id="authEmail"
-  type="email"
-  placeholder="E-mail"
-  autocomplete="email"
->
+    <input
+      id="authEmail"
+      type="email"
+      placeholder="E-mail"
+      autocomplete="email"
+    >
 
-<input
-  id="authPass"
-  type="password"
-  placeholder="Hasło"
-  autocomplete="current-password"
->
+    <input
+      id="authPass"
+      type="password"
+      placeholder="Hasło"
+      autocomplete="current-password"
+    >
 
-<div class="row">
+    <div class="row">
 
-  <button
-    class="btn gray"
-    onclick="closeModal('authModal')"
-  >
-    Anuluj
-  </button>
+      <button
+        class="btn gray"
+        onclick="closeModal('authModal')"
+      >
+        Anuluj
+      </button>
 
-  <button
-    class="btn red"
-    id="authAction"
-  >
-    Zaloguj
-  </button>
+      <button
+        class="btn red"
+        id="authAction"
+      >
+        Zaloguj
+      </button>
 
-</div>
+    </div>
 
-<p
-  class="muted"
-  id="authSwitch"
->
-  Nie masz konta?
+    <p class="muted" id="authSwitch">
+      Nie masz konta?
 
-  <button
-    class="btn gray"
-    id="switchAuth"
-  >
-    Załóż konto
-  </button>
+      <button
+        class="btn gray"
+        id="switchAuth"
+      >
+        Załóż konto
+      </button>
+    </p>
 
-</p>
-
-<div
-  class="status"
-  id="authStatus"
-></div>
-```
+    <div
+      class="status"
+      id="authStatus"
+    ></div>
 
   </div>
 
 </div>
 
-<!-- ================================================= -->
 
-<!-- UPLOAD -->
+<!-- =========================
+     UPLOAD
+========================= -->
 
-<!-- ================================================= -->
-
-<div
-  class="modal"
-  id="uploadModal"
->
+<div class="modal" id="uploadModal">
 
   <div class="box">
 
-```
-<h2>
-  Upload filmu
-</h2>
+    <h2>
+      Upload filmu
+    </h2>
 
-<input
-  id="videoTitle"
-  placeholder="Tytuł filmu"
-  maxlength="200"
->
+    <input
+      id="videoTitle"
+      placeholder="Tytuł filmu"
+      maxlength="200"
+    >
 
-<textarea
-  id="videoDescription"
-  placeholder="Opis filmu..."
-  maxlength="5000"
-></textarea>
+    <textarea
+      id="videoDescription"
+      placeholder="Opis filmu..."
+      maxlength="5000"
+    ></textarea>
 
-<label class="muted">
-  Film
-</label>
+    <label class="muted">
+      Film
+    </label>
 
-<input
-  id="videoFile"
-  type="file"
-  accept="video/*"
->
+    <input
+      id="videoFile"
+      type="file"
+      accept="video/*"
+    >
 
-<div
-  class="file-info"
-  id="videoFileInfo"
-></div>
+    <div
+      id="videoFileInfo"
+      class="muted"
+    ></div>
 
-<label class="muted">
-  Miniaturka
-</label>
+    <br>
 
-<input
-  id="thumbFile"
-  type="file"
-  accept="image/jpeg,image/png,image/gif,image/webp"
->
+    <label class="muted">
+      Miniaturka
+    </label>
 
-<div
-  class="status"
-  id="uploadStatus"
-></div>
+    <input
+      id="thumbFile"
+      type="file"
+      accept="image/jpeg,image/png,image/gif,image/webp"
+    >
 
-<div class="row">
+    <div
+      class="status"
+      id="uploadStatus"
+    ></div>
 
-  <button
-    class="btn gray"
-    onclick="closeModal('uploadModal')"
-  >
-    Anuluj
-  </button>
+    <div class="row">
 
-  <button
-    class="btn red"
-    id="publish"
-  >
-    Opublikuj
-  </button>
+      <button
+        class="btn gray"
+        onclick="closeModal('uploadModal')"
+      >
+        Anuluj
+      </button>
 
-</div>
-```
+      <button
+        class="btn red"
+        id="publish"
+      >
+        Opublikuj
+      </button>
+
+    </div>
 
   </div>
 
 </div>
 
-<!-- ================================================= -->
 
-<!-- PROFIL -->
+<!-- =========================
+     PROFIL
+========================= -->
 
-<!-- ================================================= -->
+<div class="modal" id="profileModal">
 
-<div
-  class="modal"
-  id="profileModal"
->
+  <div class="box profile">
 
-  <div class="box">
+    <h2>
+      Mój profil
+    </h2>
 
-```
-<div id="profileContent"></div>
+    <div
+      class="avatar"
+      id="profileAvatar"
+    >
+      👤
+    </div>
 
-<div class="row">
-  <button
-    class="btn gray"
-    onclick="closeModal('profileModal')"
-  >
-    Zamknij
-  </button>
-</div>
-```
+    <h2 id="profileName">
+      Użytkownik
+    </h2>
+
+    <div
+      class="subscriber-count"
+      id="subscriberCount"
+    >
+      0 subskrybentów
+    </div>
+
+    <p
+      class="muted"
+      id="profileEmail"
+    ></p>
+
+    <div class="row">
+
+      <button
+        class="btn gray"
+        onclick="closeModal('profileModal')"
+      >
+        Zamknij
+      </button>
+
+    </div>
 
   </div>
 
 </div>
+
 
 <script>
 
   let currentUser = null;
   let authMode = "login";
-
-  const likeCache = new Set();
-  const subscriptionCache = new Set();
+  let searchTimer = null;
 
 
-  /* =================================================
-     POMOCNICZE
-     ================================================= */
+  /* =========================
+     HELPERY
+  ========================= */
 
   const $ = id =>
     document.getElementById(id);
@@ -684,7 +610,6 @@
     el.style.color = ok
       ? "#5ee68a"
       : "#ff8a8a";
-
   }
 
 
@@ -709,73 +634,72 @@
   }
 
 
-  function getVisitorId() {
+  function getInitial(name) {
 
-    let visitorId =
-      localStorage.getItem(
-        "sillytube_visitor_id"
-      );
+    const text =
+      String(name || "U")
+        .trim();
 
-    if (!visitorId) {
-
-      visitorId =
-        crypto.randomUUID();
-
-      localStorage.setItem(
-        "sillytube_visitor_id",
-        visitorId
-      );
-
-    }
-
-    return visitorId;
+    return text
+      ? text.charAt(0).toUpperCase()
+      : "U";
 
   }
 
 
-  /* =================================================
-     START
-     ================================================= */
+  /* =========================
+     AUTH
+  ========================= */
 
   async function init() {
 
-    const result =
-      await sb.auth.getSession();
+    try {
 
-    currentUser =
-      result.data?.session?.user ||
-      null;
+      const result =
+        await sb.auth.getSession();
 
-    sb.auth.onAuthStateChange(
-      function(_event, session) {
+      currentUser =
+        result.data?.session?.user || null;
 
-        currentUser =
-          session?.user ||
-          null;
+      renderAccount();
+      await loadVideos();
 
-        likeCache.clear();
-        subscriptionCache.clear();
+      sb.auth.onAuthStateChange(
+        function(_event, session) {
 
-        renderAccount();
-        loadVideos();
+          currentUser =
+            session?.user || null;
 
-      }
-    );
+          renderAccount();
 
-    renderAccount();
-    await loadVideos();
+          loadVideos();
+
+        }
+      );
+
+    } catch (error) {
+
+      console.error(error);
+
+      $("list").innerHTML = `
+        <div class="empty">
+          <div class="big">⚠️</div>
+          <h2>Błąd uruchamiania</h2>
+          <p class="muted">
+            ${esc(error.message)}
+          </p>
+        </div>
+      `;
+
+    }
 
   }
 
 
-  /* =================================================
-     KONTO
-     ================================================= */
-
   function renderAccount() {
 
-    const account =
-      $("account");
+    const account = $("account");
+    const profileBtn = $("profileBtn");
 
     if (!currentUser) {
 
@@ -791,15 +715,11 @@
       $("loginBtn").onclick =
         openAuth;
 
+      profileBtn.style.display =
+        "none";
+
       return;
-
     }
-
-
-    const username =
-      currentUser.user_metadata?.username ||
-      currentUser.email?.split("@")[0] ||
-      "Użytkownik";
 
 
     account.innerHTML = `
@@ -807,9 +727,9 @@
 
         <button
           class="btn gray"
-          id="profileTopBtn"
+          id="accountProfile"
         >
-          👤 ${esc(username)}
+          👤 Profil
         </button>
 
         <button
@@ -823,7 +743,7 @@
     `;
 
 
-    $("profileTopBtn").onclick =
+    $("accountProfile").onclick =
       showMyProfile;
 
 
@@ -834,6 +754,10 @@
 
       };
 
+
+    profileBtn.style.display =
+      "inline-block";
+
   }
 
 
@@ -843,10 +767,6 @@
 
   }
 
-
-  /* =================================================
-     AUTH
-     ================================================= */
 
   $("authAction").onclick =
     async function() {
@@ -871,12 +791,16 @@
 
         msg(
           status,
-          "Podaj e-mail i hasło (minimum 6 znaków)."
+          "Podaj e-mail i hasło. Hasło musi mieć minimum 6 znaków."
         );
 
         return;
 
       }
+
+
+      $("authAction").disabled =
+        true;
 
 
       let result;
@@ -897,13 +821,7 @@
           result =
             await sb.auth.signUp({
               email,
-              password,
-              options: {
-                data: {
-                  username:
-                    email.split("@")[0]
-                }
-              }
+              password
             });
 
         }
@@ -927,7 +845,7 @@
 
             msg(
               status,
-              "Konto utworzone i zalogowane. 🎉",
+              "Konto utworzone i zalogowano.",
               true
             );
 
@@ -952,13 +870,10 @@
 
         }
 
-      } catch (error) {
+      } finally {
 
-        msg(
-          status,
-          error.message ||
-          "Wystąpił błąd logowania."
-        );
+        $("authAction").disabled =
+          false;
 
       }
 
@@ -986,17 +901,7 @@
           : "Zarejestruj";
 
 
-      $("authPass")
-        .setAttribute(
-          "autocomplete",
-          authMode === "login"
-            ? "current-password"
-            : "new-password"
-        );
-
-
-      $("authSwitch")
-        .firstChild
+      $("authSwitch").firstChild
         .textContent =
           authMode === "login"
             ? "Nie masz konta? "
@@ -1005,22 +910,20 @@
     };
 
 
-  /* =================================================
-     KANAŁ
-     ================================================= */
+  /* =========================
+     CHANNEL
+  ========================= */
 
-  async function getOrCreateChannel() {
+  async function getExistingChannel() {
 
     if (!currentUser) {
-
       throw new Error(
         "Musisz być zalogowany."
       );
-
     }
 
 
-    let result =
+    const result =
       await sb
         .from("channels")
         .select(
@@ -1030,37 +933,53 @@
           "owner_id",
           currentUser.id
         )
-        .limit(1)
-        .maybeSingle();
+        .limit(1);
 
 
     if (result.error) {
 
       throw new Error(
-        "Błąd wyszukiwania kanału: " +
         result.error.message
       );
 
     }
 
 
-    if (result.data) {
+    return result.data?.[0] || null;
 
-      return result.data;
+  }
+
+
+  async function getOrCreateChannel() {
+
+    const existing =
+      await getExistingChannel();
+
+
+    if (existing) {
+
+      return existing;
 
     }
 
 
     /*
-      Profil musi istnieć przed utworzeniem kanału,
-      ponieważ channels.owner_id wskazuje na profiles.id.
+      WAŻNE:
+
+      Najpierw sprawdzamy profil.
+
+      owner_id w channels musi wskazywać
+      istniejący rekord profiles.
     */
 
     const profile =
       await sb
         .from("profiles")
         .select("id,username")
-        .eq("id", currentUser.id)
+        .eq(
+          "id",
+          currentUser.id
+        )
         .maybeSingle();
 
 
@@ -1077,8 +996,7 @@
     if (!profile.data) {
 
       throw new Error(
-        "Twoje konto nie ma jeszcze profilu w tabeli profiles. " +
-        "Utwórz profil dla tego użytkownika w Supabase."
+        "Twoje konto nie ma jeszcze profilu w tabeli profiles. Utwórz profil w Supabase przed uploadem."
       );
 
     }
@@ -1091,16 +1009,20 @@
       "Użytkownik";
 
 
-    result =
+    const result =
       await sb
         .from("channels")
         .insert({
+
           owner_id:
             currentUser.id,
 
           name:
-            username +
-            " - kanał"
+            username + " - kanał",
+
+          description:
+            "Kanał SillyTube"
+
         })
         .select(
           "id,name,owner_id"
@@ -1123,9 +1045,9 @@
   }
 
 
-  /* =================================================
+  /* =========================
      UPLOAD
-     ================================================= */
+  ========================= */
 
   $("uploadBtn").onclick =
     function() {
@@ -1133,12 +1055,10 @@
       if (!currentUser) {
 
         openAuth();
+
         return;
 
       }
-
-      $("uploadStatus").style.display =
-        "none";
 
       openModal("uploadModal");
 
@@ -1151,6 +1071,7 @@
 
       const file =
         $("videoFile").files[0];
+
 
       if (!file) {
 
@@ -1186,24 +1107,25 @@
           .value
           .trim();
 
+
       const description =
         $("videoDescription")
           .value
           .trim();
 
+
       const videoFile =
         $("videoFile")
           .files[0];
+
 
       const thumbFile =
         $("thumbFile")
           .files[0];
 
+
       const status =
         $("uploadStatus");
-
-      const publish =
-        $("publish");
 
 
       if (!currentUser) {
@@ -1256,6 +1178,9 @@
 
       }
 
+
+      const publish =
+        $("publish");
 
       publish.disabled = true;
 
@@ -1385,12 +1310,17 @@
         }
 
 
-        /* BAZA */
+        msg(
+          status,
+          "Zapisywanie filmu..."
+        );
+
 
         result =
           await sb
             .from("videos")
             .insert({
+
               owner_id:
                 currentUser.id,
 
@@ -1408,6 +1338,7 @@
 
               thumbnail_path:
                 thumbnailPath
+
             });
 
 
@@ -1449,21 +1380,33 @@
 
 
         setTimeout(
-          function() {
+          async function() {
 
             closeModal(
               "uploadModal"
             );
 
-            $("videoTitle").value = "";
-            $("videoDescription").value = "";
-            $("videoFile").value = "";
-            $("thumbFile").value = "";
-            $("videoFileInfo").textContent = "";
 
-            status.style.display = "none";
+            $("videoTitle")
+              .value = "";
 
-            loadVideos();
+            $("videoDescription")
+              .value = "";
+
+            $("videoFile")
+              .value = "";
+
+            $("thumbFile")
+              .value = "";
+
+            $("videoFileInfo")
+              .textContent = "";
+
+            status.style.display =
+              "none";
+
+
+            await loadVideos();
 
           },
           800
@@ -1471,6 +1414,12 @@
 
 
       } catch (error) {
+
+        console.error(
+          "UPLOAD ERROR:",
+          error
+        );
+
 
         msg(
           status,
@@ -1480,18 +1429,23 @@
 
       } finally {
 
-        publish.disabled = false;
+        publish.disabled =
+          false;
 
       }
 
     };
 
 
-  /* =================================================
-     POBIERANIE FILMÓW
-     ================================================= */
+  /* =========================
+     FILMY
+  ========================= */
 
   async function loadVideos() {
+
+    const list =
+      $("list");
+
 
     const search =
       $("search")
@@ -1499,546 +1453,536 @@
         .trim();
 
 
-    const list =
-      $("list");
-
-
-    list.innerHTML =
-      `<div class="loading">Ładowanie filmów...</div>`;
-
-
-    let query =
-      sb
-        .from("videos")
-        .select("*")
-        .order(
-          "created_at",
-          {
-            ascending: false
-          }
-        );
-
-
-    if (search) {
-
-      query =
-        query.ilike(
-          "title",
-          "%" +
-          search +
-          "%"
-        );
-
-    }
-
-
-    const result =
-      await query;
-
-
-    console.log(
-      "VIDEOS:",
-      result.data
-    );
-
-
-    console.log(
-      "VIDEO ERROR:",
-      result.error
-    );
-
-
-    if (result.error) {
-
-      list.innerHTML = `
-        <div class="empty">
-
-          <div class="big">⚠️</div>
-
-          <h2>Błąd ładowania filmów</h2>
-
-          <p class="muted">
-            ${esc(result.error.message)}
-          </p>
-
-        </div>
-      `;
-
-      return;
-
-    }
-
-
-    const videos =
-      result.data || [];
-
-
-    if (!videos.length) {
-
-      list.innerHTML = `
-        <div class="empty">
-
-          <div class="big">🎬</div>
-
-          <h2>
-            Nie ma jeszcze żadnych filmów
-          </h2>
-
-          <p class="muted">
-            ${
-              search
-                ? "Nie znaleziono filmów dla tego wyszukiwania."
-                : "Opublikuj pierwszy film!"
-            }
-          </p>
-
-        </div>
-      `;
-
-      return;
-
-    }
-
-
-    /*
-      Kanały pobieramy osobno,
-      żeby brak relacji channels
-      nie ukrywał filmów.
-    */
-
-    const channelIds =
-      [
-        ...new Set(
-          videos
-            .map(v => v.channel_id)
-            .filter(Boolean)
-        )
-      ];
-
-
-    let channels = [];
-
-
-    if (channelIds.length) {
-
-      const channelResult =
-        await sb
-          .from("channels")
-          .select(
-            "id,name,owner_id"
-          )
-          .in(
-            "id",
-            channelIds
-          );
-
-
-      if (!channelResult.error) {
-
-        channels =
-          channelResult.data || [];
-
-      }
-
-    }
-
-
-    const channelMap = {};
-
-
-    channels.forEach(
-      channel => {
-
-        channelMap[channel.id] =
-          channel;
-
-      }
-    );
-
-
-    /*
-      Pobierz liczbę lajków.
-    */
-
-    const videoIds =
-      videos.map(v => v.id);
-
-
-    const likeCounts = {};
-
-
-    if (videoIds.length) {
-
-      const likesResult =
-        await sb
-          .from("video_likes")
-          .select("video_id")
-          .in(
-            "video_id",
-            videoIds
-          );
-
-
-      if (!likesResult.error) {
-
-        (likesResult.data || [])
-          .forEach(
-            like => {
-
-              likeCounts[like.video_id] =
-                (likeCounts[like.video_id] || 0) + 1;
-
-            }
-          );
-
-      }
-
-    }
-
-
-    /*
-      Sprawdź lajki aktualnego visitorId.
-    */
-
-    const visitorId =
-      getVisitorId();
-
-
-    const myLikesResult =
-      await sb
-        .from("video_likes")
-        .select("video_id")
-        .eq(
-          "visitor_id",
-          visitorId
-        )
-        .in(
-          "video_id",
-          videoIds
-        );
-
-
-    likeCache.clear();
-
-
-    if (!myLikesResult.error) {
-
-      (myLikesResult.data || [])
-        .forEach(
-          row =>
-            likeCache.add(
-              row.video_id
-            )
-        );
-
-    }
-
-
-    /*
-      Sprawdź subskrypcje zalogowanego.
-    */
-
-    subscriptionCache.clear();
-
-
-    if (currentUser && channelIds.length) {
-
-      const subsResult =
-        await sb
-          .from("subscriptions")
-          .select("channel_id")
-          .eq(
-            "subscriber_id",
-            currentUser.id
-          )
-          .in(
-            "channel_id",
-            channelIds
-          );
-
-
-      if (!subsResult.error) {
-
-        (subsResult.data || [])
-          .forEach(
-            row =>
-              subscriptionCache.add(
-                row.channel_id
-              )
-          );
-
-      }
-
-    }
-
-
     list.innerHTML = `
-      <div class="grid">
-
-        ${videos.map(
-          video => {
-
-            const videoUrl =
-              sb
-                .storage
-                .from("videos")
-                .getPublicUrl(
-                  video.video_path
-                )
-                .data
-                .publicUrl;
-
-
-            let thumbnailUrl = "";
-
-
-            if (video.thumbnail_path) {
-
-              thumbnailUrl =
-                sb
-                  .storage
-                  .from("thumbnails")
-                  .getPublicUrl(
-                    video.thumbnail_path
-                  )
-                  .data
-                  .publicUrl;
-
-            }
-
-
-            const channel =
-              channelMap[
-                video.channel_id
-              ];
-
-
-            const channelName =
-              channel?.name ||
-              "SillyTube";
-
-
-            const likes =
-              likeCounts[video.id] ||
-              0;
-
-
-            const liked =
-              likeCache.has(
-                video.id
-              );
-
-
-            const subscribed =
-              subscriptionCache.has(
-                video.channel_id
-              );
-
-
-            return `
-              <article class="card">
-
-                <video
-                  class="thumb"
-                  src="${esc(videoUrl)}"
-                  ${
-                    thumbnailUrl
-                      ? `poster="${esc(thumbnailUrl)}"`
-                      : ""
-                  }
-                  controls
-                  preload="metadata"
-                ></video>
-
-
-                <div class="info">
-
-                  <div class="title">
-                    ${esc(video.title)}
-                  </div>
-
-
-                  ${
-                    video.description
-                      ? `
-                        <div class="description">
-                          ${esc(video.description)}
-                        </div>
-                      `
-                      : ""
-                  }
-
-
-                  <div class="meta">
-
-                    ${esc(channelName)}
-
-                    ·
-
-                    ${
-                      video.created_at
-                        ? new Date(
-                            video.created_at
-                          ).toLocaleDateString(
-                            "pl-PL"
-                          )
-                        : ""
-                    }
-
-                  </div>
-
-
-                  <div class="actions">
-
-                    <button
-                      class="small-btn ${
-                        liked
-                          ? "liked"
-                          : ""
-                      }"
-                      onclick="likeVideo('${esc(video.id)}')"
-                    >
-                      👍 ${likes}
-                    </button>
-
-
-                    ${
-                      channel?.id
-                        ? `
-                          <button
-                            class="small-btn ${
-                              subscribed
-                                ? "subscribed"
-                                : ""
-                            }"
-                            onclick="subscribe('${esc(channel.id)}')"
-                          >
-                            ${
-                              subscribed
-                                ? "🔔 Subskrybujesz"
-                                : "🔔 Subskrybuj"
-                            }
-                          </button>
-
-                          <button
-                            class="small-btn"
-                            onclick="showChannelProfile('${esc(channel.id)}')"
-                          >
-                            👤 Kanał
-                          </button>
-                        `
-                        : ""
-                    }
-
-                  </div>
-
-                </div>
-
-              </article>
-            `;
-
-          }
-        ).join("")}
-
+      <div class="loading">
+        Ładowanie filmów...
       </div>
     `;
 
-  }
+
+    try {
+
+      /*
+        Najważniejsza rzecz:
+
+        Filmy pobieramy bez JOIN z channels.
+
+        Dzięki temu nawet jeśli kanał ma problem,
+        video nadal może pojawić się na stronie.
+      */
+
+      let query =
+        sb
+          .from("videos")
+          .select(
+            "id,owner_id,channel_id,title,description,video_path,thumbnail_path,created_at"
+          )
+          .order(
+            "created_at",
+            {
+              ascending: false
+            }
+          );
 
 
-  /* =================================================
-     LIKE
-     ================================================= */
+      if (search) {
 
-  async function likeVideo(videoId) {
+        query =
+          query.ilike(
+            "title",
+            "%" +
+            search +
+            "%"
+          );
 
-    const visitorId =
-      getVisitorId();
+      }
 
 
-    /*
-      Jeżeli już polubiono,
-      niczego nie dodajemy drugi raz.
-    */
+      const result =
+        await query;
 
-    if (
-      likeCache.has(videoId)
-    ) {
 
-      alert(
-        "Już polubiłeś ten film 👍"
+      console.log(
+        "VIDEOS:",
+        result.data
       );
 
-      return;
-
-    }
-
-
-    const result =
-      await sb
-        .from("video_likes")
-        .insert({
-          video_id:
-            videoId,
-
-          visitor_id:
-            visitorId
-        });
+      console.log(
+        "VIDEO ERROR:",
+        result.error
+      );
 
 
-    if (result.error) {
+      if (result.error) {
 
-      if (
-        result.error.code ===
-        "23505"
-      ) {
+        throw result.error;
 
-        likeCache.add(
-          videoId
-        );
+      }
 
-        alert(
-          "Już polubiłeś ten film 👍"
-        );
+
+      const videos =
+        result.data || [];
+
+
+      if (!videos.length) {
+
+        list.innerHTML = `
+          <div class="empty">
+
+            <div class="big">
+              🎬
+            </div>
+
+            <h2>
+              ${
+                search
+                  ? "Nie znaleziono filmów"
+                  : "Nie ma jeszcze żadnych filmów"
+              }
+            </h2>
+
+            <p class="muted">
+              ${
+                search
+                  ? "Spróbuj innej nazwy filmu."
+                  : "Wrzuć pierwszy film na SillyTube."
+              }
+            </p>
+
+          </div>
+        `;
 
         return;
 
       }
 
 
-      alert(
-        "Błąd lajka: " +
-        result.error.message
+      /*
+        Kanały pobieramy osobno.
+
+        Jeżeli kanał któregoś filmu nie istnieje,
+        film nadal jest wyświetlany.
+      */
+
+      const channelIds =
+        [
+          ...new Set(
+            videos
+              .map(
+                v => v.channel_id
+              )
+              .filter(Boolean)
+          )
+        ];
+
+
+      let channels = [];
+
+
+      if (channelIds.length) {
+
+        const channelResult =
+          await sb
+            .from("channels")
+            .select(
+              "id,name"
+            )
+            .in(
+              "id",
+              channelIds
+            );
+
+
+        if (
+          !channelResult.error
+        ) {
+
+          channels =
+            channelResult.data || [];
+
+        } else {
+
+          console.warn(
+            "CHANNEL LOAD ERROR:",
+            channelResult.error
+          );
+
+        }
+
+      }
+
+
+      const channelMap = {};
+
+
+      channels.forEach(
+        channel => {
+
+          channelMap[
+            channel.id
+          ] =
+            channel.name;
+
+        }
       );
+
+
+      list.innerHTML = `
+        <div class="grid">
+
+          ${
+            videos
+              .map(
+                video =>
+                  renderVideo(
+                    video,
+                    channelMap
+                  )
+              )
+              .join("")
+          }
+
+        </div>
+      `;
+
+
+    } catch (error) {
+
+      console.error(
+        "LOAD VIDEOS ERROR:",
+        error
+      );
+
+
+      list.innerHTML = `
+        <div class="empty">
+
+          <div class="big">
+            ⚠️
+          </div>
+
+          <h2>
+            Błąd ładowania filmów
+          </h2>
+
+          <p class="muted">
+            ${esc(error.message)}
+          </p>
+
+          <button
+            class="btn red"
+            onclick="loadVideos()"
+          >
+            Spróbuj ponownie
+          </button>
+
+        </div>
+      `;
+
+    }
+
+  }
+
+
+  function renderVideo(
+    video,
+    channelMap
+  ) {
+
+    const videoUrl =
+      sb
+        .storage
+        .from("videos")
+        .getPublicUrl(
+          video.video_path
+        )
+        .data
+        .publicUrl;
+
+
+    let thumbnailUrl = "";
+
+
+    if (
+      video.thumbnail_path
+    ) {
+
+      thumbnailUrl =
+        sb
+          .storage
+          .from("thumbnails")
+          .getPublicUrl(
+            video.thumbnail_path
+          )
+          .data
+          .publicUrl;
+
+    }
+
+
+    const channelName =
+      channelMap[
+        video.channel_id
+      ] ||
+      "SillyTube";
+
+
+    const date =
+      video.created_at
+        ? new Date(
+            video.created_at
+          ).toLocaleDateString(
+            "pl-PL"
+          )
+        : "";
+
+
+    return `
+      <article class="card">
+
+        <video
+          class="thumb"
+          src="${esc(videoUrl)}"
+          ${
+            thumbnailUrl
+              ? `poster="${esc(thumbnailUrl)}"`
+              : ""
+          }
+          controls
+          preload="metadata"
+        ></video>
+
+        <div class="info">
+
+          <div class="title">
+            ${esc(video.title)}
+          </div>
+
+          ${
+            video.description
+              ? `
+                <div class="description">
+                  ${esc(
+                    video.description
+                  )}
+                </div>
+              `
+              : ""
+          }
+
+          <div class="meta">
+            ${esc(channelName)}
+            ${date ? " · " + esc(date) : ""}
+          </div>
+
+          <div class="actions">
+
+            <button
+              class="small-btn like-button"
+              data-video-id="${esc(video.id)}"
+            >
+              👍 Lubię to
+            </button>
+
+            ${
+              video.channel_id
+                ? `
+                  <button
+                    class="small-btn"
+                    onclick="subscribe('${esc(
+                      video.channel_id
+                    )}')"
+                  >
+                    🔔 Subskrybuj
+                  </button>
+                `
+                : ""
+            }
+
+          </div>
+
+        </div>
+
+      </article>
+    `;
+
+  }
+
+
+  /* =========================
+     SEARCH
+  ========================= */
+
+  $("search").addEventListener(
+    "input",
+    function() {
+
+      clearTimeout(
+        searchTimer
+      );
+
+
+      searchTimer =
+        setTimeout(
+          loadVideos,
+          250
+        );
+
+    }
+  );
+
+
+  /* =========================
+     LIKE
+  ========================= */
+
+  async function likeVideo(
+    videoId,
+    button
+  ) {
+
+    let visitorId =
+      localStorage.getItem(
+        "sillytube_visitor_id"
+      );
+
+
+    if (!visitorId) {
+
+      if (
+        crypto &&
+        crypto.randomUUID
+      ) {
+
+        visitorId =
+          crypto.randomUUID();
+
+      } else {
+
+        visitorId =
+          "visitor-" +
+          Date.now() +
+          "-" +
+          Math.random()
+            .toString(36)
+            .slice(2);
+
+      }
+
+
+      localStorage.setItem(
+        "sillytube_visitor_id",
+        visitorId
+      );
+
+    }
+
+
+    button.disabled = true;
+
+
+    const result =
+      await sb
+        .from("video_likes")
+        .insert({
+
+          video_id:
+            videoId,
+
+          visitor_id:
+            visitorId
+
+        });
+
+
+    if (result.error) {
+
+      button.disabled = false;
+
+
+      if (
+        result.error.code ===
+        "23505"
+      ) {
+
+        button.textContent =
+          "👍 Polubiono";
+
+      } else {
+
+        console.error(
+          "LIKE ERROR:",
+          result.error
+        );
+
+        alert(
+          "Błąd lajka: " +
+          result.error.message
+        );
+
+      }
 
       return;
 
     }
 
 
-    likeCache.add(
-      videoId
-    );
+    button.textContent =
+      "👍 1 Like";
 
-
-    /*
-      Od razu odświeżamy liczbę.
-    */
-
-    await loadVideos();
 
   }
 
 
-  /* =================================================
-     SUBSKRYPCJA
-     ================================================= */
+  /*
+    Delegacja kliknięć dla przycisków lajka.
+    Dzięki temu działa również po ponownym
+    załadowaniu listy filmów.
+  */
 
-  async function subscribe(channelId) {
+  $("list").addEventListener(
+    "click",
+    function(event) {
+
+      const button =
+        event.target.closest(
+          ".like-button"
+        );
+
+
+      if (!button)
+        return;
+
+
+      const videoId =
+        button.dataset.videoId;
+
+
+      if (!videoId)
+        return;
+
+
+      likeVideo(
+        videoId,
+        button
+      );
+
+    }
+  );
+
+
+  /* =========================
+     SUBSKRYPCJA
+  ========================= */
+
+  async function subscribe(
+    channelId
+  ) {
 
     if (!currentUser) {
 
       openAuth();
+
       return;
 
     }
@@ -2055,14 +1999,32 @@
     }
 
 
+    /*
+      Nie pozwalamy subskrybować
+      samego siebie.
+    */
+
+    const channel =
+      await sb
+        .from("channels")
+        .select(
+          "owner_id"
+        )
+        .eq(
+          "id",
+          channelId
+        )
+        .maybeSingle();
+
+
     if (
-      subscriptionCache.has(
-        channelId
-      )
+      channel.data &&
+      channel.data.owner_id ===
+      currentUser.id
     ) {
 
       alert(
-        "Już subskrybujesz ten kanał 🔔"
+        "Nie możesz subskrybować własnego kanału."
       );
 
       return;
@@ -2074,148 +2036,126 @@
       await sb
         .from("subscriptions")
         .insert({
+
           subscriber_id:
             currentUser.id,
 
           channel_id:
             channelId
+
         });
 
 
     if (result.error) {
+
+      console.error(
+        "SUB ERROR:",
+        result.error
+      );
+
 
       if (
         result.error.code ===
         "23505"
       ) {
 
-        subscriptionCache.add(
-          channelId
+        alert(
+          "Już subskrybujesz ten kanał 🔔"
         );
+
+      } else {
 
         alert(
-          "Już subskrybujesz ten kanał."
+          "Błąd subskrypcji: " +
+          result.error.message
         );
 
-        return;
-
       }
-
-
-      alert(
-        "Błąd subskrypcji: " +
-        result.error.message
-      );
 
       return;
 
     }
-
-
-    subscriptionCache.add(
-      channelId
-    );
 
 
     alert(
       "Subskrypcja dodana! 🔔"
     );
 
-
-    await loadVideos();
-
   }
 
 
-  /* =================================================
+  /* =========================
      PROFIL
-     ================================================= */
+  ========================= */
 
   async function showMyProfile() {
 
     if (!currentUser) {
 
       openAuth();
+
       return;
 
     }
 
 
-    try {
+    /*
+      UWAGA:
+      Nie wywołujemy tutaj getOrCreateChannel().
+      Samo wejście w profil nie powinno próbować
+      tworzyć kanału.
+    */
 
-      /*
-        Nie tworzymy kanału automatycznie przy
-        samym otwieraniu profilu.
-
-        Najpierw próbujemy znaleźć istniejący.
-      */
-
-      const channelResult =
-        await sb
-          .from("channels")
-          .select(
-            "id,name,owner_id"
-          )
-          .eq(
-            "owner_id",
-            currentUser.id
-          )
-          .limit(1)
-          .maybeSingle();
+    const profileResult =
+      await sb
+        .from("profiles")
+        .select(
+          "id,username"
+        )
+        .eq(
+          "id",
+          currentUser.id
+        )
+        .maybeSingle();
 
 
-      if (channelResult.error) {
-
-        throw new Error(
-          channelResult.error.message
-        );
-
-      }
-
-
-      let channel =
-        channelResult.data;
-
-
-      /*
-        Jeżeli kanału jeszcze nie ma,
-        utworzymy go dopiero tutaj.
-      */
-
-      if (!channel) {
-
-        channel =
-          await getOrCreateChannel();
-
-      }
-
-
-      await showChannelProfile(
-        channel.id
-      );
-
-    } catch (error) {
+    if (profileResult.error) {
 
       alert(
-        "Nie udało się otworzyć profilu: " +
-        error.message
+        "Nie udało się pobrać profilu: " +
+        profileResult.error.message
       );
+
+      return;
 
     }
 
-  }
+
+    const username =
+      profileResult.data?.username ||
+      currentUser.user_metadata?.username ||
+      currentUser.email?.split("@")[0] ||
+      "Użytkownik";
 
 
-  async function showChannelProfile(
-    channelId
-  ) {
-
-    const content =
-      $("profileContent");
+    $("profileName")
+      .textContent =
+        username;
 
 
-    content.innerHTML =
-      `<div class="loading">Ładowanie profilu...</div>`;
+    $("profileAvatar")
+      .textContent =
+        getInitial(username);
+
+
+    $("profileEmail")
+      .textContent =
+        currentUser.email || "";
+
+
+    $("subscriberCount")
+      .textContent =
+        "Ładowanie subskrybentów...";
 
 
     openModal(
@@ -2223,396 +2163,135 @@
     );
 
 
-    try {
-
-      /*
-        Kanał
-      */
-
-      const channelResult =
-        await sb
-          .from("channels")
-          .select(
-            "id,name,owner_id"
-          )
-          .eq(
-            "id",
-            channelId
-          )
-          .maybeSingle();
-
-
-      if (channelResult.error) {
-
-        throw new Error(
-          channelResult.error.message
-        );
-
-      }
-
-
-      const channel =
-        channelResult.data;
-
-
-      if (!channel) {
-
-        throw new Error(
-          "Nie znaleziono kanału."
-        );
-
-      }
-
-
-      /*
-        Filmy kanału
-      */
-
-      const videosResult =
-        await sb
-          .from("videos")
-          .select("*")
-          .eq(
-            "channel_id",
-            channelId
-          )
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
-
-
-      if (videosResult.error) {
-
-        throw new Error(
-          videosResult.error.message
-        );
-
-      }
-
-
-      const videos =
-        videosResult.data || [];
-
-
-      /*
-        Liczba subów
-      */
-
-      const subsResult =
-        await sb
-          .from("subscriptions")
-          .select(
-            "subscriber_id",
-            {
-              count: "exact",
-              head: true
-            }
-          )
-          .eq(
-            "channel_id",
-            channelId
-          );
-
-
-      const subscribers =
-        subsResult.count || 0;
-
-
-      /*
-        Czy aktualny użytkownik subskrybuje
-      */
-
-      let isSubscribed = false;
-
-
-      if (currentUser) {
-
-        const mine =
-          await sb
-            .from("subscriptions")
-            .select("channel_id")
-            .eq(
-              "subscriber_id",
-              currentUser.id
-            )
-            .eq(
-              "channel_id",
-              channelId
-            )
-            .maybeSingle();
-
-
-        isSubscribed =
-          !!mine.data;
-
-      }
-
-
-      /*
-        Avatar
-      */
-
-      const channelLetter =
-        (channel.name || "S")
-          .charAt(0)
-          .toUpperCase();
-
-
-      content.innerHTML = `
-
-        <div class="profile">
-
-          <div class="profile-top">
-
-            <div class="avatar">
-              ${esc(channelLetter)}
-            </div>
-
-            <div>
-
-              <div class="profile-name">
-                ${esc(channel.name)}
-              </div>
-
-              <div class="profile-stats">
-
-                <div class="stat">
-                  <strong>
-                    ${subscribers}
-                  </strong>
-                  subskrybentów
-                </div>
-
-                <div class="stat">
-                  <strong>
-                    ${videos.length}
-                  </strong>
-                  filmów
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="actions">
-
-            ${
-              currentUser &&
-              channel.owner_id !== currentUser.id
-                ? `
-                  <button
-                    class="btn ${
-                      isSubscribed
-                        ? "gray"
-                        : "red"
-                    }"
-                    onclick="subscribeFromProfile('${esc(channel.id)}')"
-                  >
-                    ${
-                      isSubscribed
-                        ? "🔔 Subskrybujesz"
-                        : "🔔 Subskrybuj"
-                    }
-                  </button>
-                `
-                : ""
-            }
-
-          </div>
-
-        </div>
-
-
-        <h2 class="section-title">
-          🎬 Filmy kanału
-        </h2>
-
-
-        ${
-          videos.length
-            ? `
-              <div class="grid">
-
-                ${videos.map(
-                  video => {
-
-                    const videoUrl =
-                      sb
-                        .storage
-                        .from("videos")
-                        .getPublicUrl(
-                          video.video_path
-                        )
-                        .data
-                        .publicUrl;
-
-
-                    const thumbUrl =
-                      video.thumbnail_path
-                        ? sb
-                            .storage
-                            .from("thumbnails")
-                            .getPublicUrl(
-                              video.thumbnail_path
-                            )
-                            .data
-                            .publicUrl
-                        : "";
-
-
-                    return `
-                      <article class="card">
-
-                        <video
-                          class="thumb"
-                          src="${esc(videoUrl)}"
-                          ${
-                            thumbUrl
-                              ? `poster="${esc(thumbUrl)}"`
-                              : ""
-                          }
-                          controls
-                          preload="metadata"
-                        ></video>
-
-                        <div class="info">
-
-                          <div class="title">
-                            ${esc(video.title)}
-                          </div>
-
-                          ${
-                            video.description
-                              ? `
-                                <div class="description">
-                                  ${esc(video.description)}
-                                </div>
-                              `
-                              : ""
-                          }
-
-                        </div>
-
-                      </article>
-                    `;
-
-                  }
-                ).join("")}
-
-              </div>
-            `
-            : `
-              <div class="empty">
-
-                <div class="big">
-                  🎬
-                </div>
-
-                <h2>
-                  Ten kanał nie ma jeszcze filmów.
-                </h2>
-
-              </div>
-            `
-        }
-
-      `;
-
-    } catch (error) {
-
-      content.innerHTML = `
-        <div class="empty">
-
-          <div class="big">
-            ⚠️
-          </div>
-
-          <h2>
-            Błąd profilu
-          </h2>
-
-          <p class="muted">
-            ${esc(error.message)}
-          </p>
-
-        </div>
-      `;
+    /*
+      Najpierw szukamy kanału użytkownika.
+    */
+
+    const channelResult =
+      await sb
+        .from("channels")
+        .select(
+          "id"
+        )
+        .eq(
+          "owner_id",
+          currentUser.id
+        )
+        .limit(1);
+
+
+    if (
+      channelResult.error
+    ) {
+
+      $("subscriberCount")
+        .textContent =
+          "Nie udało się pobrać liczby subskrybentów";
+
+      console.error(
+        channelResult.error
+      );
+
+      return;
 
     }
 
-  }
+
+    const channel =
+      channelResult.data?.[0];
 
 
-  async function subscribeFromProfile(
-    channelId
-  ) {
+    if (!channel) {
 
-    await subscribe(
-      channelId
-    );
+      $("subscriberCount")
+        .textContent =
+          "0 subskrybentów";
 
-    await showChannelProfile(
-      channelId
-    );
+      return;
 
-  }
+    }
 
 
-  /* =================================================
-     PRZYCISKI
-     ================================================= */
+    /*
+      Liczymy subskrypcje.
+    */
 
-  $("myProfileBtn").onclick =
-    showMyProfile;
-
-
-  $("homeLogo").onclick =
-    function() {
-
-      $("homeHero").style.display =
-        "";
-
-      loadVideos();
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-
-    };
+    const countResult =
+      await sb
+        .from("subscriptions")
+        .select(
+          "channel_id",
+          {
+            count: "exact",
+            head: true
+          }
+        )
+        .eq(
+          "channel_id",
+          channel.id
+        );
 
 
-  let searchTimer;
+    if (
+      countResult.error
+    ) {
 
-
-  $("search").addEventListener(
-    "input",
-    function() {
-
-      clearTimeout(
-        searchTimer
+      console.error(
+        "SUB COUNT ERROR:",
+        countResult.error
       );
 
 
-      searchTimer =
-        setTimeout(
-          loadVideos,
-          200
+      $("subscriberCount")
+        .textContent =
+          "Nie udało się pobrać liczby subskrybentów";
+
+      return;
+
+    }
+
+
+    const count =
+      countResult.count || 0;
+
+
+    $("subscriberCount")
+      .textContent =
+        count +
+        (
+          count === 1
+            ? " subskrybent"
+            : " subskrybentów"
         );
+
+  }
+
+
+  $("profileBtn").onclick =
+    showMyProfile;
+
+
+  $("account").addEventListener(
+    "click",
+    function(event) {
+
+      if (
+        event.target.closest(
+          "#accountProfile"
+        )
+      ) {
+
+        showMyProfile();
+
+      }
 
     }
   );
 
 
-  /* =================================================
+  /* =========================
      START
-     ================================================= */
+  ========================= */
 
   init();
 
